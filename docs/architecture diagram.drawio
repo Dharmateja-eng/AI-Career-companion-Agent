@@ -1,0 +1,125 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Page-1" id="m50T0RChJ9TPBYfWpsVo">
+    <mxGraphModel dx="2271" dy="1653" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="LQgb70AgJpt3ykP-yveW-2" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=#6F0000;fillColor=#a20025;align=center;verticalAlign=middle;rounded=1;fontColor=#ffffff;strokeWidth=2;glass=0;shadow=0;" value="&lt;h3&gt;&lt;font style=&quot;font-size: 31px;&quot;&gt;AI Career Companion — System Architecture&lt;/font&gt;&lt;/h3&gt;" vertex="1">
+          <mxGeometry height="82.5" width="521" x="124" y="-9.5" as="geometry" />
+        </mxCell>
+        <mxCell id="LQgb70AgJpt3ykP-yveW-20" parent="1" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;fontColor=default;" value="&lt;font style=&quot;font-size: 23px;&quot;&gt;Student / User&lt;/font&gt;" vertex="1">
+          <mxGeometry height="53" width="257" x="248" y="124" as="geometry" />
+        </mxCell>
+        <mxCell id="LQgb70AgJpt3ykP-yveW-22" parent="1" style="html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.arrow;dy=0.6;dx=40;direction=south;notch=0;" value="" vertex="1">
+          <mxGeometry height="65" width="30.5" x="350" y="177" as="geometry" />
+        </mxCell>
+        <mxCell id="LQgb70AgJpt3ykP-yveW-23" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;font style=&quot;font-size: 23px;&quot;&gt;Student/User Interface&lt;/font&gt;" vertex="1">
+          <mxGeometry height="56" width="253" x="244" y="242" as="geometry" />
+        </mxCell>
+        <mxCell id="LQgb70AgJpt3ykP-yveW-25" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;font style=&quot;font-size: 25px;&quot;&gt;Backend / API Layer&lt;/font&gt;" vertex="1">
+          <mxGeometry height="61" width="251" x="252" y="363" as="geometry" />
+        </mxCell>
+        <mxCell id="LQgb70AgJpt3ykP-yveW-26" parent="1" style="html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.arrow;dy=0.58;dx=29.33;direction=south;notch=0;" value="" vertex="1">
+          <mxGeometry height="61" width="38" x="347" y="423" as="geometry" />
+        </mxCell>
+        <mxCell id="LQgb70AgJpt3ykP-yveW-27" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;font style=&quot;font-size: 23px;&quot;&gt;Resume Upload &amp;amp; Storage&lt;/font&gt;" vertex="1">
+          <mxGeometry height="70" width="251" x="248" y="482" as="geometry" />
+        </mxCell>
+        <mxCell id="LQgb70AgJpt3ykP-yveW-30" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;span style=&quot;font-size: 29px;&quot;&gt;LLM&lt;/span&gt;" vertex="1">
+          <mxGeometry height="53" width="251" x="248" y="753" as="geometry" />
+        </mxCell>
+        <mxCell id="LQgb70AgJpt3ykP-yveW-33" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="LQgb70AgJpt3ykP-yveW-29" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="363.7777777777776" y="696.9999999999998" as="sourcePoint" />
+            <mxPoint x="368" y="784" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="LQgb70AgJpt3ykP-yveW-29" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;font style=&quot;font-size: 22px;&quot;&gt;Resume Parsing Module&lt;/font&gt;" vertex="1">
+          <mxGeometry height="60" width="251" x="248" y="628" as="geometry" />
+        </mxCell>
+        <mxCell id="LQgb70AgJpt3ykP-yveW-35" parent="1" style="html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.arrow;dy=0.7;dx=42.33;direction=south;notch=0;" value="" vertex="1">
+          <mxGeometry height="73" width="38" x="347" y="552" as="geometry" />
+        </mxCell>
+        <mxCell id="LQgb70AgJpt3ykP-yveW-37" parent="1" style="html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.arrow;dy=0.6;dx=40;direction=south;notch=0;" value="" vertex="1">
+          <mxGeometry height="65" width="43" x="347" y="688" as="geometry" />
+        </mxCell>
+        <mxCell id="LQgb70AgJpt3ykP-yveW-45" edge="1" parent="1" source="LQgb70AgJpt3ykP-yveW-38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="LQgb70AgJpt3ykP-yveW-42" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="LQgb70AgJpt3ykP-yveW-38" parent="1" style="html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.arrow;dy=0.69;dx=29.89;direction=south;notch=0;" value="" vertex="1">
+          <mxGeometry height="61" width="43" x="347" y="806" as="geometry" />
+        </mxCell>
+        <mxCell id="LQgb70AgJpt3ykP-yveW-39" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;font style=&quot;font-size: 20px;&quot;&gt;Candidate / Student Profile&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="245" x="252" y="870" as="geometry" />
+        </mxCell>
+        <mxCell id="LQgb70AgJpt3ykP-yveW-40" parent="1" style="html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.arrow;dy=0.6;dx=40;direction=south;notch=0;" value="" vertex="1">
+          <mxGeometry height="65" width="34.5" x="346.25" y="298" as="geometry" />
+        </mxCell>
+        <mxCell id="LQgb70AgJpt3ykP-yveW-42" parent="1" style="html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.arrow;dy=0.6;dx=40;direction=south;notch=0;" value="" vertex="1">
+          <mxGeometry height="70" width="43" x="347" y="920" as="geometry" />
+        </mxCell>
+        <mxCell id="LQgb70AgJpt3ykP-yveW-46" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;font style=&quot;font-size: 32px;&quot;&gt;Database&lt;/font&gt;" vertex="1">
+          <mxGeometry height="60" width="251" x="248" y="990" as="geometry" />
+        </mxCell>
+        <mxCell id="LQgb70AgJpt3ykP-yveW-47" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;font style=&quot;font-size: 30px;&quot;&gt;&lt;b style=&quot;&quot;&gt;Future AI Career Companion Components&lt;/b&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="91.5" width="513" x="869" y="-9.5" as="geometry" />
+        </mxCell>
+        <mxCell id="LQgb70AgJpt3ykP-yveW-49" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;font style=&quot;font-size: 25px;&quot;&gt;Job-Posting Knowledge Base&lt;/font&gt;" vertex="1">
+          <mxGeometry height="61" width="422" x="893" y="171" as="geometry" />
+        </mxCell>
+        <mxCell id="LQgb70AgJpt3ykP-yveW-50" parent="1" style="html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.arrow;dy=0.6;dx=40;direction=south;notch=0;" value="" vertex="1">
+          <mxGeometry height="73" width="49" x="1069" y="233.5" as="geometry" />
+        </mxCell>
+        <mxCell id="LQgb70AgJpt3ykP-yveW-51" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;font style=&quot;font-size: 27px;&quot;&gt;RAG Pipeline&lt;/font&gt;" vertex="1">
+          <mxGeometry height="60" width="427" x="893" y="305" as="geometry" />
+        </mxCell>
+        <mxCell id="LQgb70AgJpt3ykP-yveW-54" edge="1" parent="1" source="LQgb70AgJpt3ykP-yveW-52" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="LQgb70AgJpt3ykP-yveW-51" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="LQgb70AgJpt3ykP-yveW-55" edge="1" parent="1" source="LQgb70AgJpt3ykP-yveW-52" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="LQgb70AgJpt3ykP-yveW-53" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="LQgb70AgJpt3ykP-yveW-52" parent="1" style="html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.arrow;dy=0.6;dx=40;direction=south;notch=0;" value="" vertex="1">
+          <mxGeometry height="77" width="53.5" x="1069" y="365" as="geometry" />
+        </mxCell>
+        <mxCell id="LQgb70AgJpt3ykP-yveW-53" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;font style=&quot;font-size: 28px;&quot;&gt;AI Agent Layer&lt;/font&gt;" vertex="1">
+          <mxGeometry height="56" width="605" x="836" y="442" as="geometry" />
+        </mxCell>
+        <mxCell id="LQgb70AgJpt3ykP-yveW-58" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.annotation_2;align=left;labelPosition=right;pointerEvents=1;rotation=90;" value="" vertex="1">
+          <mxGeometry height="176.5" width="61" x="865.75" y="440.25" as="geometry" />
+        </mxCell>
+        <mxCell id="LQgb70AgJpt3ykP-yveW-59" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.annotation_2;align=left;labelPosition=right;pointerEvents=1;rotation=91;" value="" vertex="1">
+          <mxGeometry height="131" width="69.85" x="1084.4" y="468.7" as="geometry" />
+        </mxCell>
+        <mxCell id="LQgb70AgJpt3ykP-yveW-60" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.annotation_2;align=left;labelPosition=right;pointerEvents=1;rotation=90;" value="" vertex="1">
+          <mxGeometry height="110" width="65" x="1375.5" y="475.5" as="geometry" />
+        </mxCell>
+        <mxCell id="LQgb70AgJpt3ykP-yveW-61" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;div&gt;&lt;font style=&quot;font-size: 19px;&quot;&gt;Job-Resume&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 19px;&quot;&gt;Matching Agent&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="178" width="144" x="725" y="559" as="geometry" />
+        </mxCell>
+        <mxCell id="LQgb70AgJpt3ykP-yveW-62" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;font style=&quot;font-size: 21px;&quot;&gt;Skill Gap Agent&lt;/font&gt;" vertex="1">
+          <mxGeometry height="178" width="120" x="884" y="559" as="geometry" />
+        </mxCell>
+        <mxCell id="LQgb70AgJpt3ykP-yveW-64" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;font style=&quot;font-size: 21px;&quot;&gt;Resume Agent&lt;/font&gt;" vertex="1">
+          <mxGeometry height="178" width="110" x="1023" y="563" as="geometry" />
+        </mxCell>
+        <mxCell id="LQgb70AgJpt3ykP-yveW-65" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;Cover Letter Agent&lt;/font&gt;" vertex="1">
+          <mxGeometry height="178" width="110" x="1153" y="563" as="geometry" />
+        </mxCell>
+        <mxCell id="LQgb70AgJpt3ykP-yveW-66" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;Interview Agent&lt;/font&gt;" vertex="1">
+          <mxGeometry height="174" width="120" x="1277" y="563" as="geometry" />
+        </mxCell>
+        <mxCell id="LQgb70AgJpt3ykP-yveW-67" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;font style=&quot;font-size: 21px;&quot;&gt;Career Assistant&lt;/font&gt;" vertex="1">
+          <mxGeometry height="174" width="120" x="1411" y="559" as="geometry" />
+        </mxCell>
+        <mxCell id="LQgb70AgJpt3ykP-yveW-69" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.annotation_2;align=left;labelPosition=right;pointerEvents=1;rotation=-90;" value="" vertex="1">
+          <mxGeometry height="692" width="96.5" x="1081.75" y="443.25" as="geometry" />
+        </mxCell>
+        <mxCell id="LQgb70AgJpt3ykP-yveW-70" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;font style=&quot;font-size: 28px;&quot;&gt;Application Tracking Module&lt;/font&gt;" vertex="1">
+          <mxGeometry height="82.5" width="494" x="888" y="837.5" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
+

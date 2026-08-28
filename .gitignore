@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Virtual environment
+venv/
+.venv/
+
+# Uploaded resumes and files
+uploads/
+
+# Generated student profile containing personal information
+data/candidate_profile.json
+
+# Environment variables / secrets
+.env
+
+# VS Code settings
+.vscode/
