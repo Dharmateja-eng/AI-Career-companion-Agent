@@ -8,35 +8,133 @@
 
 <body>
 
-    <h1>Student Profile</h1>
+    <h1>Student Profile Created</h1>
+
+    <hr>
 
     <h2>Personal Information</h2>
-    <p><strong>Name:</strong> {{ profile.name }}</p>
-    <p><strong>Email:</strong> {{ profile.email }}</p>
-    <p><strong>Phone:</strong> {{ profile.phone }}</p>
+
+    <p>
+        <strong>Name:</strong>
+        {{ profile.name }}
+    </p>
+
+    <p>
+        <strong>Email:</strong>
+        {{ profile.email }}
+    </p>
+
+    <p>
+        <strong>Phone:</strong>
+        {{ profile.phone }}
+    </p>
+
 
     <h2>Education</h2>
-    <p><strong>Degree:</strong> {{ profile.degree }}</p>
-    <p><strong>College:</strong> {{ profile.college }}</p>
-    <p><strong>Graduation Year:</strong> {{ profile.graduation_year }}</p>
 
-    <h2>Skills</h2>
-    <p>{{ profile.skills }}</p>
+    {% for education in profile.education %}
+        <div>
+            <p>
+                <strong>Degree:</strong>
+                {{ education.degree }}
+            </p>
+
+            <p>
+                <strong>Institution:</strong>
+                {{ education.institution }}
+            </p>
+
+            <p>
+                <strong>Year:</strong>
+                {{ education.year }}
+            </p>
+
+            <p>
+                <strong>CGPA:</strong>
+                {{ education.cgpa }}
+            </p>
+
+            <hr>
+        </div>
+    {% endfor %}
+
+
+    <h2>Technical Skills</h2>
+
+    <ul>
+        {% for skill in profile.skills %}
+            <li>{{ skill }}</li>
+        {% endfor %}
+    </ul>
+
 
     <h2>Experience</h2>
-    <p>{{ profile.experience }}</p>
+
+    {% if profile.experience %}
+        <ul>
+            {% for experience in profile.experience %}
+                <li>{{ experience }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No experience found.</p>
+    {% endif %}
+
 
     <h2>Projects</h2>
-    <p>{{ profile.projects }}</p>
+
+    {% for project in profile.projects %}
+        <div>
+            <p>
+                <strong>{{ project.title }}</strong>
+            </p>
+
+            <p>
+                {{ project.description }}
+            </p>
+
+            <hr>
+        </div>
+    {% endfor %}
+
 
     <h2>Certifications</h2>
-    <p>{{ profile.certifications }}</p>
+
+    <ul>
+        {% for certification in profile.certifications %}
+            <li>{{ certification }}</li>
+        {% endfor %}
+    </ul>
+
 
     <h2>Achievements</h2>
-    <p>{{ profile.achievements }}</p>
+
+    <ul>
+        {% for achievement in profile.achievements %}
+            <li>{{ achievement }}</li>
+        {% endfor %}
+    </ul>
+
+
+    <h2>Languages</h2>
+
+    <ul>
+        {% for language in profile.languages %}
+            <li>{{ language }}</li>
+        {% endfor %}
+    </ul>
+
 
     <h2>Resume</h2>
-    <p>Resume uploaded and processed successfully.</p>
+
+    <p>
+        <strong>File:</strong>
+        {{ resume.filename }}
+    </p>
+
+    <p>
+        Resume uploaded and processed successfully.
+    </p>
 
 </body>
 </html>
