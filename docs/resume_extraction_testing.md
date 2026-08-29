@@ -2,87 +2,97 @@
 
 ## Objective
 
-To test the resume parsing and LLM-based structured information extraction functionality of the AI Career Companion Agent.
+The resume extraction module was tested to verify whether the system can extract structured candidate information from PDF resumes using PyPDF2 and Gemini LLM.
 
 ## Extraction Workflow
 
-Resume PDF
-→ PDF Text Extraction using PyPDF2
-→ Extracted Resume Text
-→ Gemini LLM
-→ Structured Candidate Profile
-→ JSON Storage
+1. User uploads a PDF resume.
+2. PyPDF2 extracts the text from the PDF.
+3. Extracted text is sent to the Gemini LLM.
+4. Gemini identifies candidate information.
+5. The information is returned as structured JSON.
+6. The structured profile is stored in `candidate_profile.json`.
 
-## Test Case 1
+## Test Cases
 
-### Input
-Resume PDF uploaded through the Student Profile form.
+### Test Case 1 – Personal Resume
 
-### Results
+**Resume:** `resume.pdf`
 
-- Resume upload: Successful
-- PDF text extraction: Successful
-- Name extraction: Successful
-- Email extraction: Successful
-- Phone extraction: Successful
-- Education extraction: Successful
-- Skills extraction: Successful
-- Experience extraction: Successful
-- Projects extraction: Successful
-- Certifications extraction: Successful
-- Achievements extraction: Successful
-- Languages extraction: Successful
-- Structured JSON generation: Successful
-- Candidate profile JSON storage: Successful
+**Result:** Passed
 
-### Status
+The system successfully extracted:
 
-PASS
+- Name
+- Email
+- Phone
+- Education
+- Skills
+- Experience
+- Projects
+- Certifications
+- Achievements
+- Languages
+
+The extracted information was returned in structured JSON format.
 
 ---
 
-## Test Case 2
+### Test Case 2 – Python Developer Resume
 
-### Input
-The same resume PDF was uploaded again to verify repeatability.
+**Resume:** `sample_resume_1_python_developer.pdf`
 
-### Results
+**Result:** Passed
 
-- Resume upload: Successful
-- PDF text extraction: Successful
-- Name extraction: Successful
-- Email extraction: Successful
-- Phone extraction: Successful
-- Education extraction: Successful
-- Skills extraction: Successful
-- Experience extraction: Successful
-- Projects extraction: Successful
-- Certifications extraction: Successful
-- Achievements extraction: Successful
-- Languages extraction: Successful
-- Structured JSON generation: Successful
-- Candidate profile JSON storage: Successful
+The system successfully extracted:
 
-### Status
+- Name
+- Email
+- Phone
+- Education
+- CGPA and percentage
+- Technical skills
+- Internship experience
+- Projects
+- Certifications
+- Achievements
+- Languages
 
-PASS
+The system also correctly identified the internship company, role, year and description.
 
 ---
 
-## Sample Structured Output
+### Test Case 3 – Data Analyst Resume
 
-The LLM generates structured candidate information in JSON format:
+**Resume:** `sample_resume_2_data_analyst.pdf`
 
-```json
-{
-    "name": "Candidate Name",
-    "email": "candidate@example.com",
-    "phone": "XXXXXXXXXX",
-    "education": [],
-    "skills": [],
-    "experience": [],
-    "projects": [],
-    "certifications": [],
-    "achievements": [],
-    "languages": []
-}
+**Result:** Passed
+
+The system successfully extracted:
+
+- Name
+- Email
+- Phone
+- Education
+- CGPA and percentage
+- Technical skills
+- Projects
+- Certifications
+- Achievements
+- Languages
+
+The resume did not contain professional experience, and the system correctly returned an empty experience list instead of inventing information.
+
+## Testing Summary
+
+| Test Case | Resume Type | Result |
+|------------|-------------|--------|
+| 1 | Personal Resume | Passed |
+| 2 | Python Developer | Passed |
+| 3 | Data Analyst | Passed |
+
+## Conclusion
+
+The resume parsing and extraction module successfully processed different resume formats and generated structured candidate profiles.
+
+The testing demonstrates that the system can extract important candidate information such as education, skills, experience, projects, certifications, achievements and languages using PDF text extraction and an LLM.
