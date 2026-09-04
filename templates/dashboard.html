@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Career Companion</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- ================================
+         HEADER
+    ================================= -->
+
+    <header class="dashboard-header">
+
+        <div class="header-content">
+
+            <div>
+                <span class="header-badge">AI-POWERED CAREER ASSISTANT</span>
+
+                <h1>AI Career Companion</h1>
+
+                <p>
+                    Your personalized career analysis, skill roadmap
+                    and interview preparation in one place.
+                </p>
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- ================================
+         WELCOME
+    ================================= -->
+
+    <section class="welcome-card">
+
+        <div class="welcome-content">
+
+            <div class="welcome-icon">
+                👋
+            </div>
+
+            <div>
+
+                <p class="small-label">WELCOME BACK</p>
+
+                <h2>
+                    Hello,
+                    {{ profile.resume.llm_extracted_profile.name }}
+                </h2>
+
+                <p>
+                    Your resume has been analyzed. Explore your career
+                    recommendations, skill gaps and interview preparation below.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================
+         QUICK SUMMARY
+    ================================= -->
+
+    <section class="summary-grid">
+
+        <!-- Resume Score -->
+
+        <div class="summary-card">
+
+            <div class="summary-icon">📄</div>
+
+            <div>
+
+                <span>Resume Score</span>
+
+                <strong>
+                    {{ profile.resume_analysis.resume_score }}/100
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- Career Roles -->
+
+        <div class="summary-card">
+
+            <div class="summary-icon">💼</div>
+
+            <div>
+
+                <span>Career Roles</span>
+
+                <strong>
+                    {{ profile.career_analysis.recommended_roles|length }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- Missing Skills -->
+
+        <div class="summary-card">
+
+            <div class="summary-icon">🧩</div>
+
+            <div>
+
+                <span>Skill Gaps</span>
+
+                <strong>
+                    {{ profile.skill_gap_analysis.missing_skills|length }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- Interview Questions -->
+
+        <div class="summary-card">
+
+            <div class="summary-icon">🎤</div>
+
+            <div>
+
+                <span>Interview Questions</span>
+
+                <strong>
+                    {{
+                        profile.interview_analysis.technical_questions|length
+                        +
+                        profile.interview_analysis.conceptual_questions|length
+                        +
+                        profile.interview_analysis.hr_questions|length
+                    }}
+                </strong>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================
+         RESUME ANALYSIS
+    ================================= -->
+
+    <section class="section-card">
+
+        <div class="section-heading">
+
+            <div>
+                <span class="section-number">01</span>
+
+                <div>
+                    <h2>Resume Analysis</h2>
+
+                    <p>
+                        Understand how strong your resume is and where
+                        you can improve it.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- Score -->
+
+        <div class="resume-score-panel">
+
+            <div class="score-circle">
+
+                {{ profile.resume_analysis.resume_score }}
+
+                <span>/100</span>
+
+            </div>
+
+            <div class="score-content">
+
+                <h3>Resume Performance</h3>
+
+                <p>
+                    Your score represents the overall quality,
+                    completeness and effectiveness of your resume.
+                </p>
+
+                <div class="score-bar">
+
+                    <div
+                        class="score-progress"
+                        style="width: {{ profile.resume_analysis.resume_score }}%;">
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Strengths + Weaknesses -->
+
+        <div class="two-column">
+
+            <div class="analysis-box strength-box">
+
+                <h3>💪 Strengths</h3>
+
+                {% if profile.resume_analysis.strengths %}
+
+                    <ul class="result-list">
+
+                        {% for strength in profile.resume_analysis.strengths %}
+
+                            <li>
+                                <span class="list-icon">✓</span>
+                                {{ strength }}
+                            </li>
+
+                        {% endfor %}
+
+                    </ul>
+
+                {% else %}
+
+                    <p class="empty-message">
+                        No strengths identified.
+                    </p>
+
+                {% endif %}
+
+            </div>
+
+
+            <div class="analysis-box weakness-box">
+
+                <h3>⚠️ Areas to Improve</h3>
+
+                {% if profile.resume_analysis.weaknesses %}
+
+                    <ul class="result-list">
+
+                        {% for weakness in profile.resume_analysis.weaknesses %}
+
+                            <li>
+                                <span class="list-icon">!</span>
+                                {{ weakness }}
+                            </li>
+
+                        {% endfor %}
+
+                    </ul>
+
+                {% else %}
+
+                    <p class="empty-message">
+                        No major weaknesses identified.
+                    </p>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        <!-- Improvements -->
+
+        <div class="analysis-box improvement-box">
+
+            <h3>✨ AI Resume Suggestions</h3>
+
+            {% if profile.resume_analysis.improvements %}
+
+                <ul class="result-list">
+
+                    {% for improvement in profile.resume_analysis.improvements %}
+
+                        <li>
+                            <span class="list-icon">→</span>
+                            {{ improvement }}
+                        </li>
+
+                    {% endfor %}
+
+                </ul>
+
+            {% else %}
+
+                <p class="empty-message">
+                    No improvement suggestions available.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================
+         SKILLS
+    ================================= -->
+
+    <section class="section-card">
+
+        <div class="section-heading">
+
+            <div>
+                <span class="section-number">02</span>
+
+                <div>
+                    <h2>Your Skills</h2>
+
+                    <p>
+                        Skills identified from your resume.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="skills-container">
+
+            {% if profile.resume.llm_extracted_profile.skills %}
+
+                {% for skill in profile.resume.llm_extracted_profile.skills %}
+
+                    <span class="skill-tag">
+                        {{ skill }}
+                    </span>
+
+                {% endfor %}
+
+            {% else %}
+
+                <p class="empty-message">
+                    No skills identified.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================
+         CAREER RECOMMENDATIONS
+    ================================= -->
+
+    <section class="section-card">
+
+        <div class="section-heading">
+
+            <div>
+                <span class="section-number">03</span>
+
+                <div>
+                    <h2>Career Recommendations</h2>
+
+                    <p>
+                        Career roles selected based on your education,
+                        skills, projects and experience.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+
+        {% if profile.career_analysis.recommended_roles %}
+
+            <div class="career-grid">
+
+                {% for recommendation in profile.career_analysis.recommended_roles %}
+
+                    <article class="career-card">
+
+                        <div class="career-card-header">
+
+                            <span class="career-icon">💼</span>
+
+                            <span class="role-number">
+                                0{{ loop.index }}
+                            </span>
+
+                        </div>
+
+
+                        <h3>
+                            {{ recommendation.role }}
+                        </h3>
+
+
+                        <p class="career-reason">
+                            {{ recommendation.reason }}
+                        </p>
+
+
+                        {% if recommendation.required_skills %}
+
+                            <div class="career-subsection">
+
+                                <strong>Required Skills</strong>
+
+                                <div class="skills-container">
+
+                                    {% for skill in recommendation.required_skills %}
+
+                                        <span class="skill-tag">
+                                            {{ skill }}
+                                        </span>
+
+                                    {% endfor %}
+
+                                </div>
+
+                            </div>
+
+                        {% endif %}
+
+
+                        {% if recommendation.candidate_matching_skills %}
+
+                            <div class="career-subsection">
+
+                                <strong>Your Matching Skills</strong>
+
+                                <div class="skills-container">
+
+                                    {% for skill in recommendation.candidate_matching_skills %}
+
+                                        <span class="skill-tag matching">
+                                            ✓ {{ skill }}
+                                        </span>
+
+                                    {% endfor %}
+
+                                </div>
+
+                            </div>
+
+                        {% endif %}
+
+                    </article>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <p class="empty-message">
+                No career recommendations available.
+            </p>
+
+        {% endif %}
+
+    </section>
+
+
+    <!-- ================================
+         SKILL GAP
+    ================================= -->
+
+    <section class="section-card">
+
+        <div class="section-heading">
+
+            <div>
+                <span class="section-number">04</span>
+
+                <div>
+                    <h2>Skill Gap Analysis</h2>
+
+                    <p>
+                        See what you already know and what you need
+                        to learn for your target role.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+
+        {% if profile.skill_gap_analysis %}
+
+            <!-- Target Role -->
+
+            <div class="target-role">
+
+                <span>🎯 TARGET ROLE</span>
+
+                <strong>
+                    {{ profile.skill_gap_analysis.target_role }}
+                </strong>
+
+            </div>
+
+
+            <div class="skill-gap-grid">
+
+                <!-- Current -->
+
+                <div class="gap-box">
+
+                    <h3>🛠️ Current Skills</h3>
+
+                    <div class="skills-container">
+
+                        {% for skill in profile.skill_gap_analysis.current_skills %}
+
+                            <span class="skill-tag">
+                                {{ skill }}
+                            </span>
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+
+
+                <!-- Matching -->
+
+                <div class="gap-box">
+
+                    <h3>✅ Matching Skills</h3>
+
+                    {% if profile.skill_gap_analysis.matching_skills %}
+
+                        <ul class="result-list">
+
+                            {% for skill in profile.skill_gap_analysis.matching_skills %}
+
+                                <li>
+                                    <span class="list-icon">✓</span>
+                                    {{ skill }}
+                                </li>
+
+                            {% endfor %}
+
+                        </ul>
+
+                    {% else %}
+
+                        <p class="empty-message">
+                            No matching skills identified.
+                        </p>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- Missing -->
+
+                <div class="gap-box missing-box">
+
+                    <h3>❌ Missing Skills</h3>
+
+                    {% if profile.skill_gap_analysis.missing_skills %}
+
+                        <ul class="result-list">
+
+                            {% for skill in profile.skill_gap_analysis.missing_skills %}
+
+                                <li>
+                                    <span class="list-icon">→</span>
+                                    {{ skill }}
+                                </li>
+
+                            {% endfor %}
+
+                        </ul>
+
+                    {% else %}
+
+                        <p class="empty-message">
+                            No major missing skills identified.
+                        </p>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- Improve -->
+
+                <div class="gap-box">
+
+                    <h3>📈 Skills to Improve</h3>
+
+                    {% if profile.skill_gap_analysis.skills_to_improve %}
+
+                        <ul class="result-list">
+
+                            {% for skill in profile.skill_gap_analysis.skills_to_improve %}
+
+                                <li>
+                                    <span class="list-icon">→</span>
+                                    {{ skill }}
+                                </li>
+
+                            {% endfor %}
+
+                        </ul>
+
+                    {% else %}
+
+                        <p class="empty-message">
+                            No improvement areas identified.
+                        </p>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            <!-- Recommendations -->
+
+            {% if profile.skill_gap_analysis.recommendations %}
+
+                <div class="analysis-box improvement-box">
+
+                    <h3>💡 Learning Recommendations</h3>
+
+                    <ul class="result-list">
+
+                        {% for recommendation in profile.skill_gap_analysis.recommendations %}
+
+                            <li>
+                                <span class="list-icon">→</span>
+                                {{ recommendation }}
+                            </li>
+
+                        {% endfor %}
+
+                    </ul>
+
+                </div>
+
+            {% endif %}
+
+        {% else %}
+
+            <p class="empty-message">
+                Skill gap analysis is not available yet.
+            </p>
+
+        {% endif %}
+
+    </section>
+
+
+    <!-- ================================
+         INTERVIEW PREPARATION
+    ================================= -->
+
+    <section class="section-card">
+
+        <div class="section-heading">
+
+            <div>
+                <span class="section-number">05</span>
+
+                <div>
+                    <h2>Interview Preparation</h2>
+
+                    <p>
+                        Practice questions generated according to
+                        your target career role and skill gaps.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+
+        {% if profile.interview_analysis %}
+
+            <div class="target-role">
+
+                <span>🎯 PREPARING FOR</span>
+
+                <strong>
+                    {{ profile.interview_analysis.target_role }}
+                </strong>
+
+            </div>
+
+
+            <!-- Technical -->
+
+            {% if profile.interview_analysis.technical_questions %}
+
+                <div class="question-section">
+
+                    <h3>💻 Technical Questions</h3>
+
+                    <div class="question-grid">
+
+                        {% for question in profile.interview_analysis.technical_questions %}
+
+                            <article class="question-card">
+
+                                <div class="question-number">
+                                    {{ loop.index }}
+                                </div>
+
+                                <div class="question-content">
+
+                                    <h4>
+                                        {{ question.question }}
+                                    </h4>
+
+                                    <div class="question-meta">
+
+                                        <span>
+                                            {{ question.difficulty }}
+                                        </span>
+
+                                        <span>
+                                            {{ question.topic }}
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </article>
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+
+            <!-- Conceptual -->
+
+            {% if profile.interview_analysis.conceptual_questions %}
+
+                <div class="question-section">
+
+                    <h3>🧠 Conceptual Questions</h3>
+
+                    <div class="question-grid">
+
+                        {% for question in profile.interview_analysis.conceptual_questions %}
+
+                            <article class="question-card">
+
+                                <div class="question-number">
+                                    {{ loop.index }}
+                                </div>
+
+                                <div class="question-content">
+
+                                    <h4>
+                                        {{ question.question }}
+                                    </h4>
+
+                                    <div class="question-meta">
+
+                                        <span>
+                                            {{ question.difficulty }}
+                                        </span>
+
+                                        <span>
+                                            {{ question.topic }}
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </article>
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+
+            <!-- HR -->
+
+            {% if profile.interview_analysis.hr_questions %}
+
+                <div class="question-section">
+
+                    <h3>👤 HR / Behavioral Questions</h3>
+
+                    <div class="question-grid">
+
+                        {% for question in profile.interview_analysis.hr_questions %}
+
+                            <article class="question-card">
+
+                                <div class="question-number">
+                                    {{ loop.index }}
+                                </div>
+
+                                <div class="question-content">
+
+                                    <h4>
+                                        {{ question.question }}
+                                    </h4>
+
+                                    <p class="question-purpose">
+
+                                        <strong>Purpose:</strong>
+                                        {{ question.purpose }}
+
+                                    </p>
+
+                                </div>
+
+                            </article>
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+
+            <!-- Tips -->
+
+            {% if profile.interview_analysis.preparation_tips %}
+
+                <div class="analysis-box improvement-box">
+
+                    <h3>💡 Preparation Tips</h3>
+
+                    <ul class="result-list">
+
+                        {% for tip in profile.interview_analysis.preparation_tips %}
+
+                            <li>
+                                <span class="list-icon">→</span>
+                                {{ tip }}
+                            </li>
+
+                        {% endfor %}
+
+                    </ul>
+
+                </div>
+
+            {% endif %}
+
+        {% else %}
+
+            <p class="empty-message">
+                Interview preparation is not available yet.
+            </p>
+
+        {% endif %}
+
+    </section>
+
+
+    <!-- ================================
+         AI AGENTS
+    ================================= -->
+
+    <section class="section-card">
+
+        <div class="section-heading">
+
+            <div>
+                <span class="section-number">06</span>
+
+                <div>
+                    <h2>AI Career Agents</h2>
+
+                    <p>
+                        Four specialized agents work together to
+                        analyze and guide your career journey.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="agent-grid">
+
+
+            <article class="agent-card">
+
+                <div class="agent-icon">
+                    📄
+                </div>
+
+                <h3>Resume Agent</h3>
+
+                <p>
+                    Analyzes your resume, extracts candidate
+                    information and provides resume performance
+                    insights.
+                </p>
+
+            </article>
+
+
+            <article class="agent-card">
+
+                <div class="agent-icon">
+                    💼
+                </div>
+
+                <h3>Career Agent</h3>
+
+                <p>
+                    Recommends suitable career roles based on
+                    your education, skills, projects and experience.
+                </p>
+
+            </article>
+
+
+            <article class="agent-card">
+
+                <div class="agent-icon">
+                    🧩
+                </div>
+
+                <h3>Skill Gap Agent</h3>
+
+                <p>
+                    Compares your current abilities with target
+                    role requirements and identifies learning gaps.
+                </p>
+
+            </article>
+
+
+            <article class="agent-card">
+
+                <div class="agent-icon">
+                    🎤
+                </div>
+
+                <h3>Interview Agent</h3>
+
+                <p>
+                    Generates personalized technical, conceptual
+                    and HR interview preparation.
+                </p>
+
+            </article>
+
+        </div>
+
+    </section>
+
+
+    <!-- Footer -->
+
+    <footer>
+
+        <p>
+            AI Career Companion • Personalized career guidance for students
+        </p>
+
+    </footer>
+
+</div>
+
+</body>
+
+</html>

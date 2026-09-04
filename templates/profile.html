@@ -2,132 +2,133 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Student Profile</title>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>AI Career Companion</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
 </head>
+
 
 <body>
 
-    <h1>Student Profile</h1>
+    <div class="container">
 
-    <form method="POST" enctype="multipart/form-data">
+        <div class="dashboard-header">
 
-        <!-- Personal Information -->
-        <h2>Personal Information</h2>
+            <h1>AI Career Companion</h1>
 
-        <label>Full Name:</label><br>
-        <input type="text" name="name" required><br><br>
+            <p>
+                Upload your resume and let AI analyze your career profile
+            </p>
 
-        <label>Email:</label><br>
-        <input type="email" name="email" required><br><br>
-
-        <label>Phone:</label><br>
-        <input type="text" name="phone"><br><br>
+        </div>
 
 
-        <!-- Education -->
-        <h2>Education</h2>
+        <form method="POST"
+              enctype="multipart/form-data">
 
-        <label>Degree:</label><br>
-        <input type="text" name="degree"><br><br>
+            <h2>📄 Upload Your Resume</h2>
 
-        <label>College / University:</label><br>
-        <input type="text" name="college"><br><br>
-
-        <label>Graduation Year:</label><br>
-        <input type="number" name="graduation_year"><br><br>
-
-
-        <!-- Skills -->
-        <h2>Skills</h2>
-
-        <label>Technical Skills:</label><br>
-
-        <textarea
-            name="skills"
-            rows="4"
-            placeholder="Example: Python, SQL, Machine Learning">
-        </textarea>
-
-        <br><br>
+            <p>
+                Our AI will extract your profile, analyze your resume,
+                identify areas for improvement and recommend suitable
+                career roles.
+            </p>
 
 
-        <!-- Experience -->
-        <h2>Experience</h2>
+            <div class="upload-box">
 
-        <label>Experience:</label><br>
+                <label for="resume">
+                    Select your resume PDF
+                </label>
 
-        <textarea
-            name="experience"
-            rows="4"
-            placeholder="Describe your work/internship experience">
-        </textarea>
+                <input
+                    type="file"
+                    id="resume"
+                    name="resume"
+                    accept=".pdf"
+                    required
+                >
 
-        <br><br>
+                <p>
+                    Supported format: PDF
+                </p>
 
-
-        <!-- Projects -->
-        <h2>Projects</h2>
-
-        <label>Projects:</label><br>
-
-        <textarea
-            name="projects"
-            rows="4"
-            placeholder="Describe your projects">
-        </textarea>
-
-        <br><br>
+            </div>
 
 
-        <!-- Certifications -->
-        <h2>Certifications</h2>
+            <button type="submit">
+                🚀 Analyze My Resume
+            </button>
 
-        <label>Certifications:</label><br>
-
-        <textarea
-            name="certifications"
-            rows="3"
-            placeholder="Example: NPTEL, Infosys Springboard">
-        </textarea>
-
-        <br><br>
+        </form>
 
 
-        <!-- Achievements -->
-        <h2>Achievements</h2>
+        <div class="form-card">
 
-        <label>Achievements:</label><br>
+            <h2>🤖 What Our AI Will Do</h2>
 
-        <textarea
-            name="achievements"
-            rows="3"
-            placeholder="Enter your achievements">
-        </textarea>
+            <div class="agent-grid">
 
-        <br><br>
+                <div class="agent-card">
 
+                    <h3>📄 Resume Agent</h3>
 
-        <!-- Resume Upload -->
-        <h2>Resume</h2>
+                    <p>
+                        Extracts your profile and evaluates
+                        your resume performance.
+                    </p>
 
-        <label>Upload Resume (PDF):</label><br>
-
-        <input
-            type="file"
-            name="resume"
-            accept=".pdf"
-            required>
-
-        <br><br>
+                </div>
 
 
-        <!-- Submit -->
-        <button type="submit">Create Profile</button>
+                <div class="agent-card">
 
-    </form>
+                    <h3>🧠 Skill Gap Agent</h3>
+
+                    <p>
+                        Identifies skills you need to improve
+                        for your career goals.
+                    </p>
+
+                </div>
+
+
+                <div class="agent-card">
+
+                    <h3>💼 Career Agent</h3>
+
+                    <p>
+                        Finds suitable career and internship
+                        opportunities based on your profile.
+                    </p>
+
+                </div>
+
+
+                <div class="agent-card">
+
+                    <h3>🎤 Interview Agent</h3>
+
+                    <p>
+                        Helps you prepare for interviews with
+                        personalized questions and feedback.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </body>
 
