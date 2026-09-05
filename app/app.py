@@ -11,6 +11,8 @@ from agents.resume_agent import ResumeAgent
 from agents.career_agent import CareerAgent
 from agents.skill_gap_agent import SkillGapAgent
 from agents.interview_agent import InterviewAgent
+from agents.job_retrieval_agent import JobRetrievalAgent
+from agents.job_matching_agent import JobMatchingAgent
 
 
 # --------------------------------------------------
@@ -90,6 +92,11 @@ career_agent = CareerAgent(client)
 skill_gap_agent = SkillGapAgent(client)
 
 interview_agent = InterviewAgent(client)
+
+# Milestone 2 Agents
+job_retrieval_agent = JobRetrievalAgent(client)
+
+job_matching_agent = JobMatchingAgent()
 
 
 # --------------------------------------------------
@@ -198,7 +205,7 @@ def profile():
 
 
     # --------------------------------------------------
-    # RESUME AGENT
+    # RESUME AGENT - MILESTONE 1
     # --------------------------------------------------
 
     try:
@@ -233,7 +240,75 @@ def profile():
 
 
     # --------------------------------------------------
-    # CAREER AGENT
+    # JOB RETRIEVAL AGENT - MILESTONE 2
+    # --------------------------------------------------
+
+    retrieved_jobs = []
+
+    job_retrieval_error = ""
+
+
+    try:
+
+        retrieved_jobs = job_retrieval_agent.retrieve_jobs(
+            candidate_profile,
+            top_k_chunks=15,
+            top_k_jobs=5
+        )
+
+    except Exception as e:
+
+        job_retrieval_error = str(e)
+
+        retrieved_jobs = []
+
+
+    # --------------------------------------------------
+    # JOB-RESUME MATCHING AGENT - MILESTONE 2
+    # --------------------------------------------------
+
+    job_matching_result = {
+
+        "matched_jobs": []
+
+    }
+
+
+    if retrieved_jobs:
+
+        try:
+
+            job_matching_result = (
+                job_matching_agent.match_jobs(
+                    candidate_profile,
+                    retrieved_jobs
+                )
+            )
+
+        except Exception as e:
+
+            job_matching_result = {
+
+                "matched_jobs": [],
+
+                "error": str(e)
+
+            }
+
+
+    elif job_retrieval_error:
+
+        job_matching_result = {
+
+            "matched_jobs": [],
+
+            "error": job_retrieval_error
+
+        }
+
+
+    # --------------------------------------------------
+    # CAREER AGENT - MILESTONE 1
     # --------------------------------------------------
 
     try:
@@ -272,7 +347,7 @@ def profile():
 
 
     # --------------------------------------------------
-    # SKILL GAP AGENT
+    # SKILL GAP AGENT - MILESTONE 1
     # --------------------------------------------------
 
     skill_gap_result = {}
@@ -310,7 +385,7 @@ def profile():
 
 
     # --------------------------------------------------
-    # INTERVIEW AGENT
+    # INTERVIEW AGENT - MILESTONE 1
     # --------------------------------------------------
 
     interview_result = {}
@@ -417,7 +492,28 @@ def profile():
         # Interview Agent Output
         # --------------------------------------------------
 
-        "interview_analysis": interview_result
+        "interview_analysis": interview_result,
+
+
+        # --------------------------------------------------
+        # Job Retrieval Output - Milestone 2
+        # --------------------------------------------------
+
+        "job_retrieval_analysis": {
+
+            "retrieved_jobs": retrieved_jobs,
+
+            "number_of_jobs": len(
+                retrieved_jobs
+            )
+        },
+
+
+        # --------------------------------------------------
+        # Job Matching Agent Output - Milestone 2
+        # --------------------------------------------------
+
+        "job_matching_analysis": job_matching_result
     }
 
 

@@ -1,105 +1,112 @@
 # AI Career Companion Agent
 
-## Project Overview
+An AI-powered career assistance system designed to help students with **resume analysis, career recommendations, skill-gap identification, interview preparation, and internship matching**.
 
-AI Career Companion Agent is an AI-based system designed to help students with the internship application process and interview preparation.
+## 🚀 Features
 
-The system focuses on understanding a student's profile from their resume and storing the extracted information in a structured format.
+* 📄 Resume upload and PDF text extraction
+* 🤖 AI-based candidate profile extraction
+* 🎯 Career role recommendations
+* 📊 Skill-gap analysis
+* 💬 Interview question generation
+* 🔎 Semantic job retrieval using RAG
+* 🎯 Job-resume compatibility scoring
+* 📋 Matching and missing skill analysis
 
-The structured candidate profile can later be used for:
+## 📌 Milestones
 
-- Internship matching
-- Skill gap analysis
-- Resume improvement
-- Cover letter generation
-- Interview preparation
-- Career assistance
+### Milestone 1 — Candidate Understanding
 
----
+* Resume parsing and structured profile generation
+* Resume analysis and scoring
+* Career recommendations
+* Skill-gap analysis
+* Interview preparation
+* Initial multi-agent architecture
 
-## Milestone 1
+### Milestone 2 — Internship Matching
 
-Milestone 1 focuses on the **Foundation & Candidate Understanding** of the AI Career Companion Agent.
+* Curated knowledge base of **200 job postings**
+* Job preprocessing and chunking
+* Gemini-based embeddings
+* FAISS semantic search
+* Job Retrieval Agent
+* Job Matching Agent
+* Compatibility scoring and reasoning
+* Validation using multiple sample resumes
 
-### Milestone 1 Objectives
-
-1. Study internship application workflows.
-2. Understand RAG architecture.
-3. Study multi-agent design patterns.
-4. Design the system architecture.
-5. Define agent responsibilities.
-6. Design the candidate profile data model.
-7. Build student profile creation.
-8. Implement resume upload.
-9. Parse resume PDF files.
-10. Extract structured candidate information using an LLM.
-11. Store the structured candidate profile.
-12. Test resume extraction using multiple sample resumes.
-
----
-
-## Implemented Features
-
-### Student Profile Module
-
-- Student personal information collection
-- Educational information collection
-- Technical skills collection
-- Experience collection
-- Project information collection
-- Certification information collection
-- Achievement information collection
-
-### Resume Processing
-
-- PDF resume upload
-- Resume text extraction using PyPDF2
-- LLM-based resume information extraction
-- Structured candidate profile generation
-- JSON-based candidate profile storage
-
-### Extracted Resume Information
-
-The system extracts:
-
-- Name
-- Email
-- Phone
-- Education
-- Skills
-- Experience
-- Projects
-- Certifications
-- Achievements
-- Languages
-
----
-
-## System Workflow
+## 🏗️ System Workflow
 
 ```text
-Student
-   |
-   v
-Student Profile Form
-   |
-   v
 Resume Upload
-   |
-   v
-PDF Resume
-   |
-   v
-PyPDF2 Resume Text Extraction
-   |
-   v
-Gemini LLM
-   |
-   v
-Structured Candidate Information
-   |
-   v
-Candidate Profile JSON
-   |
-   v
-Profile Result Display
+      ↓
+Resume Parsing
+      ↓
+Candidate Profile
+      ↓
+AI Career Agents
+      ↓
+Job Retrieval (RAG)
+      ↓
+Job Matching
+      ↓
+Recommendations
+```
+
+## 🛠️ Tech Stack
+
+* **Python**
+* **Flask**
+* **Google Gemini**
+* **Gemini Embeddings**
+* **FAISS**
+* **PyPDF2**
+* **Pandas / NumPy**
+* **HTML / CSS / JavaScript**
+* **Git & GitHub**
+
+## 📂 Project Structure
+
+```text
+AI-Career-companion-Agent/
+├── agents/
+├── app/
+├── data/
+├── docs/
+├── scripts/
+├── static/
+├── templates/
+├── requirements.txt
+└── README.md
+```
+
+## ▶️ Run Locally
+
+```bash
+git clone https://github.com/Dharmateja-eng/AI-Career-companion-Agent.git
+cd AI-Career-companion-Agent
+
+python -m venv venv
+venv\Scripts\activate
+
+pip install -r requirements.txt
+```
+
+Create a `.env` file:
+
+```text
+GEMINI_API_KEY=your_api_key_here
+```
+
+Run the application:
+
+```bash
+python -m app.app
+```
+
+## 📈 Project Status
+
+**Milestone 1: Completed ✅**
+**Milestone 2: Completed ✅**
+
+More career-assistance features will be added in upcoming milestones.
