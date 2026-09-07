@@ -1,0 +1,60 @@
+{
+  "Sample Python Student": {
+    "expected_categories": [
+      "Software Development",
+      "Web Development",
+      "Data / AI"
+    ],
+    "expected_roles": [
+      "Python Developer",
+      "Software Developer",
+      "Web Developer"
+    ]
+  },
+  "Sample Java Student": {
+    "expected_categories": [
+      "Software Development",
+      "Web Development",
+      "Database / SQL"
+    ],
+    "expected_roles": [
+      "Java Developer",
+      "Software Developer",
+      "Web Developer"
+    ]
+  },
+  "Sample ML Student": {
+    "expected_categories": [
+      "Data / AI",
+      "Analytics",
+      "Software Development"
+    ],
+    "expected_roles": [
+      "Machine Learning Engineer",
+      "Data Analyst",
+      "Python Developer"
+    ]
+  },
+  "Sample Web Development Student": {
+    "expected_categories": [
+      "Web Development",
+      "Software Development"
+    ],
+    "expected_roles": [
+      "Web Developer",
+      "Frontend Developer",
+      "Software Developer"
+    ]
+  },
+  "Sample Cloud DevOps Student": {
+    "expected_categories": [
+      "Cloud / DevOps",
+      "Software Development"
+    ],
+    "expected_roles": [
+      "Cloud Engineer",
+      "DevOps Engineer",
+      "Software Developer"
+    ]
+  }
+}

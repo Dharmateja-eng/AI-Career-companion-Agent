@@ -1,0 +1,1000 @@
+[
+    {
+        "student": "Sample Cloud DevOps Student",
+        "manual_expectation": {
+            "expected_categories": [
+                "Cloud / DevOps",
+                "Software Development"
+            ],
+            "expected_roles": [
+                "Cloud Engineer",
+                "DevOps Engineer",
+                "Software Developer"
+            ]
+        },
+        "retrieval_evaluation": {
+            "retrieved_job_count": 5,
+            "category_match": true,
+            "matching_categories": [
+                "cloud / devops",
+                "cloud / devops",
+                "cloud / devops",
+                "cloud / devops",
+                "cloud / devops"
+            ],
+            "retrieved_jobs": [
+                {
+                    "jobid": "260916001434",
+                    "job_title": "Urgent Openings for Cloud Computing",
+                    "company": "Faxhion Technologies Private Limited",
+                    "category": "Cloud / DevOps",
+                    "skills": "IT Software - Application Programming",
+                    "experience": "0 - 5 yrs",
+                    "education": "Not specified",
+                    "industry": "IT-Software / Software Services",
+                    "location": "Bengaluru",
+                    "jobdescription": "Job Description Send me Jobs like this Using Http and network load balancers between two or more servers for high availability.Using Cloud DNS, Route 53 service for domains/subdomains management. Launching and managing database instances with Cloud sql and RDS.Managing security groups Salary:INR 2,00,000 - 7,00,000 P.A Industry: IT-Software / Software Services Functional Area: IT Software - Application Programming , Maintenance Role Category:Programming & Design Role:Software Developer Keyskills Networking Cloud Computing HTTP Database Management Desired Candidate Profile Please refer to the Job description above Company Profile: Faxhion Technologies Private Limited Development and Outsourcing Download PPT Photo 1 View Contact Details",
+                    "retrieval_score": 0.6931
+                },
+                {
+                    "jobid": "231215500523",
+                    "job_title": "Cloud Infrastructure Platform - DevOps Lead",
+                    "company": "Portescap (Danaher)",
+                    "category": "Cloud / DevOps",
+                    "skills": "IT Software - Application Programming",
+                    "experience": "10 - 15 yrs",
+                    "education": "UG: B.Tech/B.E. PG:M.Tech Doctorate:Any Doctorate - Any Specialization, Doctorate Not Required",
+                    "industry": "IT-Software / Software Services",
+                    "location": "Bengaluru/Bangalore , karnataka",
+                    "jobdescription": "Job Description Send me Jobs like this Beckman Coulter Diagnostics is a $3.2 Billion in vitro diagnostics operating company that is wholly owned by Danaher Corporation. The position of Cloud Infrastructure Platform DevOps Lead, reports to the Sr. Manager / Director, Cloud Infrastructure Platform R&D , with the primary responsibility to deploy software services, web applications and associated database updates/ upgrades on a regular cadence with zero downtime. The incumbent is responsible for creating and maintaining the policies and procedures for continuous deployment as well as monitoring the infrastructure and associated escalation handling to ensure ZERO downtime. The role would be 75% hands- on and 25% team lead. The position will require frequent work in different time zone as well as weekends. Key Responsibilities - Infrastructure Setup, Monitoring, Maintenance and Scale up for Beckman Coulter cloud based on AWS - Provisioning of Servers, Network, Storage, Firewalls, Load Balancers, OS hardening, Security - Deployment of software services on the cloud - Ensure 100% uptime of the software services and zero downtime upgrades - Writing scripts / use tools to automate the deployments - Creating deployment cook books for the use of software developers - Monitoring of uptime, performance, security, utilization of resources to ensure high availability, fast performance, good security etc - Security monitoring and defense/ counter measures against security breaches - Scale up of infrastructure on a need basis - Policy, audit and compliance documentation - Troubleshooting, Diagnosis and Fixes of issues in cloud infrastructure and deployed applications - Scheduled & Manual Backups and Snapshots - Reports to management on setups, load and associated costs to enable better decision making around Cloud Infrastructure scalability and deployment Salary: Not Disclosed by Recruiter Industry: IT-Software / Software Services Functional Area: IT Software - Application Programming , Maintenance Role Category:Admin/Maintenance/Security/Datawarehousing Role:System Administrator Desired Candidate Profile Education- UG: B.Tech/B.E. PG:M.Tech Doctorate:Any Doctorate - Any Specialization, Doctorate Not Required - Bachelor / Masters of Engineering with 10 years of overall application support with last 4 years in Hadoop cloud environment (preferably AWS based) - Strong understanding of Linux OS Administration, Web Servers like Apache, Tomcat, IIS, Application Servers like JBOSS etc., Reverse Proxy, Load Balancer, Caching, as well as DB engines likes Oracle, Postgres, Mongo, Cassandra - Cloud Infrastructure Knowledge: AWS with Auto Scaling and Multi Region deployment of same infrastructure - Strong understanding of AWS monitoring tools - Passion for cyber security. Experience with server security: ddos protection, xss protection, csrf protection and similar other. - Git knowledge. Node deployment tool. Continuous integration & Deployment tools : Jenkins, maven, puppet, chef, ansible - Bash script writing skills - Experience with web infrastructure, distributed systems, or component- oriented software engineering using Core Java and Javascript - Understanding of HIPAA regulations and associated policies for Cloud Application deployment would be a plus - Previous success in a performance- critical environment - Utmost confidentiality and integrity in all activities Company Profile: Portescap (Danaher) Portescap (Danaher) Download PPT Photo 1 View Contact Details",
+                    "retrieval_score": 0.6734
+                },
+                {
+                    "jobid": "130216900395",
+                    "job_title": "Cloud Developer - Aws/azure",
+                    "company": "Bloom systems pvt lmtd",
+                    "category": "Cloud / DevOps",
+                    "skills": "IT Software - Application Programming",
+                    "experience": "10 - 15 yrs",
+                    "education": "UG: Any Graduate - Any Specialization PG:Any Postgraduate - Any Specialization Doctorate:Doctorate Not Required",
+                    "industry": "IT-Software / Software Services",
+                    "location": "Mumbai , Bengaluru/Bangalore",
+                    "jobdescription": "Job Description Send me Jobs like this Experience: 10 to 15 Years Job description: - Cloud technologies like AWS/Azure and exposure to cloud partnerships - Ability to understand, document and analyze the as-is state of the Infrastructure landscape - Ability to design, develop and implement To-Be solutions leveraging latest technology trends suitable for customer business and technology roadmap - Ability to develop technology roadmap for a given customer environment - Ability to abstract and articulate the solution with business value design - Ability to identify incremental innovation. frameworks/solutions and differentiations on top of industry standard technology solutions - Consult and develop solutions for various type of RFPs - Excellent Written and Verbal Communication Skills - Excellent interpersonal skills - Proven ability to manage multiple opportunities and activities simultaneously and multi task effectively - Strong knowledge on Business and Information Technology Arena Salary: Not Disclosed by Recruiter Industry: IT-Software / Software Services Functional Area: IT Software - Application Programming , Maintenance Role Category:Programming & Design Role:Software Developer Keyskills Technology Solutions Information Technology Cloud Developer AWS Azure Desired Candidate Profile Education- UG: Any Graduate - Any Specialization PG:Any Postgraduate - Any Specialization Doctorate:Doctorate Not Required Company Profile: Bloom systems pvt lmtd Leading client of Bloom systems pvt lmtd Download PPT Photo 1 View Contact Details",
+                    "retrieval_score": 0.6718
+                },
+                {
+                    "jobid": "101016900461",
+                    "job_title": "Devops Engineer",
+                    "company": "Stayzilla-Startup jobs",
+                    "category": "Cloud / DevOps",
+                    "skills": "IT Software - Application Programming",
+                    "experience": "4 - 6 yrs",
+                    "education": "UG: B.Tech/B.E. - Any Specialization PG:Any Postgraduate Doctorate:Doctorate Not Required",
+                    "industry": "Internet / Ecommerce",
+                    "location": "Bengaluru",
+                    "jobdescription": "Job Description Send me Jobs like this Job description Responsibilities Responsible for effective provisioning, installation, configuration, operation, and maintenance of systems hardware and software and related infrastructure. Ensures that system hardware, operating systems, software systems, and related procedures adhere to organizational values, enabling staff, volunteers, and Partners. Salary: Not Disclosed by Recruiter Industry: Internet / Ecommerce Functional Area: IT Software - Application Programming , Maintenance Role Category:Programming & Design Role:Software Developer Keyskills Configuration Maintenance Operating Systems Desired Candidate Profile Required Skill Set Amazon Web Services Centos Linux DNS Management Database Administration - mongodb / mysql Database Server Management Mysql / Mongodb Elasticsearch Firewall and Iptables Git Management High Availability and Load Balancing for Web and Websockets etc Load Balancing - Commercial and HAProxy MySQL Management Nagios PHP-fpm installation and management Puppet Shell Scripting Storage Area Networks and Storage Management Virtualization Web Caching - Varnish / Nginx etc Web Servers - Nginx , HAProxyWorking ConditionsResponsibilities sometimes require working evenings and weekends, sometimes with little advanced notice. Education- UG: B.Tech/B.E. - Any Specialization PG:Any Postgraduate Doctorate:Doctorate Not Required Company Profile: Stayzilla-Startup jobs Company Profile: Stayzilla was founded with a laser-sharp vision to become India's largest online marketplace for \"Stays\". Going beyond the realm of just hotels, we serve a well-balanced diet comprising of all manner of \"Stay\" options to our customers including lodges, homestays, guesthouses, etc. Stayzilla also aims to provide unprecedented reach to travelers - regardless of purpose of travel - by providing stays across the entire length and breadth of the country, including all sorts of options from ultra-low budget rooms to luxury stays. Currently, Stayzilla has more than 25000 options spread across more than 4000 towns. Download PPT Photo 1 View Contact Details",
+                    "retrieval_score": 0.6716
+                },
+                {
+                    "jobid": "280916901092",
+                    "job_title": "Devops Engineer",
+                    "company": "Jivox Software India",
+                    "category": "Cloud / DevOps",
+                    "skills": "IT Software - Application Programming",
+                    "experience": "4 - 6 yrs",
+                    "education": "UG: Any Graduate - Any Specialization Doctorate:Doctorate Not Required",
+                    "industry": "Advertising / PR / MR / Event Management",
+                    "location": "Bengaluru",
+                    "jobdescription": "Job Description Send me Jobs like this Role: Software Engineer, Senior Software Engineer - DevOps About being in Devops: As a Software Engineer in DevOps you will play a pivotal role in defining the infrastructure-as-code & devops practice for Jivox. You will influence and contribute to the automation of Jivoxs software on cloud optimized for handling several billions of ad impressions. You will design and implement large scale public cloud architectures for smoother and faster software delivery. You will design and manage deployments of horizontal scaling systems, monitoring systems, big data systems, and a complete gamut of large scale distributed platform capabilities Jivox is adding to support dozens of billion events. Salary: Not Disclosed by Recruiter Industry: Advertising / PR / MR / Event Management Functional Area: IT Software - Application Programming , Maintenance Role Category:Programming & Design Role:Software Developer Keyskills Software Engineer Senior Software Engineer DevOps Webservices scripting Python Java PHP stack Desired Candidate Profile If this interests you, and you bring to the table the following:At least 2 years experience in working on Amazon Webservices (Amazon SDKs, VPC, AMIs, etc)Excellent programming experience in scripting languages (Python, Ruby or Go preferred)Excellent knowledge of Linux command line tools for server management and tuning (AWK, Daemons and services, NSlookup, Netstat, File descriptors, etc)Excellent knowledge of networking (DNS, NAT, VPN, IPtables, OSPF, etc)Knowledge of Java or PHP stack (Jetty, Tomcat, Servlets, etc) and MySQL queries (mysqldump, mysqlcheck, analyze, etc)Desirable but not mandatory skills:Experience with distributed systemsExperience with configuration management tools like Puppet, Ansible or ChefExperience with CI tools like Jenkins, Teamcity or GoCDKnowledge of open source technologies and tools in devops and cloud like Netflix, etc Education- UG: Any Graduate - Any Specialization Doctorate:Doctorate Not Required Company Profile: Jivox Software India Jivox is the leader in highly personalized digital advertising and marketing. Jivox delivers the platform that provides a unique facility to create and run personalized advertisement driven by insights. With our unique ability to correlate user and contextual data, the Jivox IQ platform creates personalized digital ads in real time - customized to the individual - by dynamically generating thousands of creative and messaging variations at scale. Jivox platform is built for extreme personalization that analyzes more than 12 billion events every month and crunches multi terabytes of data every day. Jivox helps several enterprises like Microsoft, Sony, BestBuy, WPP, and many more to run successful targeted ad campaigns. Jivox has offices in San Mateo, New York, Bangalore and London. Download PPT Photo 1 View Contact Details",
+                    "retrieval_score": 0.6712
+                }
+            ]
+        },
+        "matching_evaluation": {
+            "role_match": true,
+            "matching_expected_roles": [
+                "Devops Engineer",
+                "Devops Engineer"
+            ],
+            "matched_jobs": [
+                {
+                    "jobid": "260916001434",
+                    "job_title": "Urgent Openings for Cloud Computing",
+                    "company": "Faxhion Technologies Private Limited",
+                    "compatibility_score": 75,
+                    "matching_skills": [
+                        "AWS",
+                        "Linux"
+                    ],
+                    "missing_skills": [
+                        "Database Management",
+                        "Networking"
+                    ],
+                    "reasoning": "The candidate's profile is a strong match for this position because the job explicitly accepts '0-5 years' of experience, making it suitable for a fresher. The candidate's core skills in AWS and Linux align well with the job's focus on cloud infrastructure management."
+                },
+                {
+                    "jobid": "101016900461",
+                    "job_title": "Devops Engineer",
+                    "company": "Stayzilla-Startup jobs",
+                    "compatibility_score": 40,
+                    "matching_skills": [
+                        "AWS",
+                        "Linux",
+                        "Git"
+                    ],
+                    "missing_skills": [
+                        "Database Administration",
+                        "Configuration Management",
+                        "Shell Scripting",
+                        "Monitoring Tools"
+                    ],
+                    "reasoning": "While the skills align with the requirements, the job specifies an experience requirement of 4-6 years, whereas the student is a fresher. The candidate lacks the intermediate experience and specific tooling (Puppet, Nagios, etc.) required for this role."
+                },
+                {
+                    "jobid": "280916901092",
+                    "job_title": "Devops Engineer",
+                    "company": "Jivox Software India",
+                    "compatibility_score": 35,
+                    "matching_skills": [
+                        "AWS",
+                        "Python",
+                        "Linux"
+                    ],
+                    "missing_skills": [
+                        "CI/CD Tools (Jenkins/Teamcity)",
+                        "Configuration Management",
+                        "Networking (Advanced)"
+                    ],
+                    "reasoning": "The role requires at least 2 years of professional experience in AWS and advanced scripting/networking, which exceeds the candidate's current 'Fresher' status. The candidate possesses the base programming skills but lacks the depth required."
+                },
+                {
+                    "jobid": "231215500523",
+                    "job_title": "Cloud Infrastructure Platform - DevOps Lead",
+                    "company": "Portescap (Danaher)",
+                    "compatibility_score": 10,
+                    "matching_skills": [
+                        "AWS",
+                        "Linux",
+                        "Git"
+                    ],
+                    "missing_skills": [
+                        "10-15 years experience",
+                        "Team Leadership",
+                        "Configuration Management",
+                        "Distributed Systems"
+                    ],
+                    "reasoning": "This is a senior-level position requiring 10-15 years of experience. The candidate's profile is entirely inconsistent with the seniority and depth of expertise required for a Lead role."
+                },
+                {
+                    "jobid": "130216900395",
+                    "job_title": "Cloud Developer - Aws/azure",
+                    "company": "Bloom systems pvt lmtd",
+                    "compatibility_score": 5,
+                    "matching_skills": [
+                        "AWS"
+                    ],
+                    "missing_skills": [
+                        "10-15 years experience",
+                        "Consulting expertise",
+                        "RFP management"
+                    ],
+                    "reasoning": "The job requires 10-15 years of industry experience and high-level consulting skills. The candidate is a fresher and does not meet the professional experience or seniority requirements."
+                }
+            ]
+        },
+        "skill_matching_evaluation": {
+            "valid_matching_skills": 12,
+            "invalid_matching_skills": 0,
+            "invalid_skills": []
+        },
+        "score_consistency_evaluation": {
+            "scores": [
+                75,
+                40,
+                35,
+                10,
+                5
+            ],
+            "valid_range": true,
+            "sorted_descending": true
+        },
+        "reasoning_evaluation": {
+            "jobs_with_reasoning": 5,
+            "total_jobs": 5
+        }
+    },
+    {
+        "student": "Sample Java Student",
+        "manual_expectation": {
+            "expected_categories": [
+                "Software Development",
+                "Web Development",
+                "Database / SQL"
+            ],
+            "expected_roles": [
+                "Java Developer",
+                "Software Developer",
+                "Web Developer"
+            ]
+        },
+        "retrieval_evaluation": {
+            "retrieved_job_count": 5,
+            "category_match": true,
+            "matching_categories": [
+                "software development",
+                "software development",
+                "software development",
+                "web development",
+                "software development"
+            ],
+            "retrieved_jobs": [
+                {
+                    "jobid": "10615505470",
+                    "job_title": "Java Developer",
+                    "company": "Infochord Technologies Pvt. Ltd.",
+                    "category": "Software Development",
+                    "skills": "IT Software - Application Programming",
+                    "experience": "0 - 1 yrs",
+                    "education": "UG: Any Graduate PG:Any Postgraduate Doctorate:Any Doctorate - Any Specialization, Doctorate Not Required",
+                    "industry": "IT-Software / Software Services",
+                    "location": "Hyderabad / Secunderabad",
+                    "jobdescription": "Job Description Send me Jobs like this Java Developer Ability to quickly understand project life cycle Must be quality oriented and should have ability to meet tight deadlines. Ability to work independently and should be a good team player. To Analyse and understand the functionality and coordinate with the development team to get the defects resolved. Salary: Not Disclosed by Recruiter Industry: IT-Software / Software Services Functional Area: IT Software - Application Programming , Maintenance Role Category:Programming & Design Role:Software Developer Keyskills Java Developer Desired Candidate Profile Education- UG: Any Graduate PG:Any Postgraduate Doctorate:Any Doctorate - Any Specialization, Doctorate Not Required Please refer to the Job description above Company Profile: Infochord Technologies Pvt. Ltd. Infochord is an offshore Web & software development company based in Hyderabad, India. We provide Enterprise solutions that include Website development, Website designing, software development, E-commerce Website development, iphone apps development, Facebook apps development, Web programming, Zend programming. We are technologically advanced organization with strong experienced and committed IT professionals, Who aim to provide quality IT enabled Services by adapting the latest technologies. Download PPT Photo 1 View Contact Details",
+                    "retrieval_score": 0.7026
+                },
+                {
+                    "jobid": "191115006075",
+                    "job_title": "Urgent Freshers Software Engineer/software Developer Java All India",
+                    "company": "sumitkumar55456@gmail.com",
+                    "category": "Software Development",
+                    "skills": "IT Software - Application Programming",
+                    "experience": "0 - 2 yrs",
+                    "education": "UG: Any Graduate - Any Specialization, Graduation Not Required, B.Tech/B.E. - Any Specialization, B.Sc - Any Specialization, Diploma - Any Specialization, B.Com - Commerce PG:Any Postgraduate - Any Specialization, Post Graduation Not Required Doctorate:Any Doctorate - Any Specialization, Doctorate Not Required",
+                    "industry": "IT-Software / Software Services",
+                    "location": "Bengaluru/Bangalore , Chennai , Hyderabad / Secunderabad",
+                    "jobdescription": "Job Description Send me Jobs like this High salary - Very Urgent Freshers Software Engineer/Software Developer Java,Android need all India for own company aPal. Fresher 2010 to Till any year pass. Fresher Java Developer,Tester. Salary: Not Disclosed by Recruiter Industry: IT-Software / Software Services Functional Area: IT Software - Application Programming , Maintenance Role Category:Programming & Design Role:Software Developer Keyskills Java Android Software Engineering Software Development Desired Candidate Profile Education- UG: Any Graduate - Any Specialization, Graduation Not Required, B.Tech/B.E. - Any Specialization, B.Sc - Any Specialization, Diploma - Any Specialization, B.Com - Commerce PG:Any Postgraduate - Any Specialization, Post Graduation Not Required Doctorate:Any Doctorate - Any Specialization, Doctorate Not Required Please refer to the Job description above Company Profile: the best placement for fresher and experience candidate.. We are leading in Multinational Company. Download PPT Photo 1 View Contact Details",
+                    "retrieval_score": 0.7014
+                },
+                {
+                    "jobid": "241015500015",
+                    "job_title": "Software Engineer",
+                    "company": "ACADGILD",
+                    "category": "Software Development",
+                    "skills": "IT Software - Application Programming",
+                    "experience": "0 - 3 yrs",
+                    "education": "UG: B.Tech/B.E. PG:Post Graduation Not Required Doctorate:Any Doctorate - Any Specialization, Doctorate Not Required",
+                    "industry": "IT-Software / Software Services",
+                    "location": "Bengaluru/Bangalore",
+                    "jobdescription": "Job Description Send me Jobs like this p> Job Description : strong> p> Build efficient code in a maintainable manner li> Should be able to solve strategic problem and give quick results li> Collaborate with team in the app development li> ul> Requisites Skills : strong> p> Should be expert - programming in PHP/ Android li> Should be able to analyze the requirement and build the app by self li> Good commication skill li> ul> p> Salary: Not Disclosed by Recruiter Industry: IT-Software / Software Services Functional Area: IT Software - Application Programming , Maintenance Role Category:Programming & Design Role:Software Developer Keyskills php development android be build code efficient strategic problem software engineer Desired Candidate Profile Education- UG: B.Tech/B.E. PG:Post Graduation Not Required Doctorate:Any Doctorate - Any Specialization, Doctorate Not Required Please refer to the Job description above Company Profile: ACADGILD ACADGILD Download PPT Photo 1 View Contact Details",
+                    "retrieval_score": 0.6935
+                },
+                {
+                    "jobid": "30516900120",
+                    "job_title": "Startup Back End Developer - Spring/ Java",
+                    "company": "MyOLO",
+                    "category": "Web Development",
+                    "skills": "IT Software - Application Programming",
+                    "experience": "0 - 2 yrs",
+                    "education": "UG: B.Tech/B.E. - Any Specialization PG:M.Tech - Any Specialization, MBA/PGDM - Any Specialization, MCA - Computers Doctorate:Doctorate Not Required",
+                    "industry": "Internet / Ecommerce",
+                    "location": "Delhi",
+                    "jobdescription": "Job Description Send me Jobs like this The candidate must be hands-on with coding (Spring and Java) and should have a sound understanding of technology domain. Person should be able to work in unstructured environment with a lot of freedom. To put it succinctly - we are looking for someone with plenty of attitude, and aptitude; someone who loves to push the boundaries. Compensation Start-up salary (You will be able to pay all your bills and go for those occasional parties) And the pleasures of joining a transparent working environment and a great team at such a initial stage. Who Are You An engineering graduate with love for coding. Someone who has ideally worked at a startup for a year or two. Technical Skills Required Software development skills (Spring and Java). A good understanding of service-oriented varied layer architecture Please understand that we are looking for hands on tech ninja, if you cannot code then we request you not to apply. Got what it takes, perhaps more, then please apply. Salary: Not Disclosed by Recruiter Industry: Internet / Ecommerce Functional Area: IT Software - Application Programming , Maintenance Role Category:Programming & Design Role:Software Developer Keyskills Java Spring Software Development Technical Skills Desired Candidate Profile Education- UG: B.Tech/B.E. - Any Specialization PG:M.Tech - Any Specialization, MBA/PGDM - Any Specialization, MCA - Computers Doctorate:Doctorate Not Required Company Profile: MyOLO MYOLO stands for Me.You.Only.Live.Once. We are BITS / IIM graduates building the next generation mobile-only application that connects singles and redefines how people discover mates and, potentially, life partners. We are looking for members for our tech team and already have angel funding in place to push ahead with our plans. We are based out of New Delhi. Download PPT Photo 1 View Contact Details",
+                    "retrieval_score": 0.6928
+                },
+                {
+                    "jobid": "11215005404",
+                    "job_title": "Junior Software Engineer/ Fresher (java/ .net/ Php/ Testing)",
+                    "company": "Leading Software Development MNC",
+                    "category": "Software Development",
+                    "skills": "IT Software - Application Programming",
+                    "experience": "0 - 2 yrs",
+                    "education": "UG: B.Tech/B.E. - Computers, Electronics/Telecommunication, Instrumentation, B.Sc - Computers, BCA - Computers PG:M.Tech - Computers, Electronics/Telecommunication, M.Sc - Computers, MCA - Computers Doctorate:Doctorate Not Required",
+                    "industry": "IT-Software / Software Services",
+                    "location": "Mumbai , Chennai , Delhi/NCR(National Capital Region)",
+                    "jobdescription": "Job Description Send me Jobs like this We are urgently looking for Software Developer/ Programmer (Freshers) for various available positions. Candidates interested in following requirements can apply for selection process. 1) Java/ J2ee Developer 2) .Net, C# Developers 3) Software Test Engineer/ QA 4) PHP/ MySQL Developer 5) Technical Support/ Engineer Applicant should be BE/ B.Tech/ BCA/ MCA or BSc/ MSc (Computer Science/ IT) or Equivalent Excellent knowledge/ skills in above mentioned technologies Salary:INR 2,25,000 - 3,50,000 P.A Industry: IT-Software / Software Services Functional Area: IT Software - Application Programming , Maintenance Role Category:Programming & Design Role:Software Developer Keyskills Java MySQL J2Ee .Net PHP Software Engineering Testing Quality Assurance Engineering Test Engineering Fresher Trainee Entry Level Asp .Net C# C++ Desired Candidate Profile Education- UG: B.Tech/B.E. - Computers, Electronics/Telecommunication, Instrumentation, B.Sc - Computers, BCA - Computers PG:M.Tech - Computers, Electronics/Telecommunication, M.Sc - Computers, MCA - Computers Doctorate:Doctorate Not Required Excellent knowledge of Java/ J2ee, C# .Net/ PHP/ MySQL or Software TestingShould have excellent communication & analytical skillsExcellent academic record..Both Freshers & candidates having experience in above mentioned profiles can apply. Company Profile: Leading Software Development MNC We specialize in Product Development, by providing comprehensive framework of technology and services that enable companies, their partners and customers to collaboratively conceptualize, design, build and manage products throughout their entire lifecycle. Company today has presence in US, UK and Asia. We have development centres in Bangalore, Gurgaon, Hyderabad and the US. We have at present major focus on Microsoft Technologies, Enterprise Consumer Mobile Application Solutions and Open Source Solutions. We are also into Internet of Things (IoT), ERP, Big Data and Cloud computing. Download PPT Photo 1 View Contact Details",
+                    "retrieval_score": 0.6914
+                }
+            ]
+        },
+        "matching_evaluation": {
+            "role_match": true,
+            "matching_expected_roles": [
+                "Java Developer",
+                "Urgent Freshers Software Engineer/software Developer Java All India"
+            ],
+            "matched_jobs": [
+                {
+                    "jobid": "30516900120",
+                    "job_title": "Startup Back End Developer - Spring/ Java",
+                    "company": "MyOLO",
+                    "compatibility_score": 95,
+                    "matching_skills": [
+                        "Java",
+                        "Spring"
+                    ],
+                    "missing_skills": [],
+                    "reasoning": "The student is a perfect fit as they have direct experience with Java and Spring, which are the core technical requirements for this role. The student's education (B.Tech) and status (Fresher) align perfectly with the job profile."
+                },
+                {
+                    "jobid": "10615505470",
+                    "job_title": "Java Developer",
+                    "company": "Infochord Technologies Pvt. Ltd.",
+                    "compatibility_score": 90,
+                    "matching_skills": [
+                        "Java"
+                    ],
+                    "missing_skills": [],
+                    "reasoning": "Excellent match for a fresher. The job specifically requires Java development skills. The candidate's background matches the education and experience criteria exactly."
+                },
+                {
+                    "jobid": "11215005404",
+                    "job_title": "Junior Software Engineer/ Fresher (java/ .net/ Php/ Testing)",
+                    "company": "Leading Software Development MNC",
+                    "compatibility_score": 85,
+                    "matching_skills": [
+                        "Java",
+                        "SQL"
+                    ],
+                    "missing_skills": [],
+                    "reasoning": "Strong match. The job explicitly recruits for Java developers and accepts freshers with a B.Tech degree. The student's SQL skill is a beneficial addition for a general software role."
+                },
+                {
+                    "jobid": "191115006075",
+                    "job_title": "Urgent Freshers Software Engineer/software Developer Java All India",
+                    "company": "sumitkumar55456@gmail.com",
+                    "compatibility_score": 80,
+                    "matching_skills": [
+                        "Java"
+                    ],
+                    "missing_skills": [
+                        "Android"
+                    ],
+                    "reasoning": "Good match for a fresher Java developer. While the job lists Android as a key skill, the primary focus is Java/Software development, which the student possesses."
+                },
+                {
+                    "jobid": "241015500015",
+                    "job_title": "Software Engineer",
+                    "company": "ACADGILD",
+                    "compatibility_score": 40,
+                    "matching_skills": [],
+                    "missing_skills": [
+                        "PHP",
+                        "Android"
+                    ],
+                    "reasoning": "Low compatibility. The core technical requirements for this role are PHP and Android development, neither of which are listed in the student's skill set."
+                }
+            ]
+        },
+        "skill_matching_evaluation": {
+            "valid_matching_skills": 6,
+            "invalid_matching_skills": 0,
+            "invalid_skills": []
+        },
+        "score_consistency_evaluation": {
+            "scores": [
+                95,
+                90,
+                85,
+                80,
+                40
+            ],
+            "valid_range": true,
+            "sorted_descending": true
+        },
+        "reasoning_evaluation": {
+            "jobs_with_reasoning": 5,
+            "total_jobs": 5
+        }
+    },
+    {
+        "student": "Sample ML Student",
+        "manual_expectation": {
+            "expected_categories": [
+                "Data / AI",
+                "Analytics",
+                "Software Development"
+            ],
+            "expected_roles": [
+                "Machine Learning Engineer",
+                "Data Analyst",
+                "Python Developer"
+            ]
+        },
+        "retrieval_evaluation": {
+            "retrieved_job_count": 5,
+            "category_match": true,
+            "matching_categories": [
+                "analytics",
+                "data / ai",
+                "data / ai",
+                "data / ai",
+                "data / ai"
+            ],
+            "retrieved_jobs": [
+                {
+                    "jobid": "10615500058",
+                    "job_title": "Predictive Analytics",
+                    "company": "Prime KI Software Solutions Pvt Ltd.",
+                    "category": "Analytics",
+                    "skills": "IT Software - Application Programming",
+                    "experience": "0 - 1 yrs",
+                    "education": "UG: Any Graduate PG:Any Postgraduate Doctorate:Any Doctorate - Any Specialization, Doctorate Not Required",
+                    "industry": "IT-Software / Software Services",
+                    "location": "Hyderabad / Secunderabad",
+                    "jobdescription": "Job Description Send me Jobs like this Required Qualifications: BS/MS in Mechanical/Electrical/Computer Engineering or Computer Science. Advanced knowledge of computational intelligence and machine learning techniques including Artificial Neural Networks, Support Vector Machines, Decision Tree and online learning algorithms. Project experience in implementing machine learning algorithms in real world applications. Expert knowledge of MATLAB programming and real-time implementation. Intere st and ability to read and implement relevant research papers. Desired Qualifications: Fresher (0Yrs-1 Yrs). Should be from a top notch colleges / University. Knowledge of C, Python and R are a plus. Knowledge of XML. Experience with hospital data collection systems such as Epic. Experience with embedded processor programming such as Raspberry Pi and Arduino. Salary: Not Disclosed by Recruiter Industry: IT-Software / Software Services Functional Area: IT Software - Application Programming , Maintenance Role Category:Other Role:Fresher Keyskills Predictive Analytics Desired Candidate Profile Education- UG: Any Graduate PG:Any Postgraduate Doctorate:Any Doctorate - Any Specialization, Doctorate Not Required Please refer to the Job description above Company Profile: Prime KI Software Solutions Pvt Ltd. Our vision is to deliver first-rate, industry-defining bespoke software solutions that create profitable value as well as sustainable innovative product advantage for customers all over the world. We choose to work with precision because we look at each engagement to be important to us.We want to connect with you to drive your concept to reality. To enable clients accelerate their response time in an environment of ever-changing market dynamics. We endeavor to delight customers by adding exponential value to their business requirements. Download PPT Photo 1 View Contact Details",
+                    "retrieval_score": 0.7138
+                },
+                {
+                    "jobid": "290916004268",
+                    "job_title": "Data Scientist - Machine Learning",
+                    "company": "Premium-Jobs hiring for Leading client of Staffio HR",
+                    "category": "Data / AI",
+                    "skills": "IT Software - Embedded",
+                    "experience": "1 - 3 yrs",
+                    "education": "UG: B.Sc - Statistics, B.Tech/B.E. - Any Specialization PG:MS/M.Sc(Science) - Any Specialization Doctorate:Doctorate Not Required",
+                    "industry": "IT-Software / Software Services",
+                    "location": "Bengaluru",
+                    "jobdescription": "Job Description Send me Jobs like this Preferred: Candidates from Tier 1 Schools (IIT / IIM / BITS / IIIT / NIT / SP Jain / XLRI) Package: 15 - 25 LPA Job Description Key Skills Solid data-mining and analytical skills, including experience dealing with a large amount of data You need to have a strong background in mathematics/statistics; past participation in the International Mathematical Olympiad is a plus Programming skills in one or more of the following: C++, Python, R, and/or MATLAB You'll be working with the large datasets of our operation data. Setting up prediction models and building up algorithms to automate operational tasks shall form the major responsibilities. Most of the problems are unexplored in this system and thus you'll get a chance to work on innovative and challenging problems with unique data sets. Your strategies shall be executed on a real time basis and would tie up closely with operational efficiency Data enthusiasts with a practice of approaching problems in a mathematical manner. We would prefer candidates who can code their algorithms and can simulate their validity. Strong hold on statistics and machine learning techniques Ability to work with large data sets and good understanding of latest data-mining algorithms Minimum Education Requirement: B.Sc(statistics),Graduation (Mathematics),M.Sc. Statistics Salary: Not Disclosed by Recruiter Industry: IT-Software / Software Services Functional Area: IT Software - Embedded , EDA , VLSI , ASIC , Chip Design Role Category:Programming & Design Role:Software Developer Keyskills C++ Machine Learning Python Algorithms MATLAB Programming R Desired Candidate Profile Please refer to the Job description above Education- UG: B.Sc - Statistics, B.Tech/B.E. - Any Specialization PG:MS/M.Sc(Science) - Any Specialization Doctorate:Doctorate Not Required Company Profile: Premium-Jobs Leading client of Staffio HR Leading client of Staffio HR Download PPT Photo 1 View Contact Details",
+                    "retrieval_score": 0.6823
+                },
+                {
+                    "jobid": "280515500950",
+                    "job_title": "Data Scientist Big Data ML",
+                    "company": "ONS Search",
+                    "category": "Data / AI",
+                    "skills": "IT Software - Application Programming",
+                    "experience": "4 - 8 yrs",
+                    "education": "UG: Any Graduate PG:Any Postgraduate Doctorate:Any Doctorate - Any Specialization, Doctorate Not Required",
+                    "industry": "Strategy / Management Consulting Firms",
+                    "location": "Bengaluru/Bangalore , Chennai , Gurgaon",
+                    "jobdescription": "Job Description Send me Jobs like this Responsibilities: Extensive experience with analytical and quantitative problem solving Experience with analysis tool(s) such as R, Matlab or SAS Fluency with at least one scripting language such as Python Familiarity with relational databases and SQL Comfortable working in a Unix environment Minimum BA/BS degree in Statistics, Math, Physics, Computer Science or related quantitative degree MS/PhD preferred, or 4+ years of relevant experience Plus: Experience with MapReduce, Hadoop, Hive or similar systems. Specific interest in search engines, recommendation systems, or social networks Salary: Not Disclosed by Recruiter Industry: Strategy / Management Consulting Firms Functional Area: IT Software - Application Programming , Maintenance Role Category:Other Role:Fresher Keyskills Data Scientist Big Data ML Desired Candidate Profile Education- UG: Any Graduate PG:Any Postgraduate Doctorate:Any Doctorate - Any Specialization, Doctorate Not Required Please refer to the Job description above Company Profile: ONS Search An Executive Search firm (Contingency) operating out of our offices in Gurgaon and Bangalore, India. Download PPT Photo 1 View Contact Details",
+                    "retrieval_score": 0.6749
+                },
+                {
+                    "jobid": "20416500663",
+                    "job_title": "Principal Data Scientist",
+                    "company": "Continues Intelligence Lab Pvt.Ltd,",
+                    "category": "Data / AI",
+                    "skills": "IT Software - Application Programming",
+                    "experience": "10 - 15 yrs",
+                    "education": "UG: B.Tech/B.E. PG:M.Tech Doctorate:Any Doctorate - Any Specialization, Doctorate Not Required",
+                    "industry": "IT-Software / Software Services",
+                    "location": "Bengaluru/Bangalore",
+                    "jobdescription": "Job Description Send me Jobs like this 10 years of experience in machine learning, data mining, mathematical optimization. PhD or Masters in Computers Science, Computer Engineering, or mathematics Expert level knowledge in Hadoop/ Mahout/ MapReduce frameworks Strong knowledge of NoSQL and Relational database systems including HBase, CouchDB, PostgreSQL, MySQL, Oracle etc., Background in predictive, diagnostic, operations analytics for engineering/ industrial/ M2M applications is strongly desired. Good understanding of distributed systems Knowledge of R, Matlab, SAS or other open- source/ proprietary statistical packages Build design/ code/ test frameworks and rapid prototyping of new hypothesis Assist engineering leadership in hiring and interviewing top talent Steer Scrum reviews and stand- up meetings Mentor junior staff, conduct design/ code/ test reviews Contribute strongly to IP portfolio of the company in the form of patent disclosures, whitepapers, and blogs. Drive architecture and design of in- house IP and customer solutions in the area of engineering analytics Responsible for analyzing large data sets to develop custom models and algorithms to drive business solutions Build complex data sets from multiple data sources and build learning systems and algorithms to analyze and filter continuous data flows and offline data analysis Conduct statistical analysis and build models to determine trends, patterns and significant data relationships Salary: Not Disclosed by Recruiter Industry: IT-Software / Software Services Functional Area: IT Software - Application Programming , Maintenance Role Category:Programming & Design Role:Software Developer Desired Candidate Profile Education- UG: B.Tech/B.E. PG:M.Tech Doctorate:Any Doctorate - Any Specialization, Doctorate Not Required Please refer to the Job description above Company Profile: Continues Intelligence Lab Pvt.Ltd, Continues Intelligence Lab Pvt.Ltd, Download PPT Photo 1 View Contact Details",
+                    "retrieval_score": 0.6647
+                },
+                {
+                    "jobid": "160316902401",
+                    "job_title": "Data Scientist/algorithm Model Developer",
+                    "company": "ASL HR SOLUTIONS PVT LTD",
+                    "category": "Data / AI",
+                    "skills": "Analytics & Business Intelligence",
+                    "experience": "10 - 15 yrs",
+                    "education": "UG: B.Tech/B.E. - Computers PG:M.Tech - Any Specialization, MCA - Computers, M.Sc - Computers Doctorate:Doctorate Not Required",
+                    "industry": "IT-Software / Software Services",
+                    "location": "Delhi/NCR(National Capital Region)",
+                    "jobdescription": "Job Description Send me Jobs like this Data Scientist Role : Data Scientist / Algorithm Model Developer Designation : Deputy Group Manager, B And 8 No. Of Positions : 1 Location : Gurgaon Years Of Experience : Overall 10+ Years Qualifications : B.Tech / B.E (CS), MCA, M.Sc (CS), M.S Key Responsibilities : - Resource will focus on predictive algorithms/approach. This person will have at least 7-10 years of development experience developing analytics solutions, with 7 years algorithm/model development experience, and 3 years of data mining, and exposure to R (http://www.rproject. org/), Python etc. Preferred business experience in Collections, Sales and financial services. - Significant experience in Predictive models, Machine learning, Statistical modelling etc. Displays Business Acumen, Handled machine learning projects, Used modelling tools extensively including SPSS,R others. Should have Exposure to Big Data. Hadoop experience preferable. - Testing & Continuous evaluation of prediction techniques. Experience with A/B Testing, Lift Curves, Confusion matrix, Business exposure - Significant experience working with Technology resources in product and software development, Understand in detail hardware software componentry, Professional services experience and managing deployment of technology based assets desirable - Knowledge on Building Data Stream is Plus ( Working with nodes, Working with Models, Saving and Mapping Data Streams, Loading Files ) Salary: Not Disclosed by Recruiter Industry: IT-Software / Software Services Functional Area: Analytics & Business Intelligence Role Category:Analytics & BI Role:Data Analyst Keyskills Machine Learning Analytics Statistical Modeling Data Mining Data Scientist Algorithm Model Developer Desired Candidate Profile Education- UG: B.Tech/B.E. - Computers PG:M.Tech - Any Specialization, MCA - Computers, M.Sc - Computers Doctorate:Doctorate Not Required Desired Skills :- Must possess very strong technical skills. Successfully designed and implemented large sized high performance and scalable analytics solutions.- Senior resource, prior team handling experience preferable.- Must have good knowledge of Big Data technologies.- Experience designing applications for cloud deployment.- Must understand trends in technology and be able leverage them in technical solutions.- Must be able to design and implement frameworks for technical solutions.Preferred Skills :- Must have good written and verbal communication skills. Must be able to effectively communicate all aspects of a project solution with managers, account managers, client and project team.- Strong interpersonal and leadership abilities which can execute effective negotiation and team management skill.- Be able to think creatively. Company Profile: ASL HR SOLUTIONS PVT LTD Leading client of ASL HR SOLUTIONS PVT LTD Download PPT Photo 1 View Contact Details",
+                    "retrieval_score": 0.6589
+                }
+            ]
+        },
+        "matching_evaluation": {
+            "role_match": false,
+            "matching_expected_roles": [],
+            "matched_jobs": [
+                {
+                    "jobid": "10615500058",
+                    "job_title": "Predictive Analytics",
+                    "company": "Prime KI Software Solutions Pvt Ltd.",
+                    "compatibility_score": 85,
+                    "matching_skills": [
+                        "Python",
+                        "Machine Learning"
+                    ],
+                    "missing_skills": [
+                        "C",
+                        "R",
+                        "MATLAB"
+                    ],
+                    "reasoning": "This role is a strong match as it explicitly accepts freshers. The candidate's background in AI/ML aligns well with the job's requirement for machine learning techniques. While some specific tools like MATLAB and C are desired, they are listed as 'plus' points, making the candidate highly competitive."
+                },
+                {
+                    "jobid": "290916004268",
+                    "job_title": "Data Scientist - Machine Learning",
+                    "company": "Premium-Jobs hiring for Leading client of Staffio HR",
+                    "compatibility_score": 50,
+                    "matching_skills": [
+                        "Python",
+                        "Machine Learning"
+                    ],
+                    "missing_skills": [
+                        "C++",
+                        "R",
+                        "MATLAB",
+                        "Advanced Statistics"
+                    ],
+                    "reasoning": "The candidate meets the core technical requirements, but the job explicitly requires 1-3 years of experience and prefers candidates from Tier 1 institutions. The candidate is a fresher, which creates an experience gap."
+                },
+                {
+                    "jobid": "280515500950",
+                    "job_title": "Data Scientist Big Data ML",
+                    "company": "ONS Search",
+                    "compatibility_score": 30,
+                    "matching_skills": [
+                        "Python",
+                        "SQL"
+                    ],
+                    "missing_skills": [
+                        "R",
+                        "MATLAB",
+                        "SAS",
+                        "Hadoop",
+                        "Big Data tools"
+                    ],
+                    "reasoning": "The job requires 4-8 years of experience, which significantly exceeds the candidate's current status as a fresher. Additionally, the role asks for experience with specific big data tools that are not present in the candidate's profile."
+                },
+                {
+                    "jobid": "20416500663",
+                    "job_title": "Principal Data Scientist",
+                    "company": "Continues Intelligence Lab Pvt.Ltd,",
+                    "compatibility_score": 10,
+                    "matching_skills": [
+                        "Machine Learning"
+                    ],
+                    "missing_skills": [
+                        "10+ years experience",
+                        "PhD/Masters",
+                        "Hadoop",
+                        "NoSQL",
+                        "Distributed systems"
+                    ],
+                    "reasoning": "This is a senior-level role requiring 10-15 years of experience and advanced degrees. The candidate lacks the necessary experience, professional maturity, and specialized technical stack required for a Principal role."
+                },
+                {
+                    "jobid": "160316902401",
+                    "job_title": "Data Scientist/algorithm Model Developer",
+                    "company": "ASL HR SOLUTIONS PVT LTD",
+                    "compatibility_score": 10,
+                    "matching_skills": [
+                        "Machine Learning",
+                        "Python"
+                    ],
+                    "missing_skills": [
+                        "10+ years experience",
+                        "R",
+                        "Big Data/Hadoop",
+                        "Statistical Modeling tools"
+                    ],
+                    "reasoning": "The role mandates 10+ years of professional experience in model development and algorithm design. A fresher profile does not meet the core experience or project leadership requirements of this position."
+                }
+            ]
+        },
+        "skill_matching_evaluation": {
+            "valid_matching_skills": 9,
+            "invalid_matching_skills": 0,
+            "invalid_skills": []
+        },
+        "score_consistency_evaluation": {
+            "scores": [
+                85,
+                50,
+                30,
+                10,
+                10
+            ],
+            "valid_range": true,
+            "sorted_descending": true
+        },
+        "reasoning_evaluation": {
+            "jobs_with_reasoning": 5,
+            "total_jobs": 5
+        }
+    },
+    {
+        "student": "Sample Python Student",
+        "manual_expectation": {
+            "expected_categories": [
+                "Software Development",
+                "Web Development",
+                "Data / AI"
+            ],
+            "expected_roles": [
+                "Python Developer",
+                "Software Developer",
+                "Web Developer"
+            ]
+        },
+        "retrieval_evaluation": {
+            "retrieved_job_count": 5,
+            "category_match": true,
+            "matching_categories": [
+                "software development",
+                "software development",
+                "software development"
+            ],
+            "retrieved_jobs": [
+                {
+                    "jobid": "10615500058",
+                    "job_title": "Predictive Analytics",
+                    "company": "Prime KI Software Solutions Pvt Ltd.",
+                    "category": "Analytics",
+                    "skills": "IT Software - Application Programming",
+                    "experience": "0 - 1 yrs",
+                    "education": "UG: Any Graduate PG:Any Postgraduate Doctorate:Any Doctorate - Any Specialization, Doctorate Not Required",
+                    "industry": "IT-Software / Software Services",
+                    "location": "Hyderabad / Secunderabad",
+                    "jobdescription": "Job Description Send me Jobs like this Required Qualifications: BS/MS in Mechanical/Electrical/Computer Engineering or Computer Science. Advanced knowledge of computational intelligence and machine learning techniques including Artificial Neural Networks, Support Vector Machines, Decision Tree and online learning algorithms. Project experience in implementing machine learning algorithms in real world applications. Expert knowledge of MATLAB programming and real-time implementation. Intere st and ability to read and implement relevant research papers. Desired Qualifications: Fresher (0Yrs-1 Yrs). Should be from a top notch colleges / University. Knowledge of C, Python and R are a plus. Knowledge of XML. Experience with hospital data collection systems such as Epic. Experience with embedded processor programming such as Raspberry Pi and Arduino. Salary: Not Disclosed by Recruiter Industry: IT-Software / Software Services Functional Area: IT Software - Application Programming , Maintenance Role Category:Other Role:Fresher Keyskills Predictive Analytics Desired Candidate Profile Education- UG: Any Graduate PG:Any Postgraduate Doctorate:Any Doctorate - Any Specialization, Doctorate Not Required Please refer to the Job description above Company Profile: Prime KI Software Solutions Pvt Ltd. Our vision is to deliver first-rate, industry-defining bespoke software solutions that create profitable value as well as sustainable innovative product advantage for customers all over the world. We choose to work with precision because we look at each engagement to be important to us.We want to connect with you to drive your concept to reality. To enable clients accelerate their response time in an environment of ever-changing market dynamics. We endeavor to delight customers by adding exponential value to their business requirements. Download PPT Photo 1 View Contact Details",
+                    "retrieval_score": 0.6826
+                },
+                {
+                    "jobid": "61016900689",
+                    "job_title": "MS Cloud Architect",
+                    "company": "Bob Technologies",
+                    "category": "Cloud / DevOps",
+                    "skills": "IT Software - Application Programming",
+                    "experience": "10 - 15 yrs",
+                    "education": "UG: Any Graduate - Any Specialization PG:Any Postgraduate Doctorate:Doctorate Not Required",
+                    "industry": "IT-Software / Software Services",
+                    "location": "Bengaluru",
+                    "jobdescription": "Job Description Send me Jobs like this We have an urgent requirement for the post of MS Cloud Architect with one of our client in Bangalore, Position : MS Cloud architect Exp:10+yrs Location :Bangalore NP: Max 30 Days Required Experience & Skills Min of 10+ years of experience in technology consulting, enterprise and solutions architecture and architectural framework At least Minimum 6+ years of experience leading architecture, design, development and implementation of technical solutions at an enterprise level. 4+ years of designing and implementing complex solution Cloud solutions, Previous, demonstrated experience migrating an on premise environment to an Azure, AWS, Google Good understanding of MS technology stack (NET, ASP.Net, MVC, C#), UI frameworks (Angular, Dojo, HTML, CSS, JSS), Microsoft Active Directory and MS SQL Server Good with scripting or programming using XML, JSON, Expertise on Devops cloud devops mechanisms, chef, terraform, docker awareness Iaas, Paas knowledge on cloud either Azure or AWS. Expertise on Cloud applications and services authentication, monitoring and maintaining applications, System Center / New Relik etc Expert level knowledge of architecting service oriented architecture with high availability and scalability Analytical skills & Ability to work independently in a fast paced environment Excellent communication skills and ability to collaborate in a multi-disciplinary team Experience in providing cloud advisory and consulting services to customers including assessments, presenting recommendations on Azure migration road maps, architecture / designs etc. Detailed knowledge of software development life-cycles, including agile methods Strong experience with automated testing, continuous integration, unit testing and Test Driven development Experience with leading development in a distributed team environment TOGAF 2, MSCE, MCITP preferred. Key Responsibilities Role requires the resource to lead the consultative discovery of the clients business goals, objectives, and challenges, and then translates them into effective solutions Will be responsible for the leadership and delivery of pre-sales and project-based assignments including solution development, proof-of-concept, analysis, design/architecture, deployment and support of the Microsoft Azure/technology platforms: Design, planning and implementation of cloud based solution and enterprise applications Identify and implement appropriate solution for any technical issues Own each technical challenge and lead technical analysis and architecture Guide in-house engineers and build capability to develop with best quality software solutions Collaborate with product managers, designers, QA engineers, Ops engineers and other Stakeholders to keep projects moving efficiently Capture and share best-practice knowledge amongst the development team. Salary: Not Disclosed by Recruiter Industry: IT-Software / Software Services Functional Area: IT Software - Application Programming , Maintenance Role Category:Programming & Design Role:Technical Architect Keyskills ASP.Net MVC HTML Azure CSS MS SQL Server XML C# JSON Architecting Desired Candidate Profile Education- UG: Any Graduate - Any Specialization PG:Any Postgraduate Doctorate:Doctorate Not Required Company Profile: Bob Technologies Bob Technologies Download PPT Photo 1 View Contact Details",
+                    "retrieval_score": 0.677
+                },
+                {
+                    "jobid": "241015500015",
+                    "job_title": "Software Engineer",
+                    "company": "ACADGILD",
+                    "category": "Software Development",
+                    "skills": "IT Software - Application Programming",
+                    "experience": "0 - 3 yrs",
+                    "education": "UG: B.Tech/B.E. PG:Post Graduation Not Required Doctorate:Any Doctorate - Any Specialization, Doctorate Not Required",
+                    "industry": "IT-Software / Software Services",
+                    "location": "Bengaluru/Bangalore",
+                    "jobdescription": "Job Description Send me Jobs like this p> Job Description : strong> p> Build efficient code in a maintainable manner li> Should be able to solve strategic problem and give quick results li> Collaborate with team in the app development li> ul> Requisites Skills : strong> p> Should be expert - programming in PHP/ Android li> Should be able to analyze the requirement and build the app by self li> Good commication skill li> ul> p> Salary: Not Disclosed by Recruiter Industry: IT-Software / Software Services Functional Area: IT Software - Application Programming , Maintenance Role Category:Programming & Design Role:Software Developer Keyskills php development android be build code efficient strategic problem software engineer Desired Candidate Profile Education- UG: B.Tech/B.E. PG:Post Graduation Not Required Doctorate:Any Doctorate - Any Specialization, Doctorate Not Required Please refer to the Job description above Company Profile: ACADGILD ACADGILD Download PPT Photo 1 View Contact Details",
+                    "retrieval_score": 0.6741
+                },
+                {
+                    "jobid": "60815500239",
+                    "job_title": "ASP.Net Developer",
+                    "company": "NeoSOFT Technologies",
+                    "category": "Software Development",
+                    "skills": "IT Software - Application Programming",
+                    "experience": "0 - 3 yrs",
+                    "education": "UG: B.Tech/B.E. PG:Post Graduation Not Required",
+                    "industry": "IT-Software / Software Services",
+                    "location": "Not specified",
+                    "jobdescription": "Job Description Send me Jobs like this Job Description Bachelors Degrees in Computer science, IT, software engineering, web development, programming or other subjects Certification in .Net, web development, graphics and software programming More specific Diploma, degree or certificate in web development, multimedia design, web design and web content management. Experience in application development using C# / VB.NET, ASP.NET 2.0/ 3.5/4.0 Experience with Web Services, WCF Services and XML, IIS 6 or 7 Hands on experience in JQuery, Javascript, AJAX, CSS, HTML SQL Server ( TSQL, stored procedures, etc ) OO design and programming, knowledge of UML is added advantage. Excellent interpersonal and communication skills Ability to adapt and pick up new techniques and technology Must be thorough and precise in their work Ability to work individually or in a team to beat tight deadlines Knowledge of international web standards and protocols Design, maintain and implement web-based software applications Development based on the client requirements. Define and estimate technical solutions, document technical approach options and recommendations. Understanding of the Software Development Lifecycle. Provide technical leadership and support to other Decision Support team members Salary: Not Disclosed by Recruiter Industry: IT-Software / Software Services Functional Area: IT Software - Application Programming , Maintenance Role Category:Programming & Design Role:Software Developer Keyskills diploma web design web development application development software development multimedia graphics html xml javascript Desired Candidate Profile Please refer to the Job description above Education- UG: B.Tech/B.E. PG:Post Graduation Not Required Company Profile: NeoSOFT Technologies Established in 1996 Neosoft Technologies is a complete IT solutions company, providing software development and IT services to corporations worldwide. Neosoft's world-class offshore services offer cutting-edge IT solutions across a range of industry and technology segments to Enterprises and Independent Software Vendors (ISVs). Download PPT Photo 1 View Contact Details",
+                    "retrieval_score": 0.6711
+                },
+                {
+                    "jobid": "270416008112",
+                    "job_title": "Junior .Net Developer",
+                    "company": "Metro Career Solutions Pvt Ltd hiring for Many Top Industry Clients & MNC Clients",
+                    "category": "Software Development",
+                    "skills": "IT Software - Application Programming",
+                    "experience": "0 - 3 yrs",
+                    "education": "UG: Any Graduate - Any Specialization, Graduation Not Required PG:Any Postgraduate - Any Specialization, Post Graduation Not Required Doctorate:Any Doctorate - Any Specialization, Doctorate Not Required",
+                    "industry": "IT-Software / Software Services",
+                    "location": "Bengaluru/Bangalore , Hyderabad / Secunderabad , Delhi/NCR(National Capital Region)",
+                    "jobdescription": "Job Description Send me Jobs like this Candidate should be able to conceptualize, document and present creative solutions and provide technical assistance to junior team members. Ability to adapt quickly to an existing, complex environment. Ability to quickly learn new concepts. Salary:INR 3,50,000 - 7,50,000 P.A. INR Best In Industry Industry: IT-Software / Software Services Functional Area: IT Software - Application Programming , Maintenance Role Category:Programming & Design Role:Software Developer Keyskills Learning Creative Solutions .Net SQL Server C# C#.Net C Javascript ADO.Net Ajax C++ ASP.Net MVC WCF VB.NET Web Services Visual Studio JQuery css xml photoshop corel draw Desired Candidate Profile Education- UG: Any Graduate - Any Specialization, Graduation Not Required PG:Any Postgraduate - Any Specialization, Post Graduation Not Required Doctorate:Any Doctorate - Any Specialization, Doctorate Not Required Good verbal and written communication skills. Extremely motivated towards career. Flexible and adaptable Polite and disciplined Sincere and helping Confident and hardworking Ability to work in stressed situation Company Profile: Metro Career Solutions Pvt Ltd Many Top Industry Clients & MNC Clients We provide recruitment services like campus selection, conduct personal interviews on behalf of corporate and even provide training and skill development for our clients. We maintain a very healthy relationship between an employee and an employer. Download PPT Photo 1 View Contact Details",
+                    "retrieval_score": 0.6708
+                }
+            ]
+        },
+        "matching_evaluation": {
+            "role_match": false,
+            "matching_expected_roles": [],
+            "matched_jobs": [
+                {
+                    "jobid": "10615500058",
+                    "job_title": "Predictive Analytics",
+                    "company": "Prime KI Software Solutions Pvt Ltd.",
+                    "compatibility_score": 75,
+                    "matching_skills": [
+                        "Python"
+                    ],
+                    "missing_skills": [
+                        "Machine learning algorithms",
+                        "MATLAB",
+                        "XML"
+                    ],
+                    "reasoning": "The candidate has the desired fresher experience and Python skills. While the job requires specialized ML techniques beyond the candidate's basic project experience, it is the best fit due to the alignment with the 'Fresher' profile and core interest in Python-based analytics."
+                },
+                {
+                    "jobid": "60815500239",
+                    "job_title": "ASP.Net Developer",
+                    "company": "NeoSOFT Technologies",
+                    "compatibility_score": 50,
+                    "matching_skills": [
+                        "HTML",
+                        "CSS",
+                        "SQL"
+                    ],
+                    "missing_skills": [
+                        "ASP.NET",
+                        "C#",
+                        "Javascript",
+                        "JQuery",
+                        "XML"
+                    ],
+                    "reasoning": "The education and experience levels match, but the candidate lacks the primary technical stack (ASP.NET and C#). There is partial overlap in web development fundamentals like HTML/CSS/SQL."
+                },
+                {
+                    "jobid": "270416008112",
+                    "job_title": "Junior .Net Developer",
+                    "company": "Metro Career Solutions Pvt Ltd hiring for Many Top Industry Clients & MNC Clients",
+                    "compatibility_score": 45,
+                    "matching_skills": [
+                        "SQL",
+                        "HTML",
+                        "CSS"
+                    ],
+                    "missing_skills": [
+                        ".Net stack",
+                        "C#",
+                        "Javascript",
+                        "JQuery",
+                        "XML"
+                    ],
+                    "reasoning": "Matches the 'Fresher' experience level and education, but the candidate lacks the mandatory .Net ecosystem skills which are central to this role."
+                },
+                {
+                    "jobid": "241015500015",
+                    "job_title": "Software Engineer",
+                    "company": "ACADGILD",
+                    "compatibility_score": 30,
+                    "matching_skills": [],
+                    "missing_skills": [
+                        "PHP",
+                        "Android"
+                    ],
+                    "reasoning": "The candidate matches the education and experience requirements, but possesses none of the specific 'Requisite Skills' (PHP/Android) mentioned in the job description."
+                },
+                {
+                    "jobid": "61016900689",
+                    "job_title": "MS Cloud Architect",
+                    "company": "Bob Technologies",
+                    "compatibility_score": 10,
+                    "matching_skills": [
+                        "HTML",
+                        "CSS",
+                        "SQL"
+                    ],
+                    "missing_skills": [
+                        "10+ years experience",
+                        "Azure/AWS",
+                        "Cloud Architecture",
+                        "DevOps",
+                        "ASP.Net"
+                    ],
+                    "reasoning": "This is a senior-level role requiring 10+ years of experience. The candidate is a fresher, making them highly incompatible for this position."
+                }
+            ]
+        },
+        "skill_matching_evaluation": {
+            "valid_matching_skills": 10,
+            "invalid_matching_skills": 0,
+            "invalid_skills": []
+        },
+        "score_consistency_evaluation": {
+            "scores": [
+                75,
+                50,
+                45,
+                30,
+                10
+            ],
+            "valid_range": true,
+            "sorted_descending": true
+        },
+        "reasoning_evaluation": {
+            "jobs_with_reasoning": 5,
+            "total_jobs": 5
+        }
+    },
+    {
+        "student": "Sample Web Development Student",
+        "manual_expectation": {
+            "expected_categories": [
+                "Web Development",
+                "Software Development"
+            ],
+            "expected_roles": [
+                "Web Developer",
+                "Frontend Developer",
+                "Software Developer"
+            ]
+        },
+        "retrieval_evaluation": {
+            "retrieved_job_count": 5,
+            "category_match": true,
+            "matching_categories": [
+                "web development",
+                "web development",
+                "web development",
+                "web development",
+                "web development"
+            ],
+            "retrieved_jobs": [
+                {
+                    "jobid": "250316900013",
+                    "job_title": "Front End Developer - Html/css/javascipt",
+                    "company": "Axcess Consultancy services",
+                    "category": "Web Development",
+                    "skills": "IT Software - Application Programming",
+                    "experience": "0 - 2 yrs",
+                    "education": "UG: B.Tech/B.E. - Any Specialization PG:Any Postgraduate - Any Specialization Doctorate:Doctorate Not Required",
+                    "industry": "IT-Software / Software Services",
+                    "location": "Bengaluru/Bangalore",
+                    "jobdescription": "Job Description Send me Jobs like this Notice period not more than 30 days. Links of work samples to be included in the CV. Must have worked ONLY on B2C apps. Will be looking for Bangalore candidates only, unless the CV is exceptionally good. Look only for IITian's, Experience range would be 0-2 years. Even more is welcome. Budget is open. Job Description : - Conceived by bike enthusiasts, Wheelstreet makes bike renting a hassle free and exciting experience for the riders.We know how difficult it is to search for the right vehicle, thus we simplify that process, providing you with a comfortable and joyful experience. - Overcoming the obstacles in the otherwise unorganized bike rental marketplace through technology, Wheelstreet is a transparent and trustworthy platform.It is one stop solution for your riding needs, whether you are looking at beating traffic, planning a romantic date or a trip with your friends. - Rather than following common standards we believe in being unique and setting new trends. Thus, we are looking for like-minded growth catalysts who can help us achieve the same.Hence, We need You! What we are looking for: - We need our UI Developers to create next-generation platforms that change how millions look at getting motor bikes on rent. We are looking for problem solvers who have a knack for challenges and take them right 'on the face' to solve it at any cost, come what may. Job Responsibilities - Build responsive and elegant web UI using the latest JavaScript standards and best practices. - Collaborating with the designers and backend developers to plan, design and develop applications. - Converting designs into semantically correct and web standards compliant HTML and writing scalable and maintainable stylesheets(CSS). - Ensure Responsiveness & Cross-Browser compatibility for all ui being developed. - Refactor HTML, CSS and JavaScript code so that the UI codebase is scal-able and maintainable. - Build reusable UI components. Salary: Not Disclosed by Recruiter Industry: IT-Software / Software Services Functional Area: IT Software - Application Programming , Maintenance Role Category:Programming & Design Role:Software Developer Keyskills HTML CSS Javascript Front End Web Technologies Technology Web UI Bootstrap Material Design jQuery AJAX AngularJS Design & Development Desired Candidate Profile Education- UG: B.Tech/B.E. - Any Specialization PG:Any Postgraduate - Any Specialization Doctorate:Doctorate Not Required Skills :- 2-5 years- Experience in a similar role- Expert level knowledge of HTML, CSS, Bootstrap, Material Design, jQuery, JavaScript, AJAX, AngularJS- Must have worked extensively on developing responsive/adaptive layouts for multiple browsers and platforms, including desktop, tablet, and mobile.- Experience working with startups and writing code from scratch .Skills :Must have : JavaScript AJAX HTML CSS BootstrapOptional : Angular JSQualifications : BtechTarget Industry : internet Internet/ Online/Start-UpsWorking Days : 6 Days a week( 11:00 AM to 8:00 PM )Job Nature : Full TimeGender : No Preference. Company Profile: Axcess Consultancy services leading client of Axcess Consultancy services Download PPT Photo 1 View Contact Details",
+                    "retrieval_score": 0.7071
+                },
+                {
+                    "jobid": "30915500400",
+                    "job_title": "Web Developer",
+                    "company": "Elegensse Corporation",
+                    "category": "Web Development",
+                    "skills": "IT Software - Application Programming",
+                    "experience": "0 - 1 yrs",
+                    "education": "UG: B.Tech/B.E. PG:Post Graduation Not Required Doctorate:Any Doctorate - Any Specialization, Doctorate Not Required",
+                    "industry": "IT-Software / Software Services",
+                    "location": "Bengaluru/Bangalore , Bengaluru / Bangalore , Delhi/NCR , Hyderabad/Secunderabad , Mumbai , Pune",
+                    "jobdescription": "Job Description Send me Jobs like this Job Description Exceptional in HTML and CSS skills. Hands on coding experience in HTML, CSS, JavaScript and JQuery. Experience should be rich on Macromedia Dreamweaver, Adobe Photoshop, Adobe Illustrator, File Zilla FTP and Coral Draw. Web Development and Designing, HTML coding and Implementation. Designing websites using HTML, Java script, CSS and Dreamweaver. Designing websites as per Client requirement using the latest software and state of the art technology. Good Communication skills Salary: Not Disclosed by Recruiter Industry: IT-Software / Software Services Functional Area: IT Software - Application Programming , Maintenance Role Category:Programming & Design Role:Software Developer Keyskills dreamweaver javascript web development adobe illustrator jquery ftp adobe photoshop html css html and css designing Desired Candidate Profile Education- UG: B.Tech/B.E. PG:Post Graduation Not Required Doctorate:Any Doctorate - Any Specialization, Doctorate Not Required Please refer to the Job description above Company Profile: Elegensse Corporation Elegensse Corporation Download PPT Photo 1 View Contact Details",
+                    "retrieval_score": 0.6999
+                },
+                {
+                    "jobid": "111215500073",
+                    "job_title": "Web Developer",
+                    "company": "ELEGENSSE CORPORATION",
+                    "category": "Web Development",
+                    "skills": "IT Software - Application Programming",
+                    "experience": "0 - 1 yrs",
+                    "education": "UG: B.Tech/B.E. PG:Post Graduation Not Required Doctorate:Any Doctorate - Any Specialization, Doctorate Not Required",
+                    "industry": "IT-Software / Software Services",
+                    "location": "Mumbai",
+                    "jobdescription": "Job Description Send me Jobs like this Exceptional in HTML and CSS skills. Hands on coding experience in HTML, CSS, JavaScript and JQuery. Experience should be rich on Macromedia Dreamweaver, Adobe Photoshop, Adobe Illustrator, File Zilla FTP and Coral Draw. Web Development and Designing, HTML coding and Implementation. Designing websites using HTML, Java script, CSS and Dreamweaver. Designing websites as per Client requirement using the latest software and state of the art technology Salary: Not Disclosed by Recruiter Industry: IT-Software / Software Services Functional Area: IT Software - Application Programming , Maintenance Role Category:Programming & Design Role:Graphic/Web Designer Desired Candidate Profile Education- UG: B.Tech/B.E. PG:Post Graduation Not Required Doctorate:Any Doctorate - Any Specialization, Doctorate Not Required Please refer to the Job description above Company Profile: ELEGENSSE CORPORATION ELEGENSSE CORPORATION Download PPT Photo 1 View Contact Details",
+                    "retrieval_score": 0.699
+                },
+                {
+                    "jobid": "210516002420",
+                    "job_title": "Urgent Opening for Front-end web Developers - Freshers/experienced",
+                    "company": "MediaTree - Excellence Group",
+                    "category": "Web Development",
+                    "skills": "IT Software - eCommerce",
+                    "experience": "0 - 2 yrs",
+                    "education": "UG: Any Graduate - Any Specialization, Graduation Not Required PG:Any Postgraduate - Any Specialization, Post Graduation Not Required Doctorate:Any Doctorate - Any Specialization, Doctorate Not Required",
+                    "industry": "IT-Software / Software Services",
+                    "location": "Mumbai",
+                    "jobdescription": "Job Description Send me Jobs like this We are having urgent requirement for Front-end Web Developers You will be responsible for creating and maintaining responsive (mobile friendly) websites / microsite / landing pages - static as well as in dynamic (CMS driven). You need to have in-depth knowledge of: HTML/HTML 5 CSS/CSS 3 jQuery / Javascript (functional knowledge) Bootstrap (ability to create responsive websites) Photoshop (for slicing PSDs) Must have: First Class in Graduation Good command over written and spoken English Exposure to CMS such a WordPress and PHP/MySQL will be an added advantage. Interview rounds 1st round - Phone interview 2nd round - PSD to Bootstrap test (from home) 3rd round - PSD to Bootstrap test (in office) Salary:INR 1,25,000 - 3,00,000 P.A Industry: IT-Software / Software Services Functional Area: IT Software - eCommerce , Internet Technologies Role Category:Programming & Design Role:Software Developer Keyskills HTML Javascript CSS JQuery Photoshop PSD CMS Web Technologies Web Developer Bootstrap Responsive PHP WordPress Desired Candidate Profile Education- UG: Any Graduate - Any Specialization, Graduation Not Required PG:Any Postgraduate - Any Specialization, Post Graduation Not Required Doctorate:Any Doctorate - Any Specialization, Doctorate Not Required Please refer to the Job description above Company Profile: MediaTree - Excellence Group MediaTree is website design, development and an online marketing agency with 6+ years in the industry. A rapidly growing organisation, we have developed more than 150 websites and serve 100+ clients globally. Download PPT Photo 1 View Contact Details",
+                    "retrieval_score": 0.6925
+                },
+                {
+                    "jobid": "101015500188",
+                    "job_title": "HTML / Frontend developer executive",
+                    "company": "Creaa Designs",
+                    "category": "Web Development",
+                    "skills": "IT Software - Application Programming",
+                    "experience": "0 - 2 yrs",
+                    "education": "UG: B.Tech/B.E. PG:MCA Doctorate:Any Doctorate - Any Specialization, Doctorate Not Required",
+                    "industry": "IT-Software / Software Services",
+                    "location": "Mumbai , Mumbai",
+                    "jobdescription": "Job Description Send me Jobs like this Job Details: Good knowledge of HTML5, Bootstrap, JavaScript, CSS, JQuery along with a sound knowledge of web development and Mobile app standards. Should have strong expertise in creating responsive website for various devices and resolution. Should have strong HTML, CSS table-less design and Bootstrap knowledge and experience. Should know how to transform psd files and wireframes into web user interfaces according to design specifications. Should have knowledge of Page Optimization. Knowledge of Rally and Agile process, AngularJS . Qualification: Masters Degree in Computer Science (MCS) Diploma in Information Technology Bachelor In Engineering (Information Technology) graduate. B. TechB. E. - Computers, Diploma-Computers Any relevant graduate Salary: Not Disclosed by Recruiter Industry: IT-Software / Software Services Functional Area: IT Software - Application Programming , Maintenance Role Category:Programming & Design Role:Software Developer Keyskills php javascript xml html ajax jquery mvc web development information technology website Desired Candidate Profile Education- UG: B.Tech/B.E. PG:MCA Doctorate:Any Doctorate - Any Specialization, Doctorate Not Required Please refer to the Job description above Company Profile: Creaa Designs We believe in the power to \"Create- Art\" hence the name Creaa. We are a design studio based in Mumbai, India for the past 9 years. We have an expertise in launching the startups business, starting right from suggesting names for your brand and also to make sure that your brand name is well known in the industry. We excel in branding, creating websites using the advanced technology available in web development and skills to match the same. But the world is beyond websites, trending on a large scale growth towards mobile apps and softwares.While we specialize in developing exclusive websites, software; we enhance your company\\'s image with an artistic logo which reflects your corporate identity. E-commerce websites will keep you stylish in business which will create an exclusive & creative property. In tune with your business priority; an elite E-commerce website with essential security enhancements can be developed. Download PPT Photo 1 View Contact Details",
+                    "retrieval_score": 0.6903
+                }
+            ]
+        },
+        "matching_evaluation": {
+            "role_match": true,
+            "matching_expected_roles": [
+                "Urgent Opening for Front-end web Developers - Freshers/experienced",
+                "HTML / Frontend developer executive",
+                "Web Developer",
+                "Web Developer"
+            ],
+            "matched_jobs": [
+                {
+                    "jobid": "210516002420",
+                    "job_title": "Urgent Opening for Front-end web Developers - Freshers/experienced",
+                    "company": "MediaTree - Excellence Group",
+                    "compatibility_score": 85,
+                    "matching_skills": [
+                        "HTML",
+                        "CSS",
+                        "JavaScript"
+                    ],
+                    "missing_skills": [
+                        "jQuery",
+                        "Bootstrap"
+                    ],
+                    "reasoning": "The candidate matches the fresher requirement and core front-end skill set. The job requires jQuery and Bootstrap which are not in the student's profile, but the alignment with the 'Fresher' profile is high."
+                },
+                {
+                    "jobid": "250316900013",
+                    "job_title": "Front End Developer - Html/css/javascipt",
+                    "company": "Axcess Consultancy services",
+                    "compatibility_score": 80,
+                    "matching_skills": [
+                        "HTML",
+                        "CSS",
+                        "JavaScript"
+                    ],
+                    "missing_skills": [
+                        "Bootstrap",
+                        "jQuery",
+                        "AngularJS"
+                    ],
+                    "reasoning": "The candidate meets the B.Tech and Fresher requirements. While the core skills match, the job lists specific requirements like AngularJS and jQuery which the candidate lacks. Also, the job prefers 2-5 years of experience."
+                },
+                {
+                    "jobid": "101015500188",
+                    "job_title": "HTML / Frontend developer executive",
+                    "company": "Creaa Designs",
+                    "compatibility_score": 75,
+                    "matching_skills": [
+                        "HTML",
+                        "JavaScript",
+                        "CSS"
+                    ],
+                    "missing_skills": [
+                        "Bootstrap",
+                        "jQuery",
+                        "AngularJS"
+                    ],
+                    "reasoning": "Candidate matches the education and experience level perfectly. However, the job requires several specific technologies like Bootstrap, jQuery, and AngularJS that the candidate has not listed."
+                },
+                {
+                    "jobid": "30915500400",
+                    "job_title": "Web Developer",
+                    "company": "Elegensse Corporation",
+                    "compatibility_score": 70,
+                    "matching_skills": [
+                        "HTML",
+                        "CSS",
+                        "JavaScript"
+                    ],
+                    "missing_skills": [
+                        "jQuery",
+                        "Photoshop",
+                        "Dreamweaver"
+                    ],
+                    "reasoning": "The candidate meets the educational and experience criteria. The role heavily emphasizes design tools (Dreamweaver, Photoshop) which are not part of the candidate's skill set."
+                },
+                {
+                    "jobid": "111215500073",
+                    "job_title": "Web Developer",
+                    "company": "ELEGENSSE CORPORATION",
+                    "compatibility_score": 70,
+                    "matching_skills": [
+                        "HTML",
+                        "CSS",
+                        "JavaScript"
+                    ],
+                    "missing_skills": [
+                        "jQuery",
+                        "Photoshop",
+                        "Dreamweaver"
+                    ],
+                    "reasoning": "Same role as above with the same requirements. The candidate lacks the specific design software expertise mentioned in the job description."
+                }
+            ]
+        },
+        "skill_matching_evaluation": {
+            "valid_matching_skills": 15,
+            "invalid_matching_skills": 0,
+            "invalid_skills": []
+        },
+        "score_consistency_evaluation": {
+            "scores": [
+                85,
+                80,
+                75,
+                70,
+                70
+            ],
+            "valid_range": true,
+            "sorted_descending": true
+        },
+        "reasoning_evaluation": {
+            "jobs_with_reasoning": 5,
+            "total_jobs": 5
+        }
+    }
+]

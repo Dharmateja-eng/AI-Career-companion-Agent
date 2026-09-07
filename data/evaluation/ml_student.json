@@ -1,0 +1,20 @@
+{
+  "name": "Sample ML Student",
+  "skills": [
+    "Python",
+    "Machine Learning",
+    "Pandas",
+    "NumPy",
+    "Scikit-learn",
+    "SQL"
+  ],
+  "education": "B.Tech in Artificial Intelligence and Machine Learning",
+  "experience": "Fresher",
+  "projects": [
+    "House Price Prediction using Machine Learning",
+    "Student Performance Prediction"
+  ],
+  "certifications": [
+    "Machine Learning"
+  ]
+}

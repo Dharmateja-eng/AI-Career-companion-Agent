@@ -1,0 +1,20 @@
+{
+  "name": "Sample Python Student",
+  "skills": [
+    "Python",
+    "Flask",
+    "SQL",
+    "Git",
+    "HTML",
+    "CSS"
+  ],
+  "education": "B.Tech in Computer Science",
+  "experience": "Fresher",
+  "projects": [
+    "House Price Prediction using Python and Machine Learning",
+    "Flask-based Resume Analyzer"
+  ],
+  "certifications": [
+    "Introduction to Python"
+  ]
+}

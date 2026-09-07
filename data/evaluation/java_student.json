@@ -1,0 +1,20 @@
+{
+  "name": "Sample Java Student",
+  "skills": [
+    "Java",
+    "Spring",
+    "SQL",
+    "Git",
+    "HTML",
+    "CSS"
+  ],
+  "education": "B.Tech in Computer Science",
+  "experience": "Fresher",
+  "projects": [
+    "Java Student Management System",
+    "Spring Boot REST API"
+  ],
+  "certifications": [
+    "Java Programming"
+  ]
+}

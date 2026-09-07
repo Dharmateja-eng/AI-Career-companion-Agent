@@ -1,0 +1,20 @@
+{
+  "name": "Sample Web Development Student",
+  "skills": [
+    "HTML",
+    "CSS",
+    "JavaScript",
+    "React",
+    "Node.js",
+    "Git"
+  ],
+  "education": "B.Tech in Computer Science",
+  "experience": "Fresher",
+  "projects": [
+    "Responsive Portfolio Website",
+    "React E-commerce Website"
+  ],
+  "certifications": [
+    "Web Development"
+  ]
+}
