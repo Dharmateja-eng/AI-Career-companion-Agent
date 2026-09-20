@@ -17,3 +17,11 @@ data/candidate_profile.json
 
 # VS Code settings
 .vscode/
+# SQLite databases
+*.db
+*.sqlite
+*.sqlite3
+
+# Flask instance data
+instance/
+app/instance/

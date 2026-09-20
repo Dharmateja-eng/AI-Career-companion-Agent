@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+
+{% block title %}
+CareerAI | Profile
+{% endblock %}
+
+{% block page_heading %}
+My Profile
+{% endblock %}
+
+{% block content %}
+
+<div class="section-header">
+
+    <div>
+        <span class="section-label">STUDENT PROFILE</span>
+
+        <h2>Welcome, {{ user.name }}</h2>
+
+        <p>
+            Manage and view your CareerAI profile information.
+        </p>
+    </div>
+
+</div>
+
+
+<!-- Basic Information -->
+
+<div class="agent-grid">
+
+    <div class="feature-card">
+
+        <div class="feature-icon">
+            ♙
+        </div>
+
+        <h3>Personal Information</h3>
+
+        <p>
+            <strong>Name:</strong>
+            {{ user.name }}
+        </p>
+
+        <p>
+            <strong>Email:</strong>
+            {{ user.email }}
+        </p>
+
+    </div>
+
+
+    <div class="feature-card">
+
+        <div class="feature-icon">
+            ◈
+        </div>
+
+        <h3>Account</h3>
+
+        <p>
+            Your CareerAI account is connected to your
+            personal student profile.
+        </p>
+
+        <p>
+            <strong>Account ID:</strong>
+            {{ user.id }}
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- Career Information -->
+
+<div class="section-header">
+
+    <div>
+        <span class="section-label">CAREER INFORMATION</span>
+
+        <h2>Your Career Profile</h2>
+
+        <p>
+            Your education, skills, projects and experience
+            will appear here after your resume is analyzed.
+        </p>
+    </div>
+
+</div>
+
+
+<div class="feature-card">
+
+    <div class="workflow">
+
+        <div class="workflow-step">
+
+            <div class="step-number">
+                1
+            </div>
+
+            <span>
+                Upload Resume
+            </span>
+
+        </div>
+
+
+        <div class="workflow-line"></div>
+
+
+        <div class="workflow-step">
+
+            <div class="step-number">
+                2
+            </div>
+
+            <span>
+                AI Analysis
+            </span>
+
+        </div>
+
+
+        <div class="workflow-line"></div>
+
+
+        <div class="workflow-step">
+
+            <div class="step-number">
+                3
+            </div>
+
+            <span>
+                Build Profile
+            </span>
+
+        </div>
+
+
+        <div class="workflow-line"></div>
+
+
+        <div class="workflow-step">
+
+            <div class="step-number">
+                4
+            </div>
+
+            <span>
+                Career Guidance
+            </span>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

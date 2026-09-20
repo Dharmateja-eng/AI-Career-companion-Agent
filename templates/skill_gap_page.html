@@ -1,0 +1,950 @@
+{% extends "base.html" %}
+
+{% block title %}
+CareerAI | Skill Gap
+{% endblock %}
+
+{% block page_heading %}
+Skill Gap Analysis
+{% endblock %}
+
+{% block content %}
+
+<div class="section-header">
+
+    <div>
+
+        <span class="section-label">
+            SKILL GAP
+        </span>
+
+        <h2>
+            Understand Your Skill Gaps
+        </h2>
+
+        <p>
+            Identify the skills you already have and the skills
+            you may need to develop for your target career.
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- ===================================================== -->
+<!-- M3.1 SELECTED JOB SKILL GAP ANALYSIS -->
+<!-- ===================================================== -->
+
+{% if m3_skill_gap %}
+
+<div class="section-header">
+
+    <div>
+
+        <span class="section-label">
+            MILESTONE 3.1
+        </span>
+
+        <h2>
+            Selected Job Skill Gap Analysis
+        </h2>
+
+        <p>
+            Compare your profile with the requirements of the
+            selected internship or job.
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- ===================================================== -->
+<!-- SELECTED JOB -->
+<!-- ===================================================== -->
+
+<div class="upload-card">
+
+    <div class="upload-icon">
+        ◎
+    </div>
+
+    <div class="upload-content">
+
+        <span class="section-label">
+            SELECTED INTERNSHIP / JOB
+        </span>
+
+        <h3>
+            {{ m3_skill_gap.job_title or "Selected Job" }}
+        </h3>
+
+        {% if selected_job %}
+
+        <p>
+            <strong>
+                {{ selected_job.company or "" }}
+            </strong>
+
+            {% if selected_job.location %}
+                · {{ selected_job.location }}
+            {% endif %}
+        </p>
+
+        {% endif %}
+
+        <p>
+            This analysis compares your current profile
+            against the requirements of this specific role.
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- ===================================================== -->
+<!-- CRITICAL / MISSING SKILLS -->
+<!-- ===================================================== -->
+
+<div class="section-header">
+
+    <div>
+
+        <span class="section-label">
+            CRITICAL GAPS
+        </span>
+
+        <h2>
+            Critical / Missing Skills
+        </h2>
+
+        <p>
+            Skills that are important for the selected role
+            but are not currently demonstrated in your profile.
+        </p>
+
+    </div>
+
+</div>
+
+
+<div class="analysis-card">
+
+    {% if m3_skill_gap.critical_missing_skills %}
+
+    <div class="skill-tags">
+
+        {% for skill in m3_skill_gap.critical_missing_skills %}
+
+        <span class="skill-tag missing">
+            → {{ skill }}
+        </span>
+
+        {% endfor %}
+
+    </div>
+
+    {% else %}
+
+    <p>
+        No critical missing skills were identified.
+    </p>
+
+    {% endif %}
+
+</div>
+
+
+<!-- ===================================================== -->
+<!-- PARTIALLY DEMONSTRATED SKILLS -->
+<!-- ===================================================== -->
+
+<div class="section-header">
+
+    <div>
+
+        <span class="section-label">
+            PARTIAL MATCH
+        </span>
+
+        <h2>
+            Partially Demonstrated Skills
+        </h2>
+
+        <p>
+            Skills that appear in your profile but may need
+            stronger evidence or practical experience.
+        </p>
+
+    </div>
+
+</div>
+
+
+<div class="analysis-card">
+
+    {% if m3_skill_gap.partially_demonstrated_skills %}
+
+    <div class="skill-tags">
+
+        {% for skill in m3_skill_gap.partially_demonstrated_skills %}
+
+        <span class="skill-tag improve">
+            ↗ {{ skill }}
+        </span>
+
+        {% endfor %}
+
+    </div>
+
+    {% else %}
+
+    <p>
+        No partially demonstrated skills were identified.
+    </p>
+
+    {% endif %}
+
+</div>
+
+
+<!-- ===================================================== -->
+<!-- PREFERRED SKILLS -->
+<!-- ===================================================== -->
+
+<div class="section-header">
+
+    <div>
+
+        <span class="section-label">
+            PREFERRED SKILLS
+        </span>
+
+        <h2>
+            Preferred Skills
+        </h2>
+
+        <p>
+            Additional skills that may strengthen your profile
+            for the selected role.
+        </p>
+
+    </div>
+
+</div>
+
+
+<div class="analysis-card">
+
+    {% if m3_skill_gap.preferred_skills %}
+
+    <div class="skill-tags">
+
+        {% for skill in m3_skill_gap.preferred_skills %}
+
+        <span class="skill-tag required">
+            + {{ skill }}
+        </span>
+
+        {% endfor %}
+
+    </div>
+
+    {% else %}
+
+    <p>
+        No additional preferred skills were identified.
+    </p>
+
+    {% endif %}
+
+</div>
+
+
+<!-- ===================================================== -->
+<!-- EXPERIENCE AND QUALIFICATION GAPS -->
+<!-- ===================================================== -->
+
+<div class="section-header">
+
+    <div>
+
+        <span class="section-label">
+            EXPERIENCE & QUALIFICATIONS
+        </span>
+
+        <h2>
+            Other Gaps
+        </h2>
+
+    </div>
+
+</div>
+
+
+<div class="skill-summary-grid">
+
+
+    <!-- EXPERIENCE GAPS -->
+
+    <div class="analysis-card">
+
+        <span class="analysis-label">
+            EXPERIENCE GAPS
+        </span>
+
+        <h3>
+            Experience to Strengthen
+        </h3>
+
+        {% if m3_skill_gap.experience_gaps %}
+
+        <div class="skill-tags">
+
+            {% for gap in m3_skill_gap.experience_gaps %}
+
+            <span class="skill-tag missing">
+                → {{ gap }}
+            </span>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <p>
+            No specific experience gaps were identified.
+        </p>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- QUALIFICATION GAPS -->
+
+    <div class="analysis-card">
+
+        <span class="analysis-label">
+            QUALIFICATION GAPS
+        </span>
+
+        <h3>
+            Qualifications to Check
+        </h3>
+
+        {% if m3_skill_gap.qualification_gaps %}
+
+        <div class="skill-tags">
+
+            {% for gap in m3_skill_gap.qualification_gaps %}
+
+            <span class="skill-tag missing">
+                → {{ gap }}
+            </span>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <p>
+            No specific qualification gaps were identified.
+        </p>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+
+<!-- ===================================================== -->
+<!-- WHY THESE GAPS MATTER -->
+<!-- ===================================================== -->
+
+<div class="section-header">
+
+    <div>
+
+        <span class="section-label">
+            GAP EXPLANATIONS
+        </span>
+
+        <h2>
+            Why These Gaps Matter
+        </h2>
+
+        <p>
+            Understand why the identified skills are relevant
+            to the selected role.
+        </p>
+
+    </div>
+
+</div>
+
+
+<div class="recommendations-card">
+
+    {% if m3_skill_gap.gap_explanations %}
+
+        {% for explanation in m3_skill_gap.gap_explanations %}
+
+        <div class="recommendation-item">
+
+            <div class="recommendation-number">
+                {{ loop.index }}
+            </div>
+
+            <div>
+
+                {% if explanation is mapping %}
+
+                <h3>
+                    {{ explanation.skill or "Skill / Requirement" }}
+                </h3>
+
+                <p>
+                    {{ explanation.reason or "" }}
+                </p>
+
+                {% else %}
+
+                <p>
+                    {{ explanation }}
+                </p>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    {% else %}
+
+    <p>
+        No detailed gap explanations are available.
+    </p>
+
+    {% endif %}
+
+</div>
+
+
+<!-- ===================================================== -->
+<!-- M3.1 PERSONALIZED RECOMMENDATIONS -->
+<!-- ===================================================== -->
+
+<div class="section-header">
+
+    <div>
+
+        <span class="section-label">
+            M3.1 AI RECOMMENDATIONS
+        </span>
+
+        <h2>
+            Personalized Recommendations
+        </h2>
+
+        <p>
+            Practical actions you can take to improve your
+            alignment with the selected role.
+        </p>
+
+    </div>
+
+</div>
+
+
+<div class="recommendations-card">
+
+    {% if m3_skill_gap.recommendations %}
+
+        {% for recommendation in m3_skill_gap.recommendations %}
+
+        <div class="recommendation-item">
+
+            <div class="recommendation-number">
+                {{ loop.index }}
+            </div>
+
+            <div>
+
+                <p>
+                    {{ recommendation }}
+                </p>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    {% else %}
+
+    <p>
+        No personalized recommendations are available yet.
+    </p>
+
+    {% endif %}
+
+</div>
+
+
+{% endif %}
+
+
+<!-- ===================================================== -->
+<!-- M2 TARGET ROLE -->
+<!-- ===================================================== -->
+
+{% if skill_gap.target_role %}
+
+<div class="section-header">
+
+    <div>
+
+        <span class="section-label">
+            M2 SKILL GAP
+        </span>
+
+        <h2>
+            General Career Skill Analysis
+        </h2>
+
+    </div>
+
+</div>
+
+
+<div class="upload-card">
+
+    <div class="upload-icon">
+        ◎
+    </div>
+
+    <div class="upload-content">
+
+        <span class="section-label">
+            TARGET CAREER
+        </span>
+
+        <h3>
+            {{ skill_gap.target_role }}
+        </h3>
+
+        <p>
+            Your general skill gap analysis is based on this career role.
+        </p>
+
+    </div>
+
+</div>
+
+{% endif %}
+
+
+<!-- ===================================================== -->
+<!-- M2 SKILL SUMMARY -->
+<!-- ===================================================== -->
+
+<div class="section-header">
+
+    <div>
+
+        <span class="section-label">
+            YOUR SKILLS
+        </span>
+
+        <h2>
+            Current Skill Profile
+        </h2>
+
+    </div>
+
+</div>
+
+
+<div class="skill-summary-grid">
+
+
+    <!-- CURRENT SKILLS -->
+
+    <div class="analysis-card">
+
+        <span class="analysis-label">
+            CURRENT SKILLS
+        </span>
+
+        <h3>
+            Skills You Have
+        </h3>
+
+        {% if skill_gap.current_skills %}
+
+        <div class="skill-tags">
+
+            {% for skill in skill_gap.current_skills %}
+
+            <span class="skill-tag">
+                ✓ {{ skill }}
+            </span>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <p>
+            No current skills were found in the analysis.
+        </p>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- REQUIRED SKILLS -->
+
+    <div class="analysis-card">
+
+        <span class="analysis-label">
+            REQUIRED SKILLS
+        </span>
+
+        <h3>
+            Skills Needed
+        </h3>
+
+        {% if skill_gap.required_skills %}
+
+        <div class="skill-tags">
+
+            {% for skill in skill_gap.required_skills %}
+
+            <span class="skill-tag required">
+                {{ skill }}
+            </span>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <p>
+            No required skills were identified.
+        </p>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+
+<!-- ===================================================== -->
+<!-- M2 MATCHING & MISSING SKILLS -->
+<!-- ===================================================== -->
+
+<div class="section-header">
+
+    <div>
+
+        <span class="section-label">
+            GAP ANALYSIS
+        </span>
+
+        <h2>
+            Your Skill Gaps
+        </h2>
+
+    </div>
+
+</div>
+
+
+<div class="skill-summary-grid">
+
+
+    <!-- MATCHING SKILLS -->
+
+    <div class="analysis-card">
+
+        <span class="analysis-label">
+            MATCHING SKILLS
+        </span>
+
+        <h3>
+            Skills You Already Match
+        </h3>
+
+        {% if skill_gap.matching_skills %}
+
+        <div class="skill-tags">
+
+            {% for skill in skill_gap.matching_skills %}
+
+            <span class="skill-tag">
+                ✓ {{ skill }}
+            </span>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <p>
+            No matching skills were identified.
+        </p>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- MISSING SKILLS -->
+
+    <div class="analysis-card">
+
+        <span class="analysis-label">
+            MISSING SKILLS
+        </span>
+
+        <h3>
+            Skills You Should Learn
+        </h3>
+
+        {% if skill_gap.missing_skills %}
+
+        <div class="skill-tags">
+
+            {% for skill in skill_gap.missing_skills %}
+
+            <span class="skill-tag missing">
+                → {{ skill }}
+            </span>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <p>
+            No major missing skills were identified.
+        </p>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+
+<!-- ===================================================== -->
+<!-- M2 SKILLS TO IMPROVE -->
+<!-- ===================================================== -->
+
+<div class="section-header">
+
+    <div>
+
+        <span class="section-label">
+            IMPROVEMENT AREAS
+        </span>
+
+        <h2>
+            Skills to Strengthen
+        </h2>
+
+    </div>
+
+</div>
+
+
+<div class="analysis-card">
+
+    {% if skill_gap.skills_to_improve %}
+
+    <div class="skill-tags">
+
+        {% for skill in skill_gap.skills_to_improve %}
+
+        <span class="skill-tag improve">
+            ↗ {{ skill }}
+        </span>
+
+        {% endfor %}
+
+    </div>
+
+    {% else %}
+
+    <p>
+        No specific improvement areas were identified.
+    </p>
+
+    {% endif %}
+
+</div>
+
+
+<!-- ===================================================== -->
+<!-- M2 RECOMMENDATIONS -->
+<!-- ===================================================== -->
+
+<div class="section-header">
+
+    <div>
+
+        <span class="section-label">
+            AI RECOMMENDATIONS
+        </span>
+
+        <h2>
+            Recommended Learning Direction
+        </h2>
+
+    </div>
+
+</div>
+
+
+<div class="recommendations-card">
+
+    {% if skill_gap.recommendations %}
+
+    {% for recommendation in skill_gap.recommendations %}
+
+    <div class="recommendation-item">
+
+        <div class="recommendation-number">
+            {{ loop.index }}
+        </div>
+
+        <div>
+
+            <p>
+                {{ recommendation }}
+            </p>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+    {% else %}
+
+    <p>
+        No recommendations are available yet.
+        Analyze your resume to generate personalized recommendations.
+    </p>
+
+    {% endif %}
+
+</div>
+
+
+<!-- ===================================================== -->
+<!-- DEVELOPMENT WORKFLOW -->
+<!-- ===================================================== -->
+
+<div class="section-header">
+
+    <div>
+
+        <span class="section-label">
+            DEVELOPMENT PLAN
+        </span>
+
+        <h2>
+            Improve Step by Step
+        </h2>
+
+    </div>
+
+</div>
+
+
+<div class="feature-card">
+
+    <div class="workflow">
+
+        <div class="workflow-step">
+
+            <div class="step-number">
+                1
+            </div>
+
+            <span>
+                Analyze Current Skills
+            </span>
+
+        </div>
+
+
+        <div class="workflow-line"></div>
+
+
+        <div class="workflow-step">
+
+            <div class="step-number">
+                2
+            </div>
+
+            <span>
+                Identify Skill Gaps
+            </span>
+
+        </div>
+
+
+        <div class="workflow-line"></div>
+
+
+        <div class="workflow-step">
+
+            <div class="step-number">
+                3
+            </div>
+
+            <span>
+                Learn Required Skills
+            </span>
+
+        </div>
+
+
+        <div class="workflow-line"></div>
+
+
+        <div class="workflow-step">
+
+            <div class="step-number">
+                4
+            </div>
+
+            <span>
+                Track Your Progress
+            </span>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+{% endblock %}

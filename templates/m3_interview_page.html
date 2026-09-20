@@ -1,0 +1,827 @@
+{% extends "base.html" %}
+
+{% block title %}
+CareerAI | Interview Preparation
+{% endblock %}
+
+{% block page_heading %}
+Interview Preparation
+{% endblock %}
+
+{% block content %}
+
+<!-- ===================================================== -->
+<!-- PAGE HEADER -->
+<!-- ===================================================== -->
+
+<div class="section-header">
+
+    <div>
+
+        <span class="section-label">
+            MILESTONE 3.3
+        </span>
+
+        <h2>
+            Interview Preparation
+        </h2>
+
+        <p>
+            Prepare for your selected internship or job using
+            personalized interview questions, preparation guidance,
+            and revision topics.
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- ===================================================== -->
+<!-- SELECTED JOB -->
+<!-- ===================================================== -->
+
+<div class="upload-card">
+
+    <div class="upload-icon">
+        🎤
+    </div>
+
+    <div class="upload-content">
+
+        <span class="section-label">
+            SELECTED OPPORTUNITY
+        </span>
+
+        <h3>
+            {{ selected_job.job_title or result.job_title or "Interview Preparation" }}
+        </h3>
+
+        {% if selected_job.company %}
+
+        <p>
+            <strong>
+                {{ selected_job.company }}
+            </strong>
+        </p>
+
+        {% endif %}
+
+        {% if selected_job.location %}
+
+        <p>
+            📍 {{ selected_job.location }}
+        </p>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+
+<!-- ===================================================== -->
+<!-- INTERVIEW PREPARATION INTRO -->
+<!-- ===================================================== -->
+
+<div class="feature-card" style="margin-top:20px;">
+
+    <h3>
+        Your Personalized Interview Plan
+    </h3>
+
+    <p style="
+        margin-top:8px;
+        line-height:1.7;
+    ">
+
+        CareerAI generated this preparation plan using your
+        student profile, the selected job requirements and
+        your available skill-gap analysis.
+
+    </p>
+
+</div>
+
+
+<!-- ===================================================== -->
+<!-- TECHNICAL QUESTIONS -->
+<!-- ===================================================== -->
+
+<div class="section-header">
+
+    <div>
+
+        <span class="section-label">
+            TECHNICAL
+        </span>
+
+        <h2>
+            Technical Questions
+        </h2>
+
+        <p>
+            Technical questions related to the technologies
+            and concepts required by this job.
+        </p>
+
+    </div>
+
+</div>
+
+
+{% if result.technical_questions %}
+
+<div class="feature-card">
+
+    {% for question in result.technical_questions %}
+
+    <div style="
+        padding:16px;
+        margin-bottom:12px;
+        border-radius:12px;
+        background:#f7f5fa;
+        border:1px solid #ebe5f2;
+    ">
+
+        <strong>
+            {{ loop.index }}.
+        </strong>
+
+        <span style="
+            margin-left:8px;
+            line-height:1.6;
+        ">
+            {{ question }}
+        </span>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% else %}
+
+<div class="feature-card">
+
+    <p>
+        No technical questions were generated.
+    </p>
+
+</div>
+
+{% endif %}
+
+
+<!-- ===================================================== -->
+<!-- RESUME QUESTIONS -->
+<!-- ===================================================== -->
+
+<div class="section-header">
+
+    <div>
+
+        <span class="section-label">
+            RESUME
+        </span>
+
+        <h2>
+            Resume-Based Questions
+        </h2>
+
+        <p>
+            Questions based on the information available
+            in your student profile and resume.
+        </p>
+
+    </div>
+
+</div>
+
+
+{% if result.resume_questions %}
+
+<div class="feature-card">
+
+    {% for question in result.resume_questions %}
+
+    <div style="
+        padding:16px;
+        margin-bottom:12px;
+        border-radius:12px;
+        background:#f7f5fa;
+        border:1px solid #ebe5f2;
+    ">
+
+        <strong>
+            {{ loop.index }}.
+        </strong>
+
+        <span style="
+            margin-left:8px;
+            line-height:1.6;
+        ">
+            {{ question }}
+        </span>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% else %}
+
+<div class="feature-card">
+
+    <p>
+        No resume-based questions were generated.
+    </p>
+
+</div>
+
+{% endif %}
+
+
+<!-- ===================================================== -->
+<!-- PROJECT QUESTIONS -->
+<!-- ===================================================== -->
+
+<div class="section-header">
+
+    <div>
+
+        <span class="section-label">
+            PROJECTS
+        </span>
+
+        <h2>
+            Project Questions
+        </h2>
+
+        <p>
+            Questions about projects present in your profile.
+        </p>
+
+    </div>
+
+</div>
+
+
+{% if result.project_questions %}
+
+<div class="feature-card">
+
+    {% for question in result.project_questions %}
+
+    <div style="
+        padding:16px;
+        margin-bottom:12px;
+        border-radius:12px;
+        background:#f7f5fa;
+        border:1px solid #ebe5f2;
+    ">
+
+        <strong>
+            {{ loop.index }}.
+        </strong>
+
+        <span style="
+            margin-left:8px;
+            line-height:1.6;
+        ">
+            {{ question }}
+        </span>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% else %}
+
+<div class="feature-card">
+
+    <p>
+        No project questions were generated.
+    </p>
+
+</div>
+
+{% endif %}
+
+
+<!-- ===================================================== -->
+<!-- ROLE-SPECIFIC QUESTIONS -->
+<!-- ===================================================== -->
+
+<div class="section-header">
+
+    <div>
+
+        <span class="section-label">
+            ROLE SPECIFIC
+        </span>
+
+        <h2>
+            Role-Specific Questions
+        </h2>
+
+        <p>
+            Questions based on the responsibilities of
+            the selected job.
+        </p>
+
+    </div>
+
+</div>
+
+
+{% if result.role_specific_questions %}
+
+<div class="feature-card">
+
+    {% for question in result.role_specific_questions %}
+
+    <div style="
+        padding:16px;
+        margin-bottom:12px;
+        border-radius:12px;
+        background:#f7f5fa;
+        border:1px solid #ebe5f2;
+    ">
+
+        <strong>
+            {{ loop.index }}.
+        </strong>
+
+        <span style="
+            margin-left:8px;
+            line-height:1.6;
+        ">
+            {{ question }}
+        </span>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% else %}
+
+<div class="feature-card">
+
+    <p>
+        No role-specific questions were generated.
+    </p>
+
+</div>
+
+{% endif %}
+
+
+<!-- ===================================================== -->
+<!-- HR QUESTIONS -->
+<!-- ===================================================== -->
+
+<div class="section-header">
+
+    <div>
+
+        <span class="section-label">
+            HR / GENERAL
+        </span>
+
+        <h2>
+            HR & General Questions
+        </h2>
+
+        <p>
+            Common questions for internship and entry-level interviews.
+        </p>
+
+    </div>
+
+</div>
+
+
+{% if result.hr_questions %}
+
+<div class="feature-card">
+
+    {% for question in result.hr_questions %}
+
+    <div style="
+        padding:16px;
+        margin-bottom:12px;
+        border-radius:12px;
+        background:#f7f5fa;
+        border:1px solid #ebe5f2;
+    ">
+
+        <strong>
+            {{ loop.index }}.
+        </strong>
+
+        <span style="
+            margin-left:8px;
+            line-height:1.6;
+        ">
+            {{ question }}
+        </span>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% else %}
+
+<div class="feature-card">
+
+    <p>
+        No HR questions were generated.
+    </p>
+
+</div>
+
+{% endif %}
+
+
+<!-- ===================================================== -->
+<!-- PREPARATION GUIDANCE -->
+<!-- ===================================================== -->
+
+<div class="section-header">
+
+    <div>
+
+        <span class="section-label">
+            PREPARATION
+        </span>
+
+        <h2>
+            Preparation Guidance
+        </h2>
+
+        <p>
+            Practical steps to help you prepare for the interview.
+        </p>
+
+    </div>
+
+</div>
+
+
+{% if result.preparation_guidance %}
+
+<div class="feature-card">
+
+    {% for guidance in result.preparation_guidance %}
+
+    <div style="
+        display:flex;
+        gap:12px;
+        align-items:flex-start;
+        padding:15px;
+        margin-bottom:12px;
+        border-radius:12px;
+        background:#edf7ed;
+        border:1px solid #d9ecd9;
+    ">
+
+        <div style="
+            font-size:18px;
+        ">
+            ✓
+        </div>
+
+        <div style="
+            line-height:1.6;
+        ">
+            {{ guidance }}
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% else %}
+
+<div class="feature-card">
+
+    <p>
+        No preparation guidance was generated.
+    </p>
+
+</div>
+
+{% endif %}
+
+
+<!-- ===================================================== -->
+<!-- REVISION TOPICS -->
+<!-- ===================================================== -->
+
+<div class="section-header">
+
+    <div>
+
+        <span class="section-label">
+            REVISION
+        </span>
+
+        <h2>
+            Topics to Revise
+        </h2>
+
+        <p>
+            Technical concepts to review before the interview.
+        </p>
+
+    </div>
+
+</div>
+
+
+{% if result.revision_topics %}
+
+<div class="feature-card">
+
+    <div style="
+        display:flex;
+        flex-wrap:wrap;
+        gap:10px;
+    ">
+
+        {% for topic in result.revision_topics %}
+
+        <span style="
+            padding:9px 14px;
+            border-radius:20px;
+            background:#f4f0fa;
+            border:1px solid #e6dff0;
+            color:#7652a8;
+            font-size:14px;
+            font-weight:600;
+        ">
+
+            📚 {{ topic }}
+
+        </span>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% else %}
+
+<div class="feature-card">
+
+    <p>
+        No revision topics were generated.
+    </p>
+
+</div>
+
+{% endif %}
+
+
+<!-- ===================================================== -->
+<!-- SKILL GAP PREPARATION -->
+<!-- ===================================================== -->
+
+<div class="section-header">
+
+    <div>
+
+        <span class="section-label">
+            SKILL GAP
+        </span>
+
+        <h2>
+            Skill-Gap Preparation
+        </h2>
+
+        <p>
+            Areas from your skill-gap analysis that should
+            receive attention before the interview.
+        </p>
+
+    </div>
+
+</div>
+
+
+{% if result.skill_gap_preparation %}
+
+<div class="feature-card">
+
+    {% for item in result.skill_gap_preparation %}
+
+    <div style="
+        padding:16px;
+        margin-bottom:12px;
+        border-radius:12px;
+        background:#fff8ed;
+        border:1px solid #f0dfbd;
+    ">
+
+        <div style="
+            font-weight:700;
+            margin-bottom:6px;
+            color:#8a5a00;
+        ">
+
+            🎯 Preparation Area
+
+        </div>
+
+        <p style="
+            line-height:1.6;
+        ">
+
+            {{ item }}
+
+        </p>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% else %}
+
+<div class="feature-card">
+
+    <p>
+        No specific skill-gap preparation was identified.
+    </p>
+
+</div>
+
+{% endif %}
+
+
+<!-- ===================================================== -->
+<!-- INTERVIEW WORKFLOW -->
+<!-- ===================================================== -->
+
+<div class="section-header">
+
+    <div>
+
+        <span class="section-label">
+            INTERVIEW WORKFLOW
+        </span>
+
+        <h2>
+            How CareerAI Prepared You
+        </h2>
+
+    </div>
+
+</div>
+
+
+<div class="feature-card">
+
+    <div class="workflow">
+
+
+        <!-- STEP 1 -->
+
+        <div class="workflow-step">
+
+            <div class="step-number">
+                1
+            </div>
+
+            <span>
+                Student Profile
+            </span>
+
+        </div>
+
+
+        <div class="workflow-line"></div>
+
+
+        <!-- STEP 2 -->
+
+        <div class="workflow-step">
+
+            <div class="step-number">
+                2
+            </div>
+
+            <span>
+                Selected Job
+            </span>
+
+        </div>
+
+
+        <div class="workflow-line"></div>
+
+
+        <!-- STEP 3 -->
+
+        <div class="workflow-step">
+
+            <div class="step-number">
+                3
+            </div>
+
+            <span>
+                Skill Gap
+            </span>
+
+        </div>
+
+
+        <div class="workflow-line"></div>
+
+
+        <!-- STEP 4 -->
+
+        <div class="workflow-step">
+
+            <div class="step-number">
+                4
+            </div>
+
+            <span>
+                Interview Preparation
+            </span>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<!-- ===================================================== -->
+<!-- ACTION BUTTONS -->
+<!-- ===================================================== -->
+
+<div style="
+    margin-top:25px;
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+    flex-wrap:wrap;
+">
+
+    <a href="{{ url_for('opportunities_page') }}"
+       style="
+            display:inline-flex;
+            align-items:center;
+            gap:8px;
+            padding:11px 18px;
+            border-radius:10px;
+            background:#7652a8;
+            color:white;
+            text-decoration:none;
+            font-size:14px;
+            font-weight:600;
+       ">
+
+        ← Back to Opportunities
+
+    </a>
+
+
+    <a href="{{ url_for('skill_gap_page', job_id=selected_job.job_id) }}"
+       style="
+            display:inline-flex;
+            align-items:center;
+            gap:8px;
+            padding:11px 18px;
+            border-radius:10px;
+            background:#2f7d5a;
+            color:white;
+            text-decoration:none;
+            font-size:14px;
+            font-weight:600;
+       ">
+
+        🔍 View Skill Gap
+
+    </a>
+
+</div>
+
+
+{% endblock %}

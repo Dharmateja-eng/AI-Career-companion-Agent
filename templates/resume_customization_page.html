@@ -1,0 +1,582 @@
+{% extends "base.html" %}
+
+{% block title %}
+CareerAI | Resume Customization
+{% endblock %}
+
+{% block content %}
+
+<div style="
+    max-width:1100px;
+    margin:0 auto;
+    padding:30px;
+">
+
+    <!-- PAGE HEADER -->
+    <div style="
+        margin-bottom:30px;
+    ">
+
+        <h1 style="
+            margin:0;
+            font-size:32px;
+            color:#222;
+        ">
+            Resume & Cover Letter Customization
+        </h1>
+
+        <p style="
+            margin-top:8px;
+            color:#666;
+            font-size:15px;
+        ">
+            AI-customized application materials for your selected job.
+        </p>
+
+    </div>
+
+
+    <!-- SELECTED JOB -->
+    <div style="
+        background:white;
+        border-radius:16px;
+        padding:24px;
+        margin-bottom:25px;
+        box-shadow:0 4px 18px rgba(0,0,0,0.06);
+        border:1px solid #eee;
+    ">
+
+        <div style="
+            display:flex;
+            justify-content:space-between;
+            align-items:flex-start;
+            gap:20px;
+            flex-wrap:wrap;
+        ">
+
+            <div>
+
+                <div style="
+                    color:#7652a8;
+                    font-size:13px;
+                    font-weight:600;
+                    margin-bottom:6px;
+                ">
+                    SELECTED OPPORTUNITY
+                </div>
+
+                <h2 style="
+                    margin:0;
+                    font-size:24px;
+                    color:#222;
+                ">
+                    {{ selected_job.job_title or selected_job.jobtitle }}
+                </h2>
+
+                <p style="
+                    margin:8px 0 0;
+                    color:#555;
+                ">
+                    {{ selected_job.company }}
+                </p>
+
+            </div>
+
+
+            <div style="
+                background:#f4effa;
+                color:#7652a8;
+                padding:8px 14px;
+                border-radius:20px;
+                font-size:13px;
+                font-weight:600;
+            ">
+                M3.2 Application Customization
+            </div>
+
+        </div>
+
+
+        <div style="
+            display:flex;
+            gap:20px;
+            flex-wrap:wrap;
+            margin-top:18px;
+            color:#666;
+            font-size:14px;
+        ">
+
+            {% if selected_job.location %}
+            <span>
+                📍 {{ selected_job.location }}
+            </span>
+            {% endif %}
+
+            {% if selected_job.experience %}
+            <span>
+                💼 {{ selected_job.experience }}
+            </span>
+            {% endif %}
+
+            {% if selected_job.education %}
+            <span>
+                🎓 {{ selected_job.education }}
+            </span>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <!-- RELEVANT SKILLS -->
+    <div style="
+        background:white;
+        border-radius:16px;
+        padding:24px;
+        margin-bottom:20px;
+        box-shadow:0 4px 18px rgba(0,0,0,0.06);
+        border:1px solid #eee;
+    ">
+
+        <h2 style="margin-top:0;">
+            🎯 Relevant Skills
+        </h2>
+
+        {% if result.relevant_skills %}
+
+        <div style="
+            display:flex;
+            flex-wrap:wrap;
+            gap:10px;
+        ">
+
+            {% for skill in result.relevant_skills %}
+
+            <span style="
+                background:#f0ebf7;
+                color:#7652a8;
+                padding:8px 13px;
+                border-radius:20px;
+                font-size:14px;
+                font-weight:600;
+            ">
+                {{ skill }}
+            </span>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <p style="color:#777;">
+            No directly relevant skills were identified.
+        </p>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- RELEVANT PROJECTS -->
+    <div style="
+        background:white;
+        border-radius:16px;
+        padding:24px;
+        margin-bottom:20px;
+        box-shadow:0 4px 18px rgba(0,0,0,0.06);
+        border:1px solid #eee;
+    ">
+
+        <h2 style="margin-top:0;">
+            📂 Relevant Projects
+        </h2>
+
+        {% if result.relevant_projects %}
+
+        <ul style="
+            line-height:1.8;
+            color:#444;
+        ">
+
+            {% for project in result.relevant_projects %}
+
+            <li>
+                {{ project }}
+            </li>
+
+            {% endfor %}
+
+        </ul>
+
+        {% else %}
+
+        <p style="color:#777;">
+            No directly relevant projects were identified.
+        </p>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- EXPERIENCE + CERTIFICATIONS -->
+    <div style="
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:20px;
+        margin-bottom:20px;
+    ">
+
+        <!-- EXPERIENCE -->
+        <div style="
+            background:white;
+            border-radius:16px;
+            padding:24px;
+            box-shadow:0 4px 18px rgba(0,0,0,0.06);
+            border:1px solid #eee;
+        ">
+
+            <h2 style="margin-top:0;">
+                💼 Relevant Experience
+            </h2>
+
+            {% if result.relevant_experience %}
+
+            <ul style="
+                line-height:1.8;
+                color:#444;
+            ">
+
+                {% for experience in result.relevant_experience %}
+
+                <li>
+                    {{ experience }}
+                </li>
+
+                {% endfor %}
+
+            </ul>
+
+            {% else %}
+
+            <p style="color:#777;">
+                No relevant work experience was identified.
+            </p>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- CERTIFICATIONS -->
+        <div style="
+            background:white;
+            border-radius:16px;
+            padding:24px;
+            box-shadow:0 4px 18px rgba(0,0,0,0.06);
+            border:1px solid #eee;
+        ">
+
+            <h2 style="margin-top:0;">
+                🏆 Relevant Certifications
+            </h2>
+
+            {% if result.relevant_certifications %}
+
+            <ul style="
+                line-height:1.8;
+                color:#444;
+            ">
+
+                {% for certification in result.relevant_certifications %}
+
+                <li>
+                    {{ certification }}
+                </li>
+
+                {% endfor %}
+
+            </ul>
+
+            {% else %}
+
+            <p style="color:#777;">
+                No directly relevant certifications were identified.
+            </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <!-- PRIORITY SECTIONS -->
+    <div style="
+        background:white;
+        border-radius:16px;
+        padding:24px;
+        margin-bottom:20px;
+        box-shadow:0 4px 18px rgba(0,0,0,0.06);
+        border:1px solid #eee;
+    ">
+
+        <h2 style="margin-top:0;">
+            📌 Resume Sections to Prioritize
+        </h2>
+
+        {% if result.priority_sections %}
+
+        <div style="
+            display:flex;
+            flex-wrap:wrap;
+            gap:10px;
+        ">
+
+            {% for section in result.priority_sections %}
+
+            <span style="
+                background:#eef5ff;
+                color:#315b8a;
+                padding:8px 13px;
+                border-radius:20px;
+                font-size:14px;
+            ">
+                {{ section }}
+            </span>
+
+            {% endfor %}
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- IMPROVED BULLET POINTS -->
+    <div style="
+        background:white;
+        border-radius:16px;
+        padding:24px;
+        margin-bottom:20px;
+        box-shadow:0 4px 18px rgba(0,0,0,0.06);
+        border:1px solid #eee;
+    ">
+
+        <h2 style="margin-top:0;">
+            ✍️ Improved Resume Bullet Points
+        </h2>
+
+        {% if result.improved_bullet_points %}
+
+        {% for bullet in result.improved_bullet_points %}
+
+        <div style="
+            background:#f8f8f8;
+            border-left:4px solid #7652a8;
+            padding:15px 18px;
+            margin-bottom:12px;
+            border-radius:8px;
+            line-height:1.6;
+            color:#444;
+        ">
+            {{ bullet }}
+        </div>
+
+        {% endfor %}
+
+        {% else %}
+
+        <p style="color:#777;">
+            No bullet point improvements were generated.
+        </p>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- KEYWORDS -->
+    <div style="
+        background:white;
+        border-radius:16px;
+        padding:24px;
+        margin-bottom:20px;
+        box-shadow:0 4px 18px rgba(0,0,0,0.06);
+        border:1px solid #eee;
+    ">
+
+        <h2 style="margin-top:0;">
+            🔑 Recommended Keywords
+        </h2>
+
+        {% if result.recommended_keywords %}
+
+        <div style="
+            display:flex;
+            flex-wrap:wrap;
+            gap:10px;
+        ">
+
+            {% for keyword in result.recommended_keywords %}
+
+            <span style="
+                background:#fff4df;
+                color:#9a6500;
+                padding:8px 13px;
+                border-radius:20px;
+                font-size:14px;
+                font-weight:600;
+            ">
+                {{ keyword }}
+            </span>
+
+            {% endfor %}
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- TAILORED RESUME SUMMARY -->
+    <div style="
+        background:white;
+        border-radius:16px;
+        padding:24px;
+        margin-bottom:20px;
+        box-shadow:0 4px 18px rgba(0,0,0,0.06);
+        border:1px solid #eee;
+    ">
+
+        <h2 style="margin-top:0;">
+            📄 Tailored Resume Summary
+        </h2>
+
+        <div style="
+            background:#f8f6fb;
+            padding:20px;
+            border-radius:10px;
+            line-height:1.7;
+            color:#333;
+        ">
+            {{ result.tailored_resume_summary }}
+        </div>
+
+    </div>
+
+
+    <!-- COVER LETTER -->
+    <div style="
+        background:white;
+        border-radius:16px;
+        padding:24px;
+        margin-bottom:20px;
+        box-shadow:0 4px 18px rgba(0,0,0,0.06);
+        border:1px solid #eee;
+    ">
+
+        <h2 style="margin-top:0;">
+            💌 Tailored Cover Letter
+        </h2>
+
+        <div style="
+            background:#fafafa;
+            padding:25px;
+            border-radius:10px;
+            line-height:1.8;
+            white-space:pre-line;
+            color:#333;
+        ">
+            {{ result.cover_letter }}
+        </div>
+
+    </div>
+
+
+    <!-- REVIEW NOTES -->
+    <div style="
+        background:white;
+        border-radius:16px;
+        padding:24px;
+        margin-bottom:25px;
+        box-shadow:0 4px 18px rgba(0,0,0,0.06);
+        border:1px solid #eee;
+    ">
+
+        <h2 style="margin-top:0;">
+            📝 Review Notes
+        </h2>
+
+        {% if result.review_notes %}
+
+        <ul style="
+            line-height:1.8;
+            color:#555;
+        ">
+
+            {% for note in result.review_notes %}
+
+            <li>
+                {{ note }}
+            </li>
+
+            {% endfor %}
+
+        </ul>
+
+        {% else %}
+
+        <p style="color:#777;">
+            No additional review notes.
+        </p>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- ACTIONS -->
+    <div style="
+        display:flex;
+        gap:12px;
+        flex-wrap:wrap;
+    ">
+
+        <a href="{{ url_for('opportunities_page') }}"
+           style="
+                display:inline-flex;
+                align-items:center;
+                padding:12px 20px;
+                border-radius:10px;
+                background:#7652a8;
+                color:white;
+                text-decoration:none;
+                font-weight:600;
+           ">
+            ← Back to Opportunities
+        </a>
+
+        <a href="{{ url_for('skill_gap_page', job_id=selected_job.job_id) }}"
+           style="
+                display:inline-flex;
+                align-items:center;
+                padding:12px 20px;
+                border-radius:10px;
+                background:#f0ebf7;
+                color:#7652a8;
+                text-decoration:none;
+                font-weight:600;
+           ">
+            🔍 View Skill Gap
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CareerAI | Create Account</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body class="login-page">
+
+    <div class="login-container">
+
+        <!-- Left Section -->
+        <div class="login-intro">
+
+            <div class="login-brand">
+                <div class="brand-icon">✦</div>
+                <span>CareerAI</span>
+            </div>
+
+            <div class="login-message">
+
+                <span class="eyebrow">
+                    START YOUR JOURNEY
+                </span>
+
+                <h1>
+                    Build your future with CareerAI.
+                </h1>
+
+                <p>
+                    Create your account and let AI help you
+                    understand your skills, discover opportunities,
+                    and prepare for your career.
+                </p>
+
+            </div>
+
+            <div class="login-footer">
+                Intelligent career guidance. Built for students.
+            </div>
+
+        </div>
+
+
+        <!-- Signup Form -->
+        <div class="login-form-section">
+
+            <div class="login-form-container">
+
+                <div class="mobile-brand">
+                    <div class="brand-icon">✦</div>
+                    <strong>CareerAI</strong>
+                </div>
+
+                <span class="form-label">
+                    GET STARTED
+                </span>
+
+                <h2>
+                    Create your account
+                </h2>
+
+                <p class="form-description">
+                    Start your personalized career journey.
+                </p>
+                {% if error %}
+    <div class="form-error">
+        {{ error }}
+    </div>
+{% endif %}
+
+
+                <form method="POST" action="/signup">
+
+                    <!-- Name -->
+                    <div class="input-group">
+
+                        <label for="name">
+                            Full name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            placeholder="Enter your name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Email -->
+                    <div class="input-group">
+
+                        <label for="email">
+                            Email address
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="you@example.com"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Password -->
+                    <div class="input-group">
+
+                        <label for="password">
+                            Password
+                        </label>
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Create a password"
+                            required
+                            minlength="6"
+                        >
+
+                    </div>
+
+
+                    <!-- Confirm Password -->
+                    <div class="input-group">
+
+                        <label for="confirm_password">
+                            Confirm password
+                        </label>
+
+                        <input
+                            type="password"
+                            id="confirm_password"
+                            name="confirm_password"
+                            placeholder="Confirm your password"
+                            required
+                            minlength="6"
+                        >
+
+                    </div>
+
+
+                    <!-- Submit -->
+                    <button
+                        type="submit"
+                        class="login-button"
+                    >
+                        Create Account
+                    </button>
+
+                </form>
+
+
+                <div class="signup-text">
+
+                    Already have an account?
+
+                    <a href="{{ url_for('login') }}">
+                        Sign in
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

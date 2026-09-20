@@ -1,0 +1,570 @@
+{% extends "base.html" %}
+
+{% block title %}
+CareerAI | Settings
+{% endblock %}
+
+{% block page_heading %}
+Settings
+{% endblock %}
+
+{% block content %}
+
+<style>
+    .settings-page {
+        max-width: 1050px;
+        margin: 0 auto;
+        padding-bottom: 40px;
+    }
+
+    .settings-header {
+        margin-bottom: 25px;
+    }
+
+    .settings-header h2 {
+        margin: 0 0 8px;
+        color: #ffffff;
+        font-size: 28px;
+    }
+
+    .settings-header p {
+        margin: 0;
+        color: #aaa0bd;
+        font-size: 14px;
+    }
+
+    .settings-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .settings-card {
+        background: linear-gradient(
+            145deg,
+            #211737,
+            #2d1d4d
+        );
+        border: 1px solid rgba(192, 132, 252, 0.15);
+        border-radius: 18px;
+        padding: 24px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .settings-card.full-width {
+        grid-column: 1 / -1;
+    }
+
+    .settings-card-header {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+        margin-bottom: 22px;
+    }
+
+    .settings-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        background: rgba(192, 132, 252, 0.14);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+    }
+
+    .settings-card-header h3 {
+        margin: 0;
+        color: #ffffff;
+        font-size: 18px;
+    }
+
+    .settings-card-header p {
+        margin: 4px 0 0;
+        color: #9187a5;
+        font-size: 12px;
+    }
+
+    .profile-box {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        padding: 18px;
+        background: rgba(255, 255, 255, 0.035);
+        border-radius: 14px;
+    }
+
+    .profile-avatar {
+        width: 58px;
+        height: 58px;
+        border-radius: 50%;
+        background: linear-gradient(
+            135deg,
+            #8b5cf6,
+            #c084fc
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 23px;
+        font-weight: 700;
+    }
+
+    .profile-details h4 {
+        margin: 0 0 5px;
+        color: #ffffff;
+        font-size: 17px;
+    }
+
+    .profile-details p {
+        margin: 0;
+        color: #a9a0b8;
+        font-size: 13px;
+    }
+
+    .setting-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 15px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    .setting-row:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+
+    .setting-info h4 {
+        margin: 0 0 5px;
+        color: #eeeeee;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .setting-info p {
+        margin: 0;
+        color: #9187a5;
+        font-size: 12px;
+        line-height: 1.5;
+    }
+
+    .setting-value {
+        color: #c084fc;
+        font-size: 13px;
+        font-weight: 600;
+        text-align: right;
+    }
+
+    .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 11px;
+        border-radius: 20px;
+        background: rgba(192, 132, 252, 0.12);
+        color: #c084fc;
+        font-size: 11px;
+        font-weight: 600;
+    }
+
+    .status-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #c084fc;
+    }
+
+    .preference-list {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .preference-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 15px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    .preference-item:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+
+    .preference-text h4 {
+        margin: 0 0 5px;
+        color: #eeeeee;
+        font-size: 14px;
+    }
+
+    .preference-text p {
+        margin: 0;
+        color: #9187a5;
+        font-size: 12px;
+    }
+
+    .toggle {
+        position: relative;
+        width: 42px;
+        height: 23px;
+        flex-shrink: 0;
+    }
+
+    .toggle input {
+        display: none;
+    }
+
+    .toggle-slider {
+        position: absolute;
+        inset: 0;
+        cursor: pointer;
+        background: #4a4058;
+        border-radius: 30px;
+        transition: 0.3s;
+    }
+
+    .toggle-slider::before {
+        content: "";
+        position: absolute;
+        width: 17px;
+        height: 17px;
+        left: 3px;
+        top: 3px;
+        background: #ffffff;
+        border-radius: 50%;
+        transition: 0.3s;
+    }
+
+    .toggle input:checked + .toggle-slider {
+        background: #8b5cf6;
+    }
+
+    .toggle input:checked + .toggle-slider::before {
+        transform: translateX(19px);
+    }
+
+    .logout-card {
+        margin-top: 20px;
+        background: linear-gradient(
+            145deg,
+            #2b1829,
+            #351d32
+        );
+        border: 1px solid rgba(239, 68, 68, 0.18);
+        border-radius: 18px;
+        padding: 22px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+    .logout-info {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+
+    .logout-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        background: rgba(239, 68, 68, 0.12);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 19px;
+    }
+
+    .logout-info h3 {
+        margin: 0 0 5px;
+        color: #ffffff;
+        font-size: 16px;
+    }
+
+    .logout-info p {
+        margin: 0;
+        color: #a995a8;
+        font-size: 12px;
+    }
+
+    .logout-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 18px;
+        border-radius: 10px;
+        background: rgba(239, 68, 68, 0.12);
+        border: 1px solid rgba(239, 68, 68, 0.25);
+        color: #fca5a5;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 600;
+        transition: 0.2s ease;
+    }
+
+    .logout-button:hover {
+        background: rgba(239, 68, 68, 0.2);
+        transform: translateY(-1px);
+    }
+
+    @media (max-width: 800px) {
+        .settings-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .settings-card.full-width {
+            grid-column: auto;
+        }
+
+        .logout-card {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    }
+</style>
+
+
+<div class="settings-page">
+
+    <!-- Header -->
+    <div class="settings-header">
+        <h2>Settings</h2>
+        <p>Manage your CareerAI account and preferences.</p>
+    </div>
+
+
+    <!-- Settings Grid -->
+    <div class="settings-grid">
+
+
+        <!-- Profile -->
+        <div class="settings-card">
+
+            <div class="settings-card-header">
+
+                <div class="settings-icon">
+                    👤
+                </div>
+
+                <div>
+                    <h3>Profile</h3>
+                    <p>Your personal information</p>
+                </div>
+
+            </div>
+
+
+            <div class="profile-box">
+
+                <div class="profile-avatar">
+                    D
+                </div>
+
+                <div class="profile-details">
+
+                    <h4>Dharma</h4>
+
+                    <p>Student</p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Account -->
+        <div class="settings-card">
+
+            <div class="settings-card-header">
+
+                <div class="settings-icon">
+                    🔐
+                </div>
+
+                <div>
+                    <h3>Account</h3>
+                    <p>Account information</p>
+                </div>
+
+            </div>
+
+
+            <div class="setting-row">
+
+                <div class="setting-info">
+
+                    <h4>Account Status</h4>
+
+                    <p>Your CareerAI account is active.</p>
+
+                </div>
+
+                <div class="status-badge">
+
+                    <span class="status-dot"></span>
+
+                    Active
+
+                </div>
+
+            </div>
+
+
+            <div class="setting-row">
+
+                <div class="setting-info">
+
+                    <h4>Account Type</h4>
+
+                    <p>Your current account role.</p>
+
+                </div>
+
+                <div class="setting-value">
+                    Student
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- AI Preferences -->
+        <div class="settings-card full-width">
+
+            <div class="settings-card-header">
+
+                <div class="settings-icon">
+                    🤖
+                </div>
+
+                <div>
+                    <h3>AI Preferences</h3>
+                    <p>Customize your CareerAI experience</p>
+                </div>
+
+            </div>
+
+
+            <div class="preference-list">
+
+
+                <div class="preference-item">
+
+                    <div class="preference-text">
+
+                        <h4>Career Recommendations</h4>
+
+                        <p>
+                            Receive AI-powered career recommendations
+                            based on your profile.
+                        </p>
+
+                    </div>
+
+                    <label class="toggle">
+
+                        <input type="checkbox" checked>
+
+                        <span class="toggle-slider"></span>
+
+                    </label>
+
+                </div>
+
+
+                <div class="preference-item">
+
+                    <div class="preference-text">
+
+                        <h4>Job Matching</h4>
+
+                        <p>
+                            Use your skills and profile to find
+                            relevant job opportunities.
+                        </p>
+
+                    </div>
+
+                    <label class="toggle">
+
+                        <input type="checkbox" checked>
+
+                        <span class="toggle-slider"></span>
+
+                    </label>
+
+                </div>
+
+
+                <div class="preference-item">
+
+                    <div class="preference-text">
+
+                        <h4>AI Career Coach</h4>
+
+                        <p>
+                            Enable personalized guidance from
+                            the AI Career Coach.
+                        </p>
+
+                    </div>
+
+                    <label class="toggle">
+
+                        <input type="checkbox" checked>
+
+                        <span class="toggle-slider"></span>
+
+                    </label>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Logout -->
+    <div class="logout-card">
+
+        <div class="logout-info">
+
+            <div class="logout-icon">
+                🚪
+            </div>
+
+            <div>
+
+                <h3>Logout</h3>
+
+                <p>
+                    Sign out of your CareerAI account.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <a href="{{ url_for('logout') }}"
+           class="logout-button">
+
+            Logout →
+
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

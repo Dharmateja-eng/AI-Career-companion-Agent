@@ -1,0 +1,865 @@
+{% extends "base.html" %}
+
+{% block title %}
+CareerAI | Opportunities
+{% endblock %}
+
+{% block page_heading %}
+Opportunities
+{% endblock %}
+
+{% block content %}
+
+<!-- PAGE HEADER -->
+
+<div class="section-header">
+
+    <div>
+
+        <span class="section-label">
+            OPPORTUNITIES
+        </span>
+
+        <h2>
+            Jobs & Internship Opportunities
+        </h2>
+
+        <p>
+            Discover opportunities that match your skills,
+            education and career goals.
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- AI MATCHING INTRO -->
+
+<div class="upload-card">
+
+    <div class="upload-icon">
+        ◆
+    </div>
+
+    <div class="upload-content">
+
+        <h3>
+            AI-Powered Job Matching
+        </h3>
+
+        <p>
+            CareerAI retrieves relevant opportunities from its
+            job knowledge base and evaluates how well they match
+            your profile.
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- MATCHING FEATURES -->
+
+<div class="section-header">
+
+    <div>
+
+        <span class="section-label">
+            JOB MATCHING
+        </span>
+
+        <h2>
+            How CareerAI Matches You
+        </h2>
+
+    </div>
+
+</div>
+
+
+<div class="agent-grid">
+
+    <!-- FEATURE 1 -->
+
+    <div class="feature-card">
+
+        <div class="feature-icon">
+            ◎
+        </div>
+
+        <h3>
+            Semantic Retrieval
+        </h3>
+
+        <p>
+            Relevant job postings are retrieved using
+            semantic similarity from the CareerAI job knowledge base.
+        </p>
+
+    </div>
+
+
+    <!-- FEATURE 2 -->
+
+    <div class="feature-card">
+
+        <div class="feature-icon">
+            ◈
+        </div>
+
+        <h3>
+            Compatibility Score
+        </h3>
+
+        <p>
+            Each opportunity receives a compatibility percentage
+            based on your profile and the job requirements.
+        </p>
+
+    </div>
+
+
+    <!-- FEATURE 3 -->
+
+    <div class="feature-card">
+
+        <div class="feature-icon">
+            ◆
+        </div>
+
+        <h3>
+            Matching Skills
+        </h3>
+
+        <p>
+            CareerAI identifies the skills you already have
+            that match the opportunity.
+        </p>
+
+    </div>
+
+
+    <!-- FEATURE 4 -->
+
+    <div class="feature-card">
+
+        <div class="feature-icon">
+            ◎
+        </div>
+
+        <h3>
+            Missing Skills
+        </h3>
+
+        <p>
+            You can see which skills may need improvement
+            for a particular opportunity.
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- PERSONALIZED OPPORTUNITIES -->
+
+<div class="section-header">
+
+    <div>
+
+        <span class="section-label">
+            YOUR MATCHES
+        </span>
+
+        <h2>
+            Jobs That Match You
+        </h2>
+
+        <p>
+            AI-ranked opportunities based on your resume and profile.
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- MATCH COUNT -->
+
+<div class="upload-card">
+
+    <div class="upload-content">
+
+        <span class="section-label">
+            MATCHING ENGINE
+        </span>
+
+        <h3>
+            {{ opportunities|length }} relevant opportunities found
+        </h3>
+
+    </div>
+
+</div>
+
+
+<!-- JOB MATCHES -->
+
+{% if opportunities %}
+
+    {% for job in opportunities %}
+
+    <div class="feature-card" style="margin-bottom: 20px;">
+
+        <!-- ================================= -->
+        <!-- JOB HEADER -->
+        <!-- ================================= -->
+
+        <div style="
+            display:flex;
+            justify-content:space-between;
+            align-items:flex-start;
+            gap:20px;
+            flex-wrap:wrap;
+        ">
+
+            <!-- JOB INFORMATION -->
+
+            <div style="flex:1;">
+
+                <span class="section-label">
+
+                    {{ job.category or "OPPORTUNITY" }}
+
+                </span>
+
+
+                <h3 style="
+                    margin-top:8px;
+                    margin-bottom:6px;
+                ">
+
+                    {{ job.title or "Job Opportunity" }}
+
+                </h3>
+
+
+                <p style="margin-bottom:6px;">
+
+                    <strong>
+                        {{ job.company or "Company" }}
+                    </strong>
+
+                </p>
+
+
+                {% if job.location %}
+
+                <p style="margin-bottom:6px;">
+
+                    📍 {{ job.location }}
+
+                </p>
+
+                {% endif %}
+
+
+                {% if job.payrate %}
+
+                <p>
+
+                    💰 {{ job.payrate }}
+
+                </p>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- ================================= -->
+            <!-- COMPATIBILITY PERCENTAGE -->
+            <!-- ================================= -->
+
+            <div style="
+                min-width:140px;
+                text-align:center;
+                padding:18px;
+                border-radius:16px;
+                background:#f4f0fa;
+                border:1px solid #e6dff0;
+            ">
+
+                <div style="
+                    font-size:30px;
+                    font-weight:700;
+                    color:#7652a8;
+                ">
+
+                    {{ "%.0f"|format(job.compatibility_score or 0) }}%
+
+                </div>
+
+
+                <div style="
+                    font-size:13px;
+                    margin-top:5px;
+                    color:#666;
+                ">
+
+                    Job Match
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================================= -->
+        <!-- M3.1 + M3.2 + M3.3 ACTION BUTTONS -->
+        <!-- ================================= -->
+
+        <div style="
+            margin-top:20px;
+            display:flex;
+            justify-content:flex-end;
+            gap:10px;
+            flex-wrap:wrap;
+        ">
+
+            <!-- M3.1 SKILL GAP -->
+
+            <a href="{{ job.skill_gap_url or url_for('skill_gap_page') }}"
+               style="
+                    display:inline-flex;
+                    align-items:center;
+                    gap:8px;
+                    padding:11px 18px;
+                    border-radius:10px;
+                    background:#7652a8;
+                    color:white;
+                    text-decoration:none;
+                    font-size:14px;
+                    font-weight:600;
+               ">
+
+                🔍 Analyze Skill Gap
+
+            </a>
+
+
+            <!-- M3.2 RESUME + COVER LETTER -->
+
+            <a href="{{ url_for('customize_application', job_id=job.jobid) }}"
+               style="
+                    display:inline-flex;
+                    align-items:center;
+                    gap:8px;
+                    padding:11px 18px;
+                    border-radius:10px;
+                    background:#2f7d5a;
+                    color:white;
+                    text-decoration:none;
+                    font-size:14px;
+                    font-weight:600;
+               ">
+
+                📄 Customize Application
+
+            </a>
+
+
+            <!-- M3.3 INTERVIEW PREPARATION -->
+
+            <a href="{{ url_for('prepare_interview', job_id=job.jobid) }}"
+               style="
+                    display:inline-flex;
+                    align-items:center;
+                    gap:8px;
+                    padding:11px 18px;
+                    border-radius:10px;
+                    background:#b26a00;
+                    color:white;
+                    text-decoration:none;
+                    font-size:14px;
+                    font-weight:600;
+               ">
+
+                🎤 Prepare for Interview
+
+            </a>
+
+        </div>
+
+
+        <!-- ================================= -->
+        <!-- SCORE BAR -->
+        <!-- ================================= -->
+
+        <div style="
+            margin-top:20px;
+        ">
+
+            <div style="
+                display:flex;
+                justify-content:space-between;
+                margin-bottom:8px;
+                font-size:13px;
+            ">
+
+                <span>
+                    Compatibility
+                </span>
+
+
+                <strong>
+                    {{ "%.0f"|format(job.compatibility_score or 0) }}%
+                </strong>
+
+            </div>
+
+
+            <div style="
+                width:100%;
+                height:10px;
+                background:#e8e4ee;
+                border-radius:10px;
+                overflow:hidden;
+            ">
+
+                <div style="
+                    width: {{ job.compatibility_score or 0 }}%;
+                    height:100%;
+                    background:#7652a8;
+                    border-radius:10px;
+                    transition:width 0.5s ease;
+                "></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================================= -->
+        <!-- MATCHING SKILLS -->
+        <!-- ================================= -->
+
+        {% if job.matching_skills %}
+
+        <div style="
+            margin-top:20px;
+        ">
+
+            <h4>
+                Matching Skills
+            </h4>
+
+
+            <div style="
+                display:flex;
+                flex-wrap:wrap;
+                gap:8px;
+                margin-top:10px;
+            ">
+
+                {% for skill in job.matching_skills %}
+
+                <span style="
+                    padding:7px 12px;
+                    border-radius:20px;
+                    background:#edf7ed;
+                    font-size:13px;
+                    color:#27632a;
+                ">
+
+                    ✓ {{ skill }}
+
+                </span>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+        {% endif %}
+
+
+        <!-- ================================= -->
+        <!-- MISSING SKILLS -->
+        <!-- ================================= -->
+
+        {% if job.missing_skills %}
+
+        <div style="
+            margin-top:20px;
+        ">
+
+            <h4>
+                Skills to Improve
+            </h4>
+
+
+            <div style="
+                display:flex;
+                flex-wrap:wrap;
+                gap:8px;
+                margin-top:10px;
+            ">
+
+                {% for skill in job.missing_skills %}
+
+                <span style="
+                    padding:7px 12px;
+                    border-radius:20px;
+                    background:#fff1f1;
+                    font-size:13px;
+                    color:#9b3030;
+                ">
+
+                    → {{ skill }}
+
+                </span>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+        {% endif %}
+
+
+        <!-- ================================= -->
+        <!-- REASONING -->
+        <!-- ================================= -->
+
+        {% if job.reasoning %}
+
+        <div style="
+            margin-top:20px;
+            padding:15px;
+            border-radius:12px;
+            background:#f7f5fa;
+            border:1px solid #ebe5f2;
+        ">
+
+            <h4>
+                Why this job matches you
+            </h4>
+
+
+            <p style="
+                margin-top:8px;
+                line-height:1.6;
+            ">
+
+                {{ job.reasoning }}
+
+            </p>
+
+        </div>
+
+        {% endif %}
+
+
+        <!-- ================================= -->
+        <!-- JOB DESCRIPTION -->
+        <!-- ================================= -->
+
+        {% if job.description %}
+
+        <div style="
+            margin-top:20px;
+        ">
+
+            <h4>
+                Job Description
+            </h4>
+
+
+            <p style="
+                margin-top:8px;
+                line-height:1.6;
+            ">
+
+                {{ job.description }}
+
+            </p>
+
+        </div>
+
+        {% endif %}
+
+
+        <!-- ================================= -->
+        <!-- JOB DETAILS -->
+        <!-- ================================= -->
+
+        <div style="
+            margin-top:20px;
+            display:grid;
+            grid-template-columns:
+                repeat(auto-fit,minmax(180px,1fr));
+            gap:12px;
+        ">
+
+
+            <!-- EXPERIENCE -->
+
+            {% if job.experience %}
+
+            <div style="
+                padding:12px;
+                border-radius:10px;
+                background:#faf9fc;
+            ">
+
+                <strong>
+                    Experience
+                </strong>
+
+                <p style="
+                    margin-top:5px;
+                ">
+
+                    {{ job.experience }}
+
+                </p>
+
+            </div>
+
+            {% endif %}
+
+
+            <!-- EDUCATION -->
+
+            {% if job.education %}
+
+            <div style="
+                padding:12px;
+                border-radius:10px;
+                background:#faf9fc;
+            ">
+
+                <strong>
+                    Education
+                </strong>
+
+                <p style="
+                    margin-top:5px;
+                ">
+
+                    {{ job.education }}
+
+                </p>
+
+            </div>
+
+            {% endif %}
+
+
+            <!-- INDUSTRY -->
+
+            {% if job.industry %}
+
+            <div style="
+                padding:12px;
+                border-radius:10px;
+                background:#faf9fc;
+            ">
+
+                <strong>
+                    Industry
+                </strong>
+
+                <p style="
+                    margin-top:5px;
+                ">
+
+                    {{ job.industry }}
+
+                </p>
+
+            </div>
+
+            {% endif %}
+
+
+            <!-- CATEGORY -->
+
+            {% if job.category %}
+
+            <div style="
+                padding:12px;
+                border-radius:10px;
+                background:#faf9fc;
+            ">
+
+                <strong>
+                    Category
+                </strong>
+
+                <p style="
+                    margin-top:5px;
+                ">
+
+                    {{ job.category }}
+
+                </p>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+
+{% else %}
+
+    <!-- ================================= -->
+    <!-- NO MATCHES -->
+    <!-- ================================= -->
+
+    <div class="feature-card"
+         style="
+            text-align:center;
+            padding:60px 20px;
+         ">
+
+        <div style="
+            font-size:42px;
+            margin-bottom:15px;
+        ">
+
+            🎯
+
+        </div>
+
+
+        <h3>
+            No job matches available yet
+        </h3>
+
+
+        <p style="
+            margin-top:8px;
+        ">
+
+            Upload and analyze your resume to discover
+            relevant opportunities.
+
+        </p>
+
+    </div>
+
+{% endif %}
+
+
+<!-- ================================= -->
+<!-- WORKFLOW -->
+<!-- ================================= -->
+
+<div class="section-header">
+
+    <div>
+
+        <span class="section-label">
+            WORKFLOW
+        </span>
+
+        <h2>
+            How Job Matching Works
+        </h2>
+
+    </div>
+
+</div>
+
+
+<div class="feature-card">
+
+    <div class="workflow">
+
+
+        <!-- STEP 1 -->
+
+        <div class="workflow-step">
+
+            <div class="step-number">
+                1
+            </div>
+
+            <span>
+                Upload Resume
+            </span>
+
+        </div>
+
+
+        <div class="workflow-line"></div>
+
+
+        <!-- STEP 2 -->
+
+        <div class="workflow-step">
+
+            <div class="step-number">
+                2
+            </div>
+
+            <span>
+                Retrieve Jobs
+            </span>
+
+        </div>
+
+
+        <div class="workflow-line"></div>
+
+
+        <!-- STEP 3 -->
+
+        <div class="workflow-step">
+
+            <div class="step-number">
+                3
+            </div>
+
+            <span>
+                Calculate Match
+            </span>
+
+        </div>
+
+
+        <div class="workflow-line"></div>
+
+
+        <!-- STEP 4 -->
+
+        <div class="workflow-step">
+
+            <div class="step-number">
+                4
+            </div>
+
+            <span>
+                Explore Opportunities
+            </span>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+{% endblock %}
