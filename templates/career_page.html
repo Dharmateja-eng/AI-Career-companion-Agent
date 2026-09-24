@@ -1,0 +1,543 @@
+{% extends "base.html" %}
+
+{% block title %}
+CareerAI | Career
+{% endblock %}
+
+{% block page_heading %}
+Career Guidance
+{% endblock %}
+
+{% block content %}
+
+<!-- =========================================================
+     CAREER HEADER
+========================================================= -->
+
+<div class="section-header">
+    <div>
+        <span class="section-label">CAREER</span>
+
+        <h2>Your Career Direction</h2>
+
+        <p>
+            Explore career roles recommended from your profile,
+            resume, skills and experience.
+        </p>
+    </div>
+</div>
+
+
+<!-- =========================================================
+     AI CAREER RECOMMENDATIONS
+========================================================= -->
+
+<div class="upload-card">
+
+    <div class="upload-icon">
+        ◈
+    </div>
+
+    <div class="upload-content">
+
+        <h3>AI Career Recommendations</h3>
+
+        <p>
+            CareerAI analyzes your profile and resume to identify
+            suitable career roles and career paths.
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     RECOMMENDED ROLES
+========================================================= -->
+
+<div class="section-header">
+
+    <div>
+
+        <span class="section-label">
+            RECOMMENDED ROLES
+        </span>
+
+        <h2>
+            Roles Suitable For You
+        </h2>
+
+        <p>
+            These roles are suggested based on your current
+            skills, projects, education and career direction.
+        </p>
+
+    </div>
+
+</div>
+
+
+{% if career_analysis.recommended_roles %}
+
+<div class="agent-grid">
+
+    {% for role in career_analysis.recommended_roles %}
+
+    <div class="feature-card career-role-card">
+
+        <!-- Role Icon -->
+
+        <div class="feature-icon">
+            ◆
+        </div>
+
+
+        <!-- Role Name -->
+
+        <h3 class="career-role-title">
+            {{ role["role"] }}
+        </h3>
+
+
+        <!-- Why This Role -->
+
+        {% if role["reason"] %}
+
+        <div class="career-reason">
+
+            <div class="career-subtitle">
+                Why this role?
+            </div>
+
+            <p>
+                {{ role["reason"] }}
+            </p>
+
+        </div>
+
+        {% endif %}
+
+
+        <!-- Required Skills -->
+
+        {% if role["required_skills"] %}
+
+        <div class="career-skills-section">
+
+            <div class="career-subtitle">
+                Required Skills
+            </div>
+
+            <div class="career-skill-list">
+
+                {% for skill in role["required_skills"] %}
+
+                <span class="career-skill-tag">
+                    {{ skill }}
+                </span>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+        {% endif %}
+
+
+        <!-- Candidate Matching Skills -->
+
+        {% if role["candidate_matching_skills"] %}
+
+        <div class="career-skills-section">
+
+            <div class="career-subtitle">
+                Your Matching Skills
+            </div>
+
+            <div class="career-skill-list">
+
+                {% for skill in role["candidate_matching_skills"] %}
+
+                <span class="career-skill-tag career-matching-skill">
+                    {{ skill }}
+                </span>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+        {% endif %}
+
+
+        <!-- Footer -->
+
+        <div class="career-role-footer">
+
+            <span>
+                ✦ Recommended for your current profile
+            </span>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+
+{% else %}
+
+<!-- No Career Recommendations -->
+
+<div class="feature-card">
+
+    <div class="feature-icon">
+        ◎
+    </div>
+
+    <h3>
+        Career recommendations are not available yet
+    </h3>
+
+    <p>
+        Upload and analyze your resume to generate
+        personalized career recommendations.
+    </p>
+
+</div>
+
+{% endif %}
+
+
+
+<!-- =========================================================
+     CAREER PATHS
+========================================================= -->
+
+{% if career_analysis.career_paths %}
+
+<div class="section-header">
+
+    <div>
+
+        <span class="section-label">
+            CAREER PATHS
+        </span>
+
+        <h2>
+            Possible Career Paths
+        </h2>
+
+        <p>
+            These are possible directions you can explore
+            based on your current profile.
+        </p>
+
+    </div>
+
+</div>
+
+
+<div class="agent-grid">
+
+    {% for path in career_analysis.career_paths %}
+
+    <div class="feature-card career-path-card">
+
+        <div class="feature-icon">
+            ◇
+        </div>
+
+        <h3>
+            {{ path }}
+        </h3>
+
+        <p>
+            A possible career direction based on your
+            profile and current skill set.
+        </p>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% endif %}
+
+
+
+<!-- =========================================================
+     AI CAREER GUIDANCE
+========================================================= -->
+
+{% if career_analysis.recommendations %}
+
+<div class="section-header">
+
+    <div>
+
+        <span class="section-label">
+            AI GUIDANCE
+        </span>
+
+        <h2>
+            Career Recommendations
+        </h2>
+
+        <p>
+            Personalized suggestions generated from your
+            current profile and career goals.
+        </p>
+
+    </div>
+
+</div>
+
+
+<div class="feature-card career-guidance-card">
+
+    {% for recommendation in career_analysis.recommendations %}
+
+    <div class="recommendation-item">
+
+        <div class="recommendation-number">
+            {{ loop.index }}
+        </div>
+
+        <p>
+            {{ recommendation }}
+        </p>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% endif %}
+
+
+
+<!-- =========================================================
+     CAREER AREAS
+========================================================= -->
+
+<div class="section-header">
+
+    <div>
+
+        <span class="section-label">
+            CAREER AREAS
+        </span>
+
+        <h2>
+            Explore Career Areas
+        </h2>
+
+        <p>
+            Explore different areas of the software and
+            technology industry.
+        </p>
+
+    </div>
+
+</div>
+
+
+<div class="agent-grid">
+
+
+    <!-- Software Development -->
+
+    <div class="feature-card">
+
+        <div class="feature-icon">
+            ◈
+        </div>
+
+        <h3>
+            Software Development
+        </h3>
+
+        <p>
+            Build applications and software using
+            programming languages and development tools.
+        </p>
+
+    </div>
+
+
+    <!-- Data & AI -->
+
+    <div class="feature-card">
+
+        <div class="feature-icon">
+            ◇
+        </div>
+
+        <h3>
+            Data &amp; AI
+        </h3>
+
+        <p>
+            Work with data, machine learning,
+            artificial intelligence and analytics.
+        </p>
+
+    </div>
+
+
+    <!-- Web Development -->
+
+    <div class="feature-card">
+
+        <div class="feature-icon">
+            ◆
+        </div>
+
+        <h3>
+            Web Development
+        </h3>
+
+        <p>
+            Create modern websites and web applications
+            using frontend and backend technologies.
+        </p>
+
+    </div>
+
+
+    <!-- Cloud & DevOps -->
+
+    <div class="feature-card">
+
+        <div class="feature-icon">
+            ◎
+        </div>
+
+        <h3>
+            Cloud &amp; DevOps
+        </h3>
+
+        <p>
+            Work with cloud platforms, deployment,
+            automation and infrastructure.
+        </p>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     CAREER JOURNEY
+========================================================= -->
+
+<div class="section-header">
+
+    <div>
+
+        <span class="section-label">
+            YOUR JOURNEY
+        </span>
+
+        <h2>
+            Career Development
+        </h2>
+
+        <p>
+            Follow these steps to prepare yourself
+            for your target career.
+        </p>
+
+    </div>
+
+</div>
+
+
+<div class="feature-card">
+
+    <div class="workflow">
+
+
+        <!-- Step 1 -->
+
+        <div class="workflow-step">
+
+            <div class="step-number">
+                1
+            </div>
+
+            <span>
+                Understand Your Profile
+            </span>
+
+        </div>
+
+
+        <div class="workflow-line"></div>
+
+
+        <!-- Step 2 -->
+
+        <div class="workflow-step">
+
+            <div class="step-number">
+                2
+            </div>
+
+            <span>
+                Identify Suitable Roles
+            </span>
+
+        </div>
+
+
+        <div class="workflow-line"></div>
+
+
+        <!-- Step 3 -->
+
+        <div class="workflow-step">
+
+            <div class="step-number">
+                3
+            </div>
+
+            <span>
+                Build Required Skills
+            </span>
+
+        </div>
+
+
+        <div class="workflow-line"></div>
+
+
+        <!-- Step 4 -->
+
+        <div class="workflow-step">
+
+            <div class="step-number">
+                4
+            </div>
+
+            <span>
+                Prepare for Placements
+            </span>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+{% endblock %}

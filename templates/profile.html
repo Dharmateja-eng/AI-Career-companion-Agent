@@ -1,135 +1,361 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
+{% block title %}
+CareerAI | Home
+{% endblock %}
 
-    <meta charset="UTF-8">
+{% block page_heading %}
+Welcome to CareerAI
+{% endblock %}
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+{% block content %}
 
-    <title>AI Career Companion</title>
+<div class="hero-section">
 
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='style.css') }}">
+    <div class="hero-text">
 
-</head>
+        <span class="eyebrow">
+            ✦ AI-POWERED CAREER COMPANION
+        </span>
+
+        <h1>
+            Build your career
+            <span>with intelligence.</span>
+        </h1>
+
+        <p>
+            Upload your resume and let CareerAI understand your
+            skills, discover suitable opportunities, identify skill
+            gaps and prepare you for your next career step.
+        </p>
+
+    </div>
 
 
-<body>
+    <div class="upload-card">
 
-    <div class="container">
-
-        <div class="dashboard-header">
-
-            <h1>AI Career Companion</h1>
-
-            <p>
-                Upload your resume and let AI analyze your career profile
-            </p>
-
+        <div class="upload-icon">
+            📄
         </div>
 
+        <h2>Analyze your resume</h2>
 
+        <p>
+            Upload your resume in PDF format to create
+            your personalized career profile.
+        </p>
+
+
+        <!-- Resume Upload Form -->
         <form method="POST"
+              action="/"
               enctype="multipart/form-data">
 
-            <h2>📄 Upload Your Resume</h2>
+            <label class="file-upload"
+                   for="resume">
 
-            <p>
-                Our AI will extract your profile, analyze your resume,
-                identify areas for improvement and recommend suitable
-                career roles.
-            </p>
+                <span>Choose Resume PDF</span>
+
+                <small>
+                    Click here to select your resume
+                </small>
+
+            </label>
+
+            <input
+                type="file"
+                id="resume"
+                name="resume"
+                accept=".pdf"
+                required
+            >
 
 
-            <div class="upload-box">
+            <div class="selected-file"
+                 id="selectedFile">
 
-                <label for="resume">
-                    Select your resume PDF
-                </label>
-
-                <input
-                    type="file"
-                    id="resume"
-                    name="resume"
-                    accept=".pdf"
-                    required
-                >
-
-                <p>
-                    Supported format: PDF
-                </p>
+                No file selected
 
             </div>
 
 
-            <button type="submit">
-                🚀 Analyze My Resume
+            <button
+                type="submit"
+                class="primary-button">
+
+                ✦ Analyze My Resume
+
             </button>
 
         </form>
 
+    </div>
 
-        <div class="form-card">
-
-            <h2>🤖 What Our AI Will Do</h2>
-
-            <div class="agent-grid">
-
-                <div class="agent-card">
-
-                    <h3>📄 Resume Agent</h3>
-
-                    <p>
-                        Extracts your profile and evaluates
-                        your resume performance.
-                    </p>
-
-                </div>
+</div>
 
 
-                <div class="agent-card">
+<div class="section-header">
 
-                    <h3>🧠 Skill Gap Agent</h3>
+    <div>
 
-                    <p>
-                        Identifies skills you need to improve
-                        for your career goals.
-                    </p>
+        <span class="section-label">
+            YOUR AI CAREER TEAM
+        </span>
 
-                </div>
+        <h2>
+            Everything starts with understanding you.
+        </h2>
 
+    </div>
 
-                <div class="agent-card">
-
-                    <h3>💼 Career Agent</h3>
-
-                    <p>
-                        Finds suitable career and internship
-                        opportunities based on your profile.
-                    </p>
-
-                </div>
+</div>
 
 
-                <div class="agent-card">
+<div class="agent-grid">
 
-                    <h3>🎤 Interview Agent</h3>
+    <div class="feature-card">
 
-                    <p>
-                        Helps you prepare for interviews with
-                        personalized questions and feedback.
-                    </p>
+        <div class="feature-icon">
+            📄
+        </div>
 
-                </div>
+        <h3>
+            Resume Analysis
+        </h3>
 
+        <p>
+            Extracts your education, skills, projects,
+            certifications and other important information.
+        </p>
+
+    </div>
+
+
+    <div class="feature-card">
+
+        <div class="feature-icon">
+            ◈
+        </div>
+
+        <h3>
+            Career Discovery
+        </h3>
+
+        <p>
+            Recommends career roles that align with
+            your current profile and experience.
+        </p>
+
+    </div>
+
+
+    <div class="feature-card">
+
+        <div class="feature-icon">
+            ◎
+        </div>
+
+        <h3>
+            Skill Gap
+        </h3>
+
+        <p>
+            Identifies the skills you already have and
+            the areas you should improve.
+        </p>
+
+    </div>
+
+
+    <div class="feature-card">
+
+        <div class="feature-icon">
+            🎤
+        </div>
+
+        <h3>
+            Interview Preparation
+        </h3>
+
+        <p>
+            Generates personalized technical and
+            HR interview preparation.
+        </p>
+
+    </div>
+
+
+    <div class="feature-card">
+
+        <div class="feature-icon">
+            💼
+        </div>
+
+        <h3>
+            Internship Matching
+        </h3>
+
+        <p>
+            Uses semantic search and AI matching to
+            find suitable opportunities.
+        </p>
+
+    </div>
+
+
+    <div class="feature-card">
+
+        <div class="feature-icon">
+            🤖
+        </div>
+
+        <h3>
+            AI Career Guidance
+        </h3>
+
+        <p>
+            Get personalized guidance based on your
+            career profile and goals.
+        </p>
+
+    </div>
+
+</div>
+
+
+<div class="workflow-card">
+
+    <div>
+
+        <span class="section-label">
+            HOW IT WORKS
+        </span>
+
+        <h2>
+            From resume to career direction.
+        </h2>
+
+    </div>
+
+
+    <div class="workflow">
+
+        <div class="workflow-step">
+
+            <div class="step-number">
+                01
             </div>
+
+            <strong>
+                Upload
+            </strong>
+
+            <span>
+                Your resume
+            </span>
+
+        </div>
+
+
+        <div class="workflow-line"></div>
+
+
+        <div class="workflow-step">
+
+            <div class="step-number">
+                02
+            </div>
+
+            <strong>
+                Understand
+            </strong>
+
+            <span>
+                AI analyzes your profile
+            </span>
+
+        </div>
+
+
+        <div class="workflow-line"></div>
+
+
+        <div class="workflow-step">
+
+            <div class="step-number">
+                03
+            </div>
+
+            <strong>
+                Discover
+            </strong>
+
+            <span>
+                Roles and opportunities
+            </span>
+
+        </div>
+
+
+        <div class="workflow-line"></div>
+
+
+        <div class="workflow-step">
+
+            <div class="step-number">
+                04
+            </div>
+
+            <strong>
+                Improve
+            </strong>
+
+            <span>
+                Skills and interview readiness
+            </span>
 
         </div>
 
     </div>
 
-</body>
+</div>
 
-</html>
+
+{% endblock %}
+
+
+{% block scripts %}
+
+<script>
+
+const resumeInput =
+    document.getElementById("resume");
+
+const selectedFile =
+    document.getElementById("selectedFile");
+
+
+resumeInput.addEventListener(
+    "change",
+    function () {
+
+        if (this.files.length > 0) {
+
+            selectedFile.textContent =
+                this.files[0].name;
+
+        }
+
+        else {
+
+            selectedFile.textContent =
+                "No file selected";
+
+        }
+
+    }
+);
+
+</script>
+
+{% endblock %}

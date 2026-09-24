@@ -1,112 +1,156 @@
 # AI Career Companion Agent
 
-An AI-powered career assistance system designed to help students with **resume analysis, career recommendations, skill-gap identification, interview preparation, and internship matching**.
+An AI-powered career assistance platform that analyzes student resumes, builds structured candidate profiles, identifies skill gaps, provides career recommendations, prepares students for interviews, and matches candidates with relevant job opportunities using Retrieval-Augmented Generation (RAG).
 
-## 🚀 Features
+## Project Overview
 
-* 📄 Resume upload and PDF text extraction
-* 🤖 AI-based candidate profile extraction
-* 🎯 Career role recommendations
-* 📊 Skill-gap analysis
-* 💬 Interview question generation
-* 🔎 Semantic job retrieval using RAG
-* 🎯 Job-resume compatibility scoring
-* 📋 Matching and missing skill analysis
+The AI Career Companion Agent is designed to support students throughout their career preparation journey.
 
-## 📌 Milestones
+The system uses multiple AI agents and a RAG-based job matching pipeline to understand a candidate's resume, retrieve relevant job postings, compare candidate skills with job requirements, and provide compatibility scores and explanations.
 
-### Milestone 1 — Candidate Understanding
+## Key Features
 
-* Resume parsing and structured profile generation
-* Resume analysis and scoring
-* Career recommendations
-* Skill-gap analysis
-* Interview preparation
-* Initial multi-agent architecture
+- Resume upload and PDF text extraction
+- AI-powered resume analysis
+- Structured candidate profile generation
+- Career role recommendations
+- Skill gap analysis
+- AI-generated interview preparation
+- Internship/job knowledge base
+- Semantic job retrieval using RAG
+- Job-Resume Matching Agent
+- Compatibility scoring
+- Matching and missing skill identification
+- AI-generated matching explanations
+- Integrated career dashboard
+- Evaluation using multiple sample student profiles
 
-### Milestone 2 — Internship Matching
+---
 
-* Curated knowledge base of **200 job postings**
-* Job preprocessing and chunking
-* Gemini-based embeddings
-* FAISS semantic search
-* Job Retrieval Agent
-* Job Matching Agent
-* Compatibility scoring and reasoning
-* Validation using multiple sample resumes
+# Milestone 1 - Candidate Understanding
 
-## 🏗️ System Workflow
+Milestone 1 focused on understanding the candidate from their resume and building the initial AI career assistance pipeline.
+
+### Implemented Features
+
+- Resume PDF upload
+- Resume text extraction using PyPDF2
+- Candidate information extraction using Gemini
+- Structured candidate profile generation
+- Resume analysis and scoring
+- Career recommendations
+- Skill gap analysis
+- Interview preparation
+- Multiple AI career agents
+- End-to-end resume processing
+- Candidate profile storage in JSON
+
+### Milestone 1 Agents
+
+1. Resume Agent
+2. Career Agent
+3. Skill Gap Agent
+4. Interview Agent
+
+### Milestone 1 Workflow
 
 ```text
+Student
+   ↓
 Resume Upload
-      ↓
-Resume Parsing
-      ↓
-Candidate Profile
-      ↓
-AI Career Agents
-      ↓
-Job Retrieval (RAG)
-      ↓
-Job Matching
-      ↓
-Recommendations
-```
+   ↓
+Flask Backend
+   ↓
+PDF Text Extraction
+   ↓
+Gemini LLM
+   ↓
+Structured Candidate Profile
+   ↓
+Career / Skill Gap / Interview Agents
+   ↓
+Career Dashboard
+---
 
-## 🛠️ Tech Stack
+# Milestone 2 - RAG-Based Job Matching
 
-* **Python**
-* **Flask**
-* **Google Gemini**
-* **Gemini Embeddings**
-* **FAISS**
-* **PyPDF2**
-* **Pandas / NumPy**
-* **HTML / CSS / JavaScript**
-* **Git & GitHub**
+Milestone 2 extends the system with an internship/job knowledge base and a RAG-based semantic job matching pipeline.
 
-## 📂 Project Structure
+## 1. Job Knowledge Base
 
-```text
-AI-Career-companion-Agent/
-├── agents/
-├── app/
-├── data/
-├── docs/
-├── scripts/
-├── static/
-├── templates/
-├── requirements.txt
-└── README.md
-```
+A curated dataset of **200 technical job postings** was prepared from a sample job-posting dataset.
 
-## ▶️ Run Locally
+The dataset was cleaned, filtered, deduplicated, and organized into eight technical categories:
 
-```bash
-git clone https://github.com/Dharmateja-eng/AI-Career-companion-Agent.git
-cd AI-Career-companion-Agent
+- Software Development
+- Web Development
+- Data / AI
+- Mobile Development
+- Database / SQL
+- Cloud / DevOps
+- Testing
+- Analytics
 
-python -m venv venv
-venv\Scripts\activate
+The final knowledge base contains:
 
-pip install -r requirements.txt
-```
+- 200 job postings
+- Standardized job information
+- Cleaned and searchable job descriptions
+- No missing values after preprocessing
 
-Create a `.env` file:
+> Note: The dataset contains historical/sample job postings and is used as a knowledge base for demonstrating semantic job matching. It does not represent live job vacancies.
+
+## 2. RAG Pipeline
+
+The job postings are processed through a Retrieval-Augmented Generation (RAG) pipeline.
+
+### RAG Workflow
 
 ```text
-GEMINI_API_KEY=your_api_key_here
-```
+Job Postings
+     ↓
+Data Cleaning
+     ↓
+Job Chunking
+     ↓
+Text Embeddings
+     ↓
+FAISS Vector Index
+     ↓
+Semantic Retrieval
+     ↓
+Relevant Job Postings
 
-Run the application:
+---
 
-```bash
-python -m app.app
-```
+# Milestone 3 - AI Career Assistance Agents
 
-## 📈 Project Status
+Milestone 3 extends the AI Career Companion Agent with specialized agents that provide personalized career guidance, skill-gap analysis, resume and cover letter customization, interview preparation, and conversational career assistance.
 
-**Milestone 1: Completed ✅**
-**Milestone 2: Completed ✅**
+## 1. M3.1 - Skill Gap Analysis Agent
 
-More career-assistance features will be added in upcoming milestones.
+The Skill Gap Analysis Agent compares the student's candidate profile with the requirements of a selected job role.
+
+### Key Functions
+
+- Compares candidate skills with job requirements
+- Identifies missing skills
+- Identifies partially matched skills
+- Identifies existing/strong skills
+- Provides recommendations for improving skill gaps
+- Explains why a skill is important for the selected role
+
+### Workflow
+
+```text
+Student Profile
+       ↓
+Selected Job Requirements
+       ↓
+Skill Comparison
+       ↓
+Skill Gap Identification
+       ↓
+Missing / Partial / Existing Skills
+       ↓
+Personalized Improvement Recommendations

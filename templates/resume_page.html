@@ -1,0 +1,409 @@
+{% extends "base.html" %}
+
+{% block title %}
+CareerAI | Resume
+{% endblock %}
+
+{% block page_heading %}
+My Resume
+{% endblock %}
+
+{% block content %}
+
+<div class="section-header">
+    <div>
+        <span class="section-label">RESUME</span>
+        <h2>Resume & AI Analysis</h2>
+        <p>
+            Manage your resume and view the AI analysis generated from your latest upload.
+        </p>
+    </div>
+</div>
+
+
+<!-- Latest Resume -->
+
+<div class="resume-status-card">
+
+    <div class="resume-status-icon">
+        📄
+    </div>
+
+    <div class="resume-status-content">
+
+        {% if resume %}
+
+            <h3>{{ resume.filename }}</h3>
+
+            <p>
+                Your latest resume is uploaded and available for analysis.
+            </p>
+
+            {% if resume.uploaded_at %}
+            <span class="resume-date">
+                Uploaded: {{ resume.uploaded_at.strftime("%d %b %Y, %I:%M %p") }}
+            </span>
+            {% endif %}
+
+        {% else %}
+
+            <h3>No Resume Uploaded</h3>
+
+            <p>
+                Upload your PDF resume below to start your CareerAI analysis.
+            </p>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+
+<!-- Upload Resume -->
+
+<div class="upload-card">
+
+    <div class="upload-icon">
+        ▣
+    </div>
+
+    <div class="upload-content">
+
+        <h3>
+            {% if resume %}
+                Analyze Another Resume
+            {% else %}
+                Upload Your Resume
+            {% endif %}
+        </h3>
+
+        <p>
+            Upload a PDF resume to generate your personalized career profile,
+            career recommendations and job matches.
+        </p>
+
+        <form method="POST"
+              action="/"
+              enctype="multipart/form-data">
+
+            <label for="resume"
+                   class="primary-button">
+
+                Choose Resume
+
+            </label>
+
+            <input type="file"
+                   id="resume"
+                   name="resume"
+                   accept=".pdf"
+                   hidden
+                   required>
+
+            <p id="selected-file"
+               class="selected-file">
+            </p>
+
+            <button type="submit"
+                    class="primary-button">
+
+                Analyze Resume
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+{% if resume_analysis %}
+
+<!-- Resume Score -->
+
+<div class="section-header">
+
+    <div>
+        <span class="section-label">AI ANALYSIS</span>
+        <h2>Your Resume Analysis</h2>
+        <p>
+            CareerAI analyzed your latest resume using AI.
+        </p>
+    </div>
+
+</div>
+
+
+<div class="resume-analysis-grid">
+
+
+    <!-- Score -->
+
+    <div class="analysis-card score-card">
+
+        <span class="analysis-label">
+            RESUME SCORE
+        </span>
+
+        <div class="resume-score">
+
+            {{ resume_analysis.get("resume_score", 0) }}%
+
+        </div>
+
+        <div class="score-track">
+
+            <div class="score-progress"
+                 style="width: {{ resume_analysis.get('resume_score', 0) }}%;">
+            </div>
+
+        </div>
+
+        <p>
+            Overall resume quality based on the AI analysis.
+        </p>
+
+    </div>
+
+
+    <!-- Strengths -->
+
+    <div class="analysis-card">
+
+        <span class="analysis-label">
+            STRENGTHS
+        </span>
+
+        <h3>
+            What you're doing well
+        </h3>
+
+        {% set strengths = resume_analysis.get("strengths", []) %}
+
+        {% if strengths %}
+
+            <ul class="analysis-list">
+
+                {% for item in strengths %}
+
+                    <li>
+                        {{ item }}
+                    </li>
+
+                {% endfor %}
+
+            </ul>
+
+        {% else %}
+
+            <p>
+                No strengths were returned by the AI analysis.
+            </p>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- Weaknesses -->
+
+    <div class="analysis-card">
+
+        <span class="analysis-label">
+            AREAS TO IMPROVE
+        </span>
+
+        <h3>
+            Improve your resume
+        </h3>
+
+        {% set weaknesses = resume_analysis.get("weaknesses", []) %}
+
+        {% if weaknesses %}
+
+            <ul class="analysis-list">
+
+                {% for item in weaknesses %}
+
+                    <li>
+                        {{ item }}
+                    </li>
+
+                {% endfor %}
+
+            </ul>
+
+        {% else %}
+
+            <p>
+                No major weaknesses were identified.
+            </p>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- Improvements -->
+
+    <div class="analysis-card">
+
+        <span class="analysis-label">
+            SUGGESTIONS
+        </span>
+
+        <h3>
+            Recommended improvements
+        </h3>
+
+        {% set improvements = resume_analysis.get("improvements", []) %}
+
+        {% if improvements %}
+
+            <ul class="analysis-list">
+
+                {% for item in improvements %}
+
+                    <li>
+                        {{ item }}
+                    </li>
+
+                {% endfor %}
+
+            </ul>
+
+        {% else %}
+
+            <p>
+                No additional suggestions were returned.
+            </p>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endif %}
+
+
+<!-- What CareerAI Analyzes -->
+
+<div class="section-header">
+
+    <div>
+        <span class="section-label">
+            AI FEATURES
+        </span>
+
+        <h2>
+            What CareerAI Analyzes
+        </h2>
+
+    </div>
+
+</div>
+
+
+<div class="agent-grid">
+
+
+    <div class="feature-card">
+
+        <div class="feature-icon">
+            ◈
+        </div>
+
+        <h3>
+            Resume Analysis
+        </h3>
+
+        <p>
+            AI evaluates your resume and identifies
+            important strengths and areas for improvement.
+        </p>
+
+    </div>
+
+
+    <div class="feature-card">
+
+        <div class="feature-icon">
+            ◆
+        </div>
+
+        <h3>
+            Skills Extraction
+        </h3>
+
+        <p>
+            Your technical and professional skills are
+            extracted and organized into your profile.
+        </p>
+
+    </div>
+
+
+    <div class="feature-card">
+
+        <div class="feature-icon">
+            ◎
+        </div>
+
+        <h3>
+            Career Recommendations
+        </h3>
+
+        <p>
+            CareerAI analyzes your profile and suggests
+            suitable career roles.
+        </p>
+
+    </div>
+
+
+    <div class="feature-card">
+
+        <div class="feature-icon">
+            ✧
+        </div>
+
+        <h3>
+            Job Matching
+        </h3>
+
+        <p>
+            Your profile is compared with relevant
+            internship and job opportunities.
+        </p>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    const resumeInput = document.getElementById("resume");
+    const selectedFile = document.getElementById("selected-file");
+
+    resumeInput.addEventListener("change", function () {
+
+        if (this.files.length > 0) {
+
+            selectedFile.textContent =
+                "Selected: " + this.files[0].name;
+
+        } else {
+
+            selectedFile.textContent = "";
+
+        }
+
+    });
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,620 @@
+{% extends "base.html" %}
+
+{% block title %}
+CareerAI | Interview
+{% endblock %}
+
+{% block page_heading %}
+Interview Preparation
+{% endblock %}
+
+{% block content %}
+
+<!-- ======================================================
+     INTERVIEW HEADER
+====================================================== -->
+
+<div class="section-header">
+
+    <div>
+
+        <span class="section-label">
+            INTERVIEW
+        </span>
+
+        <h2>
+            Prepare With Confidence
+        </h2>
+
+        <p>
+            Practice interview questions generated from
+            your profile and target career role.
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     TARGET ROLE
+====================================================== -->
+
+<div class="upload-card">
+
+    <div class="upload-icon">
+        ◉
+    </div>
+
+    <div class="upload-content">
+
+        <h3>
+            AI Interview Preparation
+        </h3>
+
+        {% if interview.target_role %}
+
+            <p>
+                Your current interview preparation is focused on:
+            </p>
+
+            <h3 style="margin-top: 8px;">
+                {{ interview.target_role }}
+            </h3>
+
+        {% else %}
+
+            <p>
+                Upload and analyze your resume first to generate
+                personalized interview preparation.
+            </p>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     INTERVIEW QUESTIONS
+====================================================== -->
+
+{% if interview.technical_questions
+      or interview.conceptual_questions
+      or interview.hr_questions %}
+
+
+<div class="section-header">
+
+    <div>
+
+        <span class="section-label">
+            AI GENERATED
+        </span>
+
+        <h2>
+            Interview Questions
+        </h2>
+
+        <p>
+            These questions are generated based on your
+            career profile and target role.
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     TECHNICAL QUESTIONS
+====================================================== -->
+
+{% if interview.technical_questions %}
+
+<div class="analysis-card">
+
+    <h3>
+        💻 Technical Questions
+    </h3>
+
+    <p>
+        Questions related to the technical skills required
+        for your target role.
+    </p>
+
+
+    <div class="analysis-list">
+
+        {% for question in interview.technical_questions %}
+
+        <div class="recommendation-item">
+
+            <div class="recommendation-number">
+                {{ loop.index }}
+            </div>
+
+            <div>
+
+                {% if question is mapping %}
+
+                    <strong>
+                        {{ question.get("question", "Technical Question") }}
+                    </strong>
+
+                    {% if question.get("answer") %}
+
+                    <p>
+                        <strong>Suggested Answer:</strong>
+                        {{ question.get("answer") }}
+                    </p>
+
+                    {% endif %}
+
+                    {% if question.get("explanation") %}
+
+                    <p>
+                        {{ question.get("explanation") }}
+                    </p>
+
+                    {% endif %}
+
+                {% else %}
+
+                    <strong>
+                        {{ question }}
+                    </strong>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endif %}
+
+
+<!-- ======================================================
+     CONCEPTUAL QUESTIONS
+====================================================== -->
+
+{% if interview.conceptual_questions %}
+
+<div class="analysis-card">
+
+    <h3>
+        🧠 Conceptual Questions
+    </h3>
+
+    <p>
+        Questions to test your understanding of important
+        concepts related to your role.
+    </p>
+
+
+    <div class="analysis-list">
+
+        {% for question in interview.conceptual_questions %}
+
+        <div class="recommendation-item">
+
+            <div class="recommendation-number">
+                {{ loop.index }}
+            </div>
+
+            <div>
+
+                {% if question is mapping %}
+
+                    <strong>
+                        {{ question.get("question", "Conceptual Question") }}
+                    </strong>
+
+                    {% if question.get("answer") %}
+
+                    <p>
+                        <strong>Suggested Answer:</strong>
+                        {{ question.get("answer") }}
+                    </p>
+
+                    {% endif %}
+
+                    {% if question.get("explanation") %}
+
+                    <p>
+                        {{ question.get("explanation") }}
+                    </p>
+
+                    {% endif %}
+
+                {% else %}
+
+                    <strong>
+                        {{ question }}
+                    </strong>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endif %}
+
+
+<!-- ======================================================
+     HR QUESTIONS
+====================================================== -->
+
+{% if interview.hr_questions %}
+
+<div class="analysis-card">
+
+    <h3>
+        👔 HR Questions
+    </h3>
+
+    <p>
+        Common placement and HR questions to help you
+        prepare for the final interview rounds.
+    </p>
+
+
+    <div class="analysis-list">
+
+        {% for question in interview.hr_questions %}
+
+        <div class="recommendation-item">
+
+            <div class="recommendation-number">
+                {{ loop.index }}
+            </div>
+
+            <div>
+
+                {% if question is mapping %}
+
+                    <strong>
+                        {{ question.get("question", "HR Question") }}
+                    </strong>
+
+                    {% if question.get("answer") %}
+
+                    <p>
+                        <strong>Suggested Answer:</strong>
+                        {{ question.get("answer") }}
+                    </p>
+
+                    {% endif %}
+
+                    {% if question.get("explanation") %}
+
+                    <p>
+                        {{ question.get("explanation") }}
+                    </p>
+
+                    {% endif %}
+
+                {% else %}
+
+                    <strong>
+                        {{ question }}
+                    </strong>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endif %}
+
+
+<!-- ======================================================
+     PREPARATION TIPS
+====================================================== -->
+
+{% if interview.preparation_tips %}
+
+<div class="section-header">
+
+    <div>
+
+        <span class="section-label">
+            PREPARATION
+        </span>
+
+        <h2>
+            Preparation Tips
+        </h2>
+
+    </div>
+
+</div>
+
+
+<div class="recommendations-card">
+
+    {% for tip in interview.preparation_tips %}
+
+    <div class="recommendation-item">
+
+        <div class="recommendation-number">
+            {{ loop.index }}
+        </div>
+
+        <div>
+
+            {% if tip is mapping %}
+
+                <strong>
+                    {{ tip.get("title", "Preparation Tip") }}
+                </strong>
+
+                <p>
+                    {{ tip.get("description", tip.get("tip", "")) }}
+                </p>
+
+            {% else %}
+
+                <p>
+                    {{ tip }}
+                </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% endif %}
+
+
+{% else %}
+
+<!-- ======================================================
+     NO INTERVIEW DATA
+====================================================== -->
+
+<div class="feature-card">
+
+    <div class="feature-icon">
+        ✧
+    </div>
+
+    <h3>
+        Interview Preparation Not Available Yet
+    </h3>
+
+    <p>
+        Complete your resume analysis first. CareerAI will
+        then generate interview questions based on your
+        profile and recommended career role.
+    </p>
+
+</div>
+
+{% endif %}
+
+
+<!-- ======================================================
+     INTERVIEW PRACTICE AREAS
+====================================================== -->
+
+<div class="section-header">
+
+    <div>
+
+        <span class="section-label">
+            PRACTICE
+        </span>
+
+        <h2>
+            Practice Areas
+        </h2>
+
+    </div>
+
+</div>
+
+
+<div class="agent-grid">
+
+
+    <!-- Technical -->
+
+    <div class="feature-card">
+
+        <div class="feature-icon">
+            ?
+        </div>
+
+        <h3>
+            Technical Questions
+        </h3>
+
+        <p>
+            Practice programming, databases, web development,
+            AI and other technical questions.
+        </p>
+
+    </div>
+
+
+    <!-- Conceptual -->
+
+    <div class="feature-card">
+
+        <div class="feature-icon">
+            ◈
+        </div>
+
+        <h3>
+            Conceptual Questions
+        </h3>
+
+        <p>
+            Strengthen your understanding of important
+            technical concepts for your target role.
+        </p>
+
+    </div>
+
+
+    <!-- HR -->
+
+    <div class="feature-card">
+
+        <div class="feature-icon">
+            ✧
+        </div>
+
+        <h3>
+            HR Questions
+        </h3>
+
+        <p>
+            Prepare for common HR and placement questions
+            with confidence.
+        </p>
+
+    </div>
+
+
+    <!-- Readiness -->
+
+    <div class="feature-card">
+
+        <div class="feature-icon">
+            ✓
+        </div>
+
+        <h3>
+            Interview Readiness
+        </h3>
+
+        <p>
+            Practice regularly and improve your confidence
+            before placement interviews.
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     INTERVIEW JOURNEY
+====================================================== -->
+
+<div class="section-header">
+
+    <div>
+
+        <span class="section-label">
+            INTERVIEW JOURNEY
+        </span>
+
+        <h2>
+            Prepare Step by Step
+        </h2>
+
+    </div>
+
+</div>
+
+
+<div class="feature-card">
+
+    <div class="workflow">
+
+
+        <div class="workflow-step">
+
+            <div class="step-number">
+                1
+            </div>
+
+            <span>
+                Analyze Your Profile
+            </span>
+
+        </div>
+
+
+        <div class="workflow-line"></div>
+
+
+        <div class="workflow-step">
+
+            <div class="step-number">
+                2
+            </div>
+
+            <span>
+                Get AI Questions
+            </span>
+
+        </div>
+
+
+        <div class="workflow-line"></div>
+
+
+        <div class="workflow-step">
+
+            <div class="step-number">
+                3
+            </div>
+
+            <span>
+                Practice Answers
+            </span>
+
+        </div>
+
+
+        <div class="workflow-line"></div>
+
+
+        <div class="workflow-step">
+
+            <div class="step-number">
+                4
+            </div>
+
+            <span>
+                Improve & Repeat
+            </span>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+{% endblock %}

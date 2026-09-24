@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}CareerAI{% endblock %}</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">✦</div>
+
+            <div>
+                <h2>CareerAI</h2>
+                <span>Career Companion</span>
+            </div>
+        </div>
+
+
+        <nav class="navigation">
+
+            <!-- Home -->
+            <a href="{{ url_for('dashboard') }}"
+               class="nav-item">
+                <span>⌂</span>
+                <span>Home</span>
+            </a>
+
+
+            <!-- Profile -->
+            <a href="{{ url_for('profile_page') }}"
+               class="nav-item">
+                <span>♙</span>
+                <span>Profile</span>
+            </a>
+
+
+            <!-- Resume -->
+            <a href="{{ url_for('resume_page') }}"
+               class="nav-item">
+                <span>▣</span>
+                <span>Resume</span>
+            </a>
+
+
+            <!-- Career -->
+            <a href="{{ url_for('career_page') }}"
+               class="nav-item">
+                <span>◈</span>
+                <span>Career</span>
+            </a>
+
+
+            <!-- Opportunities -->
+            <a href="{{ url_for('opportunities_page') }}"
+               class="nav-item">
+                <span>◆</span>
+                <span>Opportunities</span>
+            </a>
+
+
+            <!-- Skill Gap -->
+            <a href="{{ url_for('skill_gap_page') }}"
+               class="nav-item">
+                <span>◎</span>
+                <span>Skill Gap</span>
+            </a>
+
+
+            <!-- Interview -->
+            <a href="{{ url_for('interview_page') }}"
+               class="nav-item">
+                <span>◉</span>
+                <span>Interview</span>
+            </a>
+
+
+            <!-- AI Career Coach -->
+            <a href="{{ url_for('career_coach_page') }}"
+               class="nav-item">
+                <span>✧</span>
+                <span>AI Career Coach</span>
+            </a>
+
+        </nav>
+
+
+        <!-- Sidebar Bottom -->
+
+        <div class="sidebar-bottom">
+
+            <a href="{{ url_for('settings_page') }}"
+               class="nav-item">
+                <span>⚙</span>
+                <span>Settings</span>
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- Main area -->
+
+    <main class="main-content">
+
+
+        <!-- Top bar -->
+
+        <header class="topbar">
+
+            <div class="page-heading">
+
+                <h1>
+                    {% block page_heading %}
+                    Career Dashboard
+                    {% endblock %}
+                </h1>
+
+                <p>
+                    Your personal AI-powered career companion
+                </p>
+
+            </div>
+
+
+            <div class="topbar-actions">
+
+                <button class="icon-button">
+                    🔍
+                </button>
+
+                <button class="icon-button">
+                    🔔
+                </button>
+
+
+                <div class="user-profile">
+
+                    <div class="avatar">
+                        D
+                    </div>
+
+                    <div class="user-info">
+
+                        <strong>
+                            Dharma
+                        </strong>
+
+                        <span>
+                            Student
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- Page content -->
+
+        <section class="page-content">
+
+            {% block content %}
+
+            {% endblock %}
+
+        </section>
+
+    </main>
+
+
+    {% block scripts %}
+    {% endblock %}
+
+</body>
+
+</html>

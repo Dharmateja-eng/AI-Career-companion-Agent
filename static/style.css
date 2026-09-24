@@ -895,3 +895,325 @@ button:active {
         display: none;
     }
 }
+/* ================================
+   LOGIN PAGE
+================================ */
+
+.login-page {
+    min-height: 100vh;
+
+    background: #f6f7fb;
+}
+
+
+.login-container {
+    min-height: 100vh;
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+}
+
+
+/* ================================
+   LOGIN INTRO
+================================ */
+
+.login-intro {
+    background: #111827;
+
+    color: white;
+
+    padding: 55px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: space-between;
+}
+
+
+.login-brand {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    font-size: 21px;
+
+    font-weight: bold;
+}
+
+
+.login-message {
+    max-width: 560px;
+}
+
+
+.login-message h1 {
+    font-size: 52px;
+
+    line-height: 1.08;
+
+    margin: 18px 0;
+}
+
+
+.login-message p {
+    color: #9ca3af;
+
+    font-size: 15px;
+
+    line-height: 1.8;
+
+    max-width: 500px;
+}
+
+
+.login-footer {
+    color: #6b7280;
+
+    font-size: 12px;
+}
+
+
+/* ================================
+   LOGIN FORM SECTION
+================================ */
+
+.login-form-section {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 40px;
+}
+
+
+.login-form-container {
+    width: 100%;
+
+    max-width: 430px;
+}
+
+
+.mobile-brand {
+    display: none;
+}
+
+
+.form-label {
+    font-size: 10px;
+
+    font-weight: bold;
+
+    letter-spacing: 1.5px;
+
+    color: #7c3aed;
+}
+
+
+.login-form-container h2 {
+    margin-top: 10px;
+
+    font-size: 30px;
+
+    color: #111827;
+}
+
+
+.form-description {
+    margin-top: 8px;
+
+    margin-bottom: 32px;
+
+    font-size: 14px;
+
+    color: #6b7280;
+}
+
+
+/* ================================
+   INPUTS
+================================ */
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+
+.input-group label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    color: #374151;
+}
+
+
+.input-group input {
+    width: 100%;
+
+    padding: 14px 15px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 10px;
+
+    background: white;
+
+    font-size: 14px;
+
+    outline: none;
+
+    transition: 0.2s;
+}
+
+
+.input-group input:focus {
+    border-color: #7c3aed;
+
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.08);
+}
+
+
+.input-group input::placeholder {
+    color: #9ca3af;
+}
+
+
+/* ================================
+   FORM OPTIONS
+================================ */
+
+.form-options {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 25px;
+
+    font-size: 12px;
+}
+
+
+.remember {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    color: #6b7280;
+}
+
+
+.form-options a,
+.signup-text a {
+    color: #7c3aed;
+
+    text-decoration: none;
+
+    font-weight: bold;
+}
+
+
+.form-options a:hover,
+.signup-text a:hover {
+    text-decoration: underline;
+}
+
+
+/* ================================
+   LOGIN BUTTON
+================================ */
+
+.login-button {
+    width: 100%;
+
+    padding: 14px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #7c3aed;
+
+    color: white;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+
+.login-button:hover {
+    background: #6d28d9;
+
+    transform: translateY(-1px);
+}
+
+
+/* ================================
+   SIGN UP
+================================ */
+
+.signup-text {
+    margin-top: 25px;
+
+    text-align: center;
+
+    font-size: 13px;
+
+    color: #6b7280;
+}
+
+
+/* ================================
+   LOGIN RESPONSIVE
+================================ */
+
+@media (max-width: 850px) {
+
+    .login-container {
+        grid-template-columns: 1fr;
+    }
+
+
+    .login-intro {
+        display: none;
+    }
+
+
+    .mobile-brand {
+        display: flex;
+
+        align-items: center;
+
+        gap: 10px;
+
+        margin-bottom: 45px;
+
+        font-size: 20px;
+    }
+
+
+    .login-form-section {
+        min-height: 100vh;
+    }
+
+}
