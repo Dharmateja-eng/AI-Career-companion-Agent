@@ -1,5 +1,4 @@
 import json
-import time
 
 
 class M3MockInterviewAgent:
@@ -19,48 +18,24 @@ class M3MockInterviewAgent:
     def __init__(self, client):
         self.client = client
 
-    def _generate_json(self, prompt, max_retries=3):
+    def _generate_json(self, prompt):
         """
-        Send a Gemini request with automatic retry handling
-        for temporary model availability errors.
+        Generate JSON using the central GeminiService.
+
+        GeminiService handles:
+        - model selection
+        - retry
+        - 429 quota errors
+        - 503 temporary errors
+        - model fallback
         """
 
-        last_error = None
+        response = self.client.generate(
+            prompt,
+            response_mime_type="application/json"
+        )
 
-        for attempt in range(max_retries):
-            try:
-                response = self.client.models.generate_content(
-                    model="gemini-3.1-flash-lite",
-                    contents=prompt,
-                    config={
-                        "response_mime_type": "application/json"
-                    }
-                )
-
-                return json.loads(response.text)
-
-            except Exception as e:
-                last_error = e
-
-                error_text = str(e)
-
-                # Retry temporary Gemini availability errors.
-                if "503" in error_text or "UNAVAILABLE" in error_text:
-                    if attempt < max_retries - 1:
-                        wait_time = 2 ** attempt
-
-                        print(
-                            f"Gemini temporarily unavailable. "
-                            f"Retrying in {wait_time} seconds..."
-                        )
-
-                        time.sleep(wait_time)
-                        continue
-
-                # For other errors, stop immediately.
-                raise
-
-        raise last_error
+        return json.loads(response.text)
 
     def generate_question(
         self,

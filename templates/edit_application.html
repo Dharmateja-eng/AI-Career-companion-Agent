@@ -1,0 +1,431 @@
+{% extends "base.html" %}
+
+{% block title %}CareerAI | Edit Application{% endblock %}
+
+{% block page_heading %}
+Edit Application
+{% endblock %}
+
+{% block content %}
+
+<div class="edit-application-page">
+
+    <!-- =====================================================
+         PAGE HEADER
+    ====================================================== -->
+
+    <div class="edit-application-header">
+
+        <span class="edit-eyebrow">
+            APPLICATION MANAGEMENT
+        </span>
+
+        <h1>✏️ Edit Application</h1>
+
+        <p>
+            Update your application details, deadlines, follow-ups,
+            and interview progress.
+        </p>
+
+    </div>
+
+
+    <!-- =====================================================
+         EDIT FORM
+    ====================================================== -->
+
+    <form method="POST" class="edit-application-form">
+
+
+        <!-- =================================================
+             APPLICATION DETAILS
+        ================================================== -->
+
+        <div class="edit-card">
+
+            <div class="edit-card-header">
+
+                <div>
+                    <h2>📋 Application Details</h2>
+
+                    <p>
+                        Update the company and internship information.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="edit-form-grid">
+
+
+                <!-- COMPANY -->
+
+                <div class="edit-form-group">
+
+                    <label for="company">
+                        Company Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="company"
+                        name="company"
+                        value="{{ application.company or '' }}"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- JOB TITLE -->
+
+                <div class="edit-form-group">
+
+                    <label for="job_title">
+                        Job / Internship Title
+                    </label>
+
+                    <input
+                        type="text"
+                        id="job_title"
+                        name="job_title"
+                        value="{{ application.job_title or '' }}"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- JOB DESCRIPTION -->
+
+                <div class="edit-form-group edit-full-width">
+
+                    <label for="job_description">
+                        Job Description
+                    </label>
+
+                    <textarea
+                        id="job_description"
+                        name="job_description"
+                        rows="4"
+                        placeholder="Enter the job or internship description..."
+                    >{{ application.job_description or '' }}</textarea>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             APPLICATION TIMELINE
+        ================================================== -->
+
+        <div class="edit-card">
+
+            <div class="edit-card-header">
+
+                <div>
+                    <h2>📅 Application Timeline</h2>
+
+                    <p>
+                        Manage application dates, deadlines, and follow-up reminders.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="edit-form-grid">
+
+
+                <!-- APPLICATION DATE -->
+
+                <div class="edit-form-group">
+
+                    <label for="application_date">
+                        Application Date
+                    </label>
+
+                    <input
+                        type="date"
+                        id="application_date"
+                        name="application_date"
+                        value="{% if application.application_date %}{{ application.application_date.strftime('%Y-%m-%d') }}{% endif %}"
+                    >
+
+                </div>
+
+
+                <!-- DEADLINE -->
+
+                <div class="edit-form-group">
+
+                    <label for="deadline">
+                        Application Deadline
+                    </label>
+
+                    <input
+                        type="date"
+                        id="deadline"
+                        name="deadline"
+                        value="{% if application.deadline %}{{ application.deadline.strftime('%Y-%m-%d') }}{% endif %}"
+                    >
+
+                </div>
+
+
+                <!-- FOLLOW-UP DATE -->
+
+                <div class="edit-form-group">
+
+                    <label for="follow_up_date">
+                        Follow-up Date
+                    </label>
+
+                    <input
+                        type="date"
+                        id="follow_up_date"
+                        name="follow_up_date"
+                        value="{{ application.follow_up_date.strftime('%Y-%m-%d') if application.follow_up_date else '' }}"
+                    >
+
+                    <small>
+                        Set a reminder for contacting the company or checking your application.
+                    </small>
+
+                </div>
+
+
+                <!-- APPLICATION STATUS -->
+
+                <div class="edit-form-group">
+
+                    <label for="status">
+                        Application Status
+                    </label>
+
+                    <select
+                        id="status"
+                        name="status"
+                    >
+
+                        <option value="Saved"
+                            {% if application.status == "Saved" %}selected{% endif %}>
+                            Saved
+                        </option>
+
+                        <option value="Planning to apply"
+                            {% if application.status == "Planning to apply" %}selected{% endif %}>
+                            Planning to apply
+                        </option>
+
+                        <option value="Applied"
+                            {% if application.status == "Applied" %}selected{% endif %}>
+                            Applied
+                        </option>
+
+                        <option value="Application under review"
+                            {% if application.status == "Application under review" %}selected{% endif %}>
+                            Application under review
+                        </option>
+
+                        <option value="Shortlisted"
+                            {% if application.status == "Shortlisted" %}selected{% endif %}>
+                            Shortlisted
+                        </option>
+
+                        <option value="Interview scheduled"
+                            {% if application.status == "Interview scheduled" %}selected{% endif %}>
+                            Interview scheduled
+                        </option>
+
+                        <option value="Interview completed"
+                            {% if application.status == "Interview completed" %}selected{% endif %}>
+                            Interview completed
+                        </option>
+
+                        <option value="Offer received"
+                            {% if application.status == "Offer received" %}selected{% endif %}>
+                            Offer received
+                        </option>
+
+                        <option value="Rejected"
+                            {% if application.status == "Rejected" %}selected{% endif %}>
+                            Rejected
+                        </option>
+
+                        <option value="Withdrawn"
+                            {% if application.status == "Withdrawn" %}selected{% endif %}>
+                            Withdrawn
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             INTERVIEW DETAILS
+        ================================================== -->
+
+        <div class="edit-card">
+
+            <div class="edit-card-header">
+
+                <div>
+                    <h2>🎤 Interview Details</h2>
+
+                    <p>
+                        Update your interview schedule and current interview status.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="edit-form-grid">
+
+
+                <!-- INTERVIEW DATE -->
+
+                <div class="edit-form-group">
+
+                    <label for="interview_date">
+                        Interview Date
+                    </label>
+
+                    <input
+                        type="date"
+                        id="interview_date"
+                        name="interview_date"
+                        value="{% if application.interview_date %}{{ application.interview_date.strftime('%Y-%m-%d') }}{% endif %}"
+                    >
+
+                </div>
+
+
+                <!-- INTERVIEW STATUS -->
+
+                <div class="edit-form-group">
+
+                    <label for="interview_status">
+                        Interview Status
+                    </label>
+
+                    <select
+                        id="interview_status"
+                        name="interview_status"
+                    >
+
+                        <option value=""
+                            {% if not application.interview_status %}selected{% endif %}>
+                            Not Scheduled
+                        </option>
+
+                        <option value="Scheduled"
+                            {% if application.interview_status == "Scheduled" %}selected{% endif %}>
+                            Scheduled
+                        </option>
+
+                        <option value="Completed"
+                            {% if application.interview_status == "Completed" %}selected{% endif %}>
+                            Completed
+                        </option>
+
+                        <option value="Passed"
+                            {% if application.interview_status == "Passed" %}selected{% endif %}>
+                            Passed
+                        </option>
+
+                        <option value="Failed"
+                            {% if application.interview_status == "Failed" %}selected{% endif %}>
+                            Failed
+                        </option>
+
+                        <option value="Rescheduled"
+                            {% if application.interview_status == "Rescheduled" %}selected{% endif %}>
+                            Rescheduled
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             NOTES & FOLLOW-UP
+        ================================================== -->
+
+        <div class="edit-card">
+
+            <div class="edit-card-header">
+
+                <div>
+                    <h2>📝 Notes & Follow-up</h2>
+
+                    <p>
+                        Store important information related to this application.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="edit-form-group edit-full-width">
+
+                <label for="notes">
+                    Notes
+                </label>
+
+                <textarea
+                    id="notes"
+                    name="notes"
+                    rows="5"
+                    placeholder="Add notes about this application..."
+                >{{ application.notes or '' }}</textarea>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             ACTION BUTTONS
+        ================================================== -->
+
+        <div class="edit-form-actions">
+
+            <a
+                href="{{ url_for('applications_page') }}"
+                class="edit-cancel-button"
+            >
+                Cancel
+            </a>
+
+
+            <button
+                type="submit"
+                class="edit-save-button"
+            >
+                💾 Save Changes
+            </button>
+
+        </div>
+
+
+    </form>
+
+</div>
+
+{% endblock %}

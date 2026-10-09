@@ -1559,7 +1559,7 @@ body {
    ========================================================= */
 
 
-/* =========================================================
+/* =======================================================
    DASHBOARD PAGE
    ========================================================= */
 
@@ -2071,31 +2071,37 @@ body {
 }
 
 .profile-detail-row {
-    display: flex;
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 24px;
 
-    justify-content: space-between;
-
-    gap: 20px;
-
-    padding: 14px 0;
+    padding: 16px 0;
 
     border-bottom: 1px solid #eeeaf4;
+
+    align-items: start;
 }
 
 .profile-detail-row span {
     color: #8b849b;
 
-    font-size: 12px;
+    font-size: 13px;
+
+    font-weight: 500;
 }
 
 .profile-detail-row strong {
-    max-width: 65%;
+    width: 100%;
 
     color: #302b43;
 
-    font-size: 12px;
+    font-size: 13px;
 
-    text-align: right;
+    line-height: 1.6;
+
+    text-align: left;
+
+    word-break: break-word;
 }
 
 .profile-skills-preview h3 {
@@ -3041,12 +3047,22 @@ footer {
     }
 }
 /* =========================================================
-   MODERN DASHBOARD
+   DASHBOARD CONTENT GRID
    ========================================================= */
 
-.dashboard-page {
-    max-width: 1500px;
-    margin: auto;
+.dashboard-content-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: 24px;
+    width: 100%;
+    margin-top: 24px;
+    align-items: start;
+}
+
+.dashboard-content-grid .dashboard-panel {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
 }
 
 
@@ -4554,4 +4570,917 @@ hr {
 
 ::-webkit-scrollbar-thumb:hover {
     background: #8d7db5;
+}
+/* =========================================================
+   APPLICATION TRACKER - EDIT BUTTON
+   ========================================================= */
+
+.edit-application-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 16px;
+    padding: 9px 16px;
+
+    background: #f3edff;
+    color: #6d28d9;
+
+    border: 1px solid #ddd0ff;
+    border-radius: 10px;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    text-decoration: none;
+
+    transition: all 0.2s ease;
+}
+
+.edit-application-btn:hover {
+    background: #6d28d9;
+    color: white;
+    border-color: #6d28d9;
+
+    transform: translateY(-1px);
+    box-shadow: 0 5px 12px rgba(109, 40, 217, 0.18);
+}
+/* =========================================================
+   M4.1 - DEADLINE & REMINDER MANAGEMENT
+   ========================================================= */
+
+.application-reminders {
+    margin: 30px 0;
+    padding: 28px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 18px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+}
+
+.reminder-section-header {
+    margin-bottom: 24px;
+}
+
+.reminder-section-header h3 {
+    margin: 6px 0 8px;
+    font-size: 24px;
+    font-weight: 700;
+    color: #37358f;
+}
+
+.reminder-section-header p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+
+/* Four reminder cards */
+
+.application-reminders {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+
+.reminder-section-header {
+    grid-column: 1 / -1;
+}
+
+
+/* Individual reminder card */
+
+.reminder-card {
+    padding: 20px;
+    background: #f8f8ff;
+    border: 1px solid #e4e4f4;
+    border-radius: 14px;
+    min-height: 150px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.reminder-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+
+/* Card heading */
+
+.reminder-card h4 {
+    margin: 0 0 16px;
+    font-size: 17px;
+    font-weight: 700;
+    color: #1f2937;
+}
+
+
+/* Reminder list */
+
+.reminder-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+
+/* Individual reminder */
+
+.reminder-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 12px 14px;
+    background: #ffffff;
+    border: 1px solid #eeeeee;
+    border-radius: 10px;
+}
+
+
+/* Company */
+
+.reminder-item strong {
+    display: block;
+    font-size: 14px;
+    color: #29277f;
+    margin-bottom: 3px;
+}
+
+
+/* Job title */
+
+.reminder-item span {
+    display: block;
+    font-size: 13px;
+    color: #6b7280;
+}
+
+
+/* Date */
+
+.reminder-date {
+    flex-shrink: 0;
+    font-size: 13px;
+    font-weight: 600;
+    color: #37358f;
+    background: #eeeeff;
+    padding: 7px 10px;
+    border-radius: 8px;
+}
+
+
+/* Status */
+
+.reminder-status {
+    flex-shrink: 0;
+    font-size: 12px;
+    font-weight: 600;
+    color: #37358f;
+    background: #eeeeff;
+    padding: 7px 10px;
+    border-radius: 8px;
+}
+
+
+/* No reminders */
+
+.no-reminders {
+    margin: 0;
+    padding: 14px;
+    text-align: center;
+    color: #9ca3af;
+    font-size: 13px;
+    background: #ffffff;
+    border-radius: 10px;
+    border: 1px dashed #d1d5db;
+}
+
+
+/* Responsive */
+
+@media (max-width: 800px) {
+
+    .application-reminders {
+        grid-template-columns: 1fr;
+    }
+
+    .reminder-section-header {
+        grid-column: auto;
+    }
+
+    .reminder-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+}
+/* =========================================================
+   APPLICATION HISTORY - CLEAN CARD DESIGN
+   ========================================================= */
+
+.applications-section {
+    margin-top: 30px;
+}
+
+.applications-section .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 20px;
+    margin-bottom: 22px;
+}
+
+.application-section-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    color: #37358f;
+    margin-bottom: 5px;
+}
+
+.applications-section .section-header h2 {
+    margin: 0 0 6px;
+    font-size: 26px;
+    font-weight: 700;
+    color: #171735;
+}
+
+.applications-section .section-header p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.application-count {
+    flex-shrink: 0;
+    padding: 8px 14px;
+    background: #eeeeff;
+    color: #37358f;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   APPLICATION LIST
+   ========================================================= */
+
+.application-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+
+/* =========================================================
+   APPLICATION CARD
+   ========================================================= */
+
+.application-history-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 18px;
+    padding: 24px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease,
+                box-shadow 0.2s ease;
+}
+
+.application-history-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+
+/* =========================================================
+   CARD TOP
+   ========================================================= */
+
+.application-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+
+/* Company + job */
+
+.application-company-section {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+}
+
+.application-company-icon {
+    width: 46px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #eeeeff;
+    border-radius: 12px;
+    font-size: 21px;
+    flex-shrink: 0;
+}
+
+.application-record-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    color: #8b8ca5;
+    margin-bottom: 3px;
+}
+
+.application-title-content h3 {
+    margin: 0;
+    font-size: 20px;
+    color: #37358f;
+    font-weight: 700;
+}
+
+.application-company-name {
+    margin: 4px 0 0;
+    font-size: 14px;
+    color: #6b7280;
+}
+
+
+/* =========================================================
+   STATUS
+   ========================================================= */
+
+.application-status-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+}
+
+.application-status-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.6px;
+    color: #9ca3af;
+}
+
+.history-status-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 7px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+
+/* Status colors */
+
+.history-status-applied {
+    background: #e8f5e9;
+    color: #28733a;
+}
+
+.history-status-shortlisted {
+    background: #fff4d6;
+    color: #946200;
+}
+
+.history-status-interview {
+    background: #eee8ff;
+    color: #5a3ca8;
+}
+
+.history-status-offer {
+    background: #e1f7ee;
+    color: #187453;
+}
+
+.history-status-rejected {
+    background: #ffe7e7;
+    color: #b42323;
+}
+
+.history-status-saved {
+    background: #eeeeff;
+    color: #37358f;
+}
+
+.history-status-default {
+    background: #f1f1f5;
+    color: #55556b;
+}
+
+
+/* =========================================================
+   DIVIDER
+   ========================================================= */
+
+.application-card-divider {
+    height: 1px;
+    background: #eeeeee;
+    margin: 20px 0;
+}
+
+
+/* =========================================================
+   APPLICATION INFORMATION
+   ========================================================= */
+
+.application-information {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.application-info-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 13px;
+    background: #f8f8fc;
+    border: 1px solid #eeeeee;
+    border-radius: 11px;
+}
+
+.application-info-icon {
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #eeeeff;
+    border-radius: 9px;
+    font-size: 16px;
+    flex-shrink: 0;
+}
+
+.application-info-content {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.application-info-content span {
+    font-size: 11px;
+    color: #8b8ca5;
+}
+
+.application-info-content strong {
+    font-size: 13px;
+    color: #25253f;
+}
+
+
+/* =========================================================
+   JOB DESCRIPTION
+   ========================================================= */
+
+.application-description-box {
+    margin-top: 16px;
+    padding: 16px;
+    background: #f8f8fc;
+    border: 1px solid #eeeeee;
+    border-radius: 12px;
+}
+
+.description-heading {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    color: #37358f;
+}
+
+.application-description-box p {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #5f6072;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+    .applications-section .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .application-card-top {
+        flex-direction: column;
+    }
+
+    .application-status-container {
+        align-items: flex-start;
+    }
+
+    .application-information {
+        grid-template-columns: 1fr;
+    }
+
+}
+/* =========================================================
+   EDIT APPLICATION PAGE
+========================================================= */
+
+.edit-application-page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 45px 40px 60px;
+}
+
+
+/* HEADER */
+
+.edit-application-header {
+    margin-bottom: 30px;
+}
+
+.edit-eyebrow {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: #7651c7;
+    margin-bottom: 8px;
+}
+
+.edit-application-header h1 {
+    margin: 0;
+    font-size: 32px;
+    color: #17142b;
+}
+
+.edit-application-header p {
+    margin-top: 8px;
+    color: #6f6b80;
+    font-size: 16px;
+}
+
+
+/* FORM */
+
+.edit-application-form {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+
+/* CARD */
+
+.edit-card {
+    background: #ffffff;
+    border: 1px solid #e7e2f0;
+    border-radius: 18px;
+    padding: 28px 30px;
+    box-shadow: 0 5px 20px rgba(50, 30, 90, 0.06);
+}
+
+
+/* CARD HEADER */
+
+.edit-card-header {
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #eeeaf5;
+}
+
+.edit-card-header h2 {
+    margin: 0;
+    font-size: 20px;
+    color: #29245a;
+}
+
+.edit-card-header p {
+    margin: 6px 0 0;
+    color: #777286;
+    font-size: 14px;
+}
+
+
+/* GRID */
+
+.edit-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 24px;
+}
+
+
+/* FORM GROUP */
+
+.edit-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.edit-form-group label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #39344b;
+}
+
+
+/* INPUTS */
+
+.edit-form-group input,
+.edit-form-group select,
+.edit-form-group textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 14px;
+    border: 1px solid #dcd7e8;
+    border-radius: 10px;
+    background: #faf9fd;
+    color: #28243b;
+    font-size: 15px;
+    font-family: inherit;
+    outline: none;
+    transition: 0.2s ease;
+}
+
+
+/* FOCUS */
+
+.edit-form-group input:focus,
+.edit-form-group select:focus,
+.edit-form-group textarea:focus {
+    border-color: #7651c7;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(118, 81, 199, 0.10);
+}
+
+
+/* TEXTAREA */
+
+.edit-form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+    line-height: 1.5;
+}
+
+
+/* FULL WIDTH */
+
+.edit-full-width {
+    grid-column: 1 / -1;
+}
+
+
+/* ACTIONS */
+
+.edit-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 14px;
+    padding-top: 5px;
+}
+
+
+/* CANCEL */
+
+.edit-cancel-button {
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 10px;
+    border: 1px solid #ddd7e9;
+    background: #ffffff;
+    color: #5f586e;
+    font-weight: 600;
+    transition: 0.2s ease;
+}
+
+.edit-cancel-button:hover {
+    background: #f5f2fa;
+}
+
+
+/* SAVE */
+
+.edit-save-button {
+    border: none;
+    padding: 13px 28px;
+    border-radius: 10px;
+    background: linear-gradient(
+        135deg,
+        #7651c7,
+        #6637c7
+    );
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 5px 14px rgba(102, 55, 199, 0.25);
+    transition: 0.2s ease;
+}
+
+.edit-save-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 7px 18px rgba(102, 55, 199, 0.32);
+}
+
+
+/* MOBILE */
+
+@media (max-width: 750px) {
+
+    .edit-application-page {
+        padding: 30px 18px;
+    }
+
+    .edit-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .edit-full-width {
+        grid-column: auto;
+    }
+
+    .edit-card {
+        padding: 22px;
+    }
+
+    .edit-form-actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .edit-save-button,
+    .edit-cancel-button {
+        text-align: center;
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+/* ======================================================
+   CAREER COACH CHAT LAYOUT
+====================================================== */
+
+.career-coach-layout {
+    display: flex;
+    gap: 20px;
+    min-height: 650px;
+}
+
+
+/* ======================================================
+   SIDEBAR
+====================================================== */
+
+.chat-sidebar {
+    width: 260px;
+    flex-shrink: 0;
+    background: #ffffff;
+    border: 1px solid #e8e8ee;
+    border-radius: 18px;
+    padding: 18px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.04);
+    display: flex;
+    flex-direction: column;
+}
+
+
+.sidebar-header {
+    padding: 5px 5px 15px;
+}
+
+
+.sidebar-header h2 {
+    margin: 0;
+    font-size: 20px;
+    color: #333;
+}
+
+
+/* ======================================================
+   NEW CHAT BUTTON
+====================================================== */
+
+.new-chat-btn {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1px solid #ddd8f5;
+    border-radius: 12px;
+    background: #6d5dfc;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: left;
+    transition: 0.2s;
+}
+
+
+.new-chat-btn span {
+    font-size: 18px;
+    margin-right: 6px;
+}
+
+
+.new-chat-btn:hover {
+    background: #5b4be8;
+}
+
+
+/* ======================================================
+   HISTORY
+====================================================== */
+
+.history-title {
+    margin-top: 25px;
+    margin-bottom: 10px;
+    padding: 0 5px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #888;
+    text-transform: uppercase;
+}
+
+
+.chat-history-list {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+
+.history-item {
+    padding: 11px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 13px;
+    color: #444;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: 0.2s;
+}
+
+
+.history-item:hover {
+    background: #f3f1ff;
+}
+
+
+.history-item.active {
+    background: #ece9ff;
+    color: #5b4be8;
+    font-weight: 600;
+}
+
+
+.history-loading,
+.history-empty {
+    padding: 12px 5px;
+    color: #999;
+    font-size: 13px;
+}
+
+
+/* ======================================================
+   MAIN CHAT
+====================================================== */
+
+.career-chat-main {
+    flex: 1;
+    min-width: 0;
+}
+
+
+/* ======================================================
+   MOBILE
+====================================================== */
+
+@media (max-width: 850px) {
+
+    .career-coach-layout {
+        flex-direction: column;
+    }
+
+    .chat-sidebar {
+        width: auto;
+    }
+
+    .chat-history-list {
+        max-height: 180px;
+    }
+
 }

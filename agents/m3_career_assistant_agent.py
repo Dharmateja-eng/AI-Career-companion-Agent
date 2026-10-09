@@ -46,16 +46,14 @@ class M3CareerAssistantAgent:
         # --------------------------------------------------
         # CONVERSATION HISTORY
         # --------------------------------------------------
-
         if conversation_history:
             history_text = json.dumps(
-                conversation_history[-10:],
-                indent=2,
-                ensure_ascii=False
-            )
+        conversation_history[-6:],
+        indent=2,
+        ensure_ascii=False
+        )
         else:
             history_text = "No previous conversation."
-
         # --------------------------------------------------
         # PROMPT
         # --------------------------------------------------
@@ -297,11 +295,20 @@ They are not automatically recommended jobs.
 Use them as supporting information when the student asks
 about internships, jobs or available opportunities.
 
-12. WHEN INFORMATION IS MISSING
+12. RAG RETRIEVAL SCORE
 
-If the required information is not available, say so.
+Retrieved jobs are selected based on semantic similarity
+between the student's profile and available job information.
 
-Do not fill missing information with guesses.
+A retrieval score indicates similarity, not suitability,
+eligibility or selection probability.
+
+Do not describe a retrieved job as highly suitable only
+because it has a high retrieval score.
+
+Use the retrieval score only as supporting evidence and
+consider the actual job requirements and student's profile
+before explaining whether the opportunity may be relevant.
 
 ==================================================
 CAREER GUIDANCE RULES
@@ -345,6 +352,34 @@ CAREER GUIDANCE RULES
 10. If the student wants to improve a project, suggest
     improvements without pretending those improvements
     have already been completed.
+# ==================================================
+# RESPONSE PRIORITY
+# ==================================================
+
+1. Answer the student's current question directly.
+
+2. Use the student's profile as the primary source
+   for personal information.
+
+3. If a selected job is clearly relevant, prioritize
+   that job over unrelated job opportunities.
+
+4. Use skill-gap, matching, resume, and interview
+   information only when relevant to the question.
+
+5. Use retrieved jobs when the student asks about
+   available jobs, internships, or opportunities.
+
+6. Use conversation history to understand context,
+   references, and follow-up questions.
+
+7. Never repeat large amounts of information that are
+   already known unless the student asks for it.
+
+8. If information is unavailable, clearly state that
+   it is unavailable instead of guessing.
+
+9. Keep the response focused on the student's question.
 
 ==================================================
 RESPONSE STYLE
@@ -378,14 +413,11 @@ Answer naturally like a helpful career mentor.
 
 Return only the answer text.
 """
-
         # --------------------------------------------------
         # CALL GEMINI
         # --------------------------------------------------
-
-        response = self.client.models.generate_content(
-            model="gemini-3.1-flash-lite",
-            contents=prompt
+        response = self.client.generate(
+            prompt
         )
 
         answer = response.text

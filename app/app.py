@@ -1,8 +1,10 @@
 import os
 import json
+import time
 import ast
 
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, send_file
+from datetime import datetime
 from flask_session import Session
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
@@ -17,11 +19,14 @@ from app.models import (
     M3SkillGapAnalysis,
     M3ResumeCoverLetter,
     M3InterviewPreparation,
-    CareerConversationMessage
+    CareerConversation,
+    CareerConversationMessage,
+    Application
 )
 from dotenv import load_dotenv
 from PyPDF2 import PdfReader
-from google import genai
+from services.gemini_service import GeminiService
+from services.document_generator import DocumentGenerator
 
 from agents.resume_agent import ResumeAgent
 from agents.career_agent import CareerAgent
@@ -33,6 +38,8 @@ from agents.m3_resume_cover_letter_agent import M3ResumeCoverLetterAgent
 from agents.m3_interview_agent import M3InterviewAgent
 from agents.m3_career_assistant_agent import M3CareerAssistantAgent
 from agents.m3_mock_interview_agent import M3MockInterviewAgent
+from services.document_generator import DocumentGenerator
+
 
 # ==========================================================
 # LOAD ENVIRONMENT VARIABLES
@@ -70,7 +77,23 @@ PROFILE_FILE = os.path.join(
     LOCAL_DATA_DIR,
     "candidate_profile.json"
 )
+# ==========================================================
+# DOCUMENT GENERATION
+# ==========================================================
 
+GENERATED_DOCUMENTS_DIR = os.path.join(
+    LOCAL_DATA_DIR,
+    "generated_documents"
+)
+
+os.makedirs(
+    GENERATED_DOCUMENTS_DIR,
+    exist_ok=True
+)
+
+document_generator = DocumentGenerator(
+    GENERATED_DOCUMENTS_DIR
+)
 
 # ==========================================================
 # CREATE REQUIRED DIRECTORIES
@@ -91,13 +114,6 @@ os.makedirs(
 # CREATE FLASK APPLICATION
 # ==========================================================
 
-app = Flask(
-    __name__,
-    template_folder="../templates",
-    static_folder="../static"
-)
-
-app.config["SECRET_KEY"] = "careerai-development-secret"
 # ==========================================================
 # SERVER-SIDE SESSION CONFIGURATION
 # ==========================================================
@@ -147,34 +163,30 @@ with app.app_context():
 
 
 # ==========================================================
-# GEMINI CLIENT
+# CENTRAL GEMINI AI SERVICE
 # ==========================================================
 
-client = genai.Client(
-    api_key=GEMINI_API_KEY
-)
-
+gemini_service = GeminiService()
 
 # ==========================================================
 # AI AGENTS - MILESTONE 1
 # ==========================================================
 
 resume_agent = ResumeAgent(
-    client
+    gemini_service
 )
 
 career_agent = CareerAgent(
-    client
+    gemini_service
 )
 
 skill_gap_agent = SkillGapAgent(
-    client
+    gemini_service
 )
 
 interview_agent = InterviewAgent(
-    client
+    gemini_service
 )
-
 
 # ==========================================================
 # MILESTONE 2 AGENTS
@@ -185,7 +197,7 @@ job_retrieval_available = False
 
 try:
     from agents.job_retrieval_agent import JobRetrievalAgent
-    job_retrieval_agent = JobRetrievalAgent(client)
+    job_retrieval_agent = JobRetrievalAgent(gemini_service)
     job_retrieval_available = True
     print("M2: Job Retrieval Agent loaded successfully.")
 except Exception as e:
@@ -198,12 +210,11 @@ job_matching_agent = JobMatchingAgent()
 # MILESTONE 3.1 AGENT
 # ==========================================================
 
-m3_skill_gap_agent = M3SkillGapAgent(client)
-
-m3_resume_cover_letter_agent = M3ResumeCoverLetterAgent(client)
-m3_interview_agent = M3InterviewAgent(client)
-m3_career_assistant_agent = M3CareerAssistantAgent(client)
-m3_mock_interview_agent = M3MockInterviewAgent(client)
+m3_skill_gap_agent = M3SkillGapAgent(gemini_service)
+m3_resume_cover_letter_agent = M3ResumeCoverLetterAgent(gemini_service)
+m3_interview_agent = M3InterviewAgent(gemini_service)
+m3_career_assistant_agent = M3CareerAssistantAgent(gemini_service)
+m3_mock_interview_agent = M3MockInterviewAgent(gemini_service)
 print("M3 Mock Interview Agent loaded:", m3_mock_interview_agent)
 # ==========================================================
 # RESUME TEXT EXTRACTION
@@ -546,6 +557,18 @@ def save_analysis_to_database(
         ensure_ascii=False
     )
 
+    # Candidate identity comes from the uploaded resume/profile,
+    # not from the login account.
+    student_profile.candidate_name = candidate_profile.get(
+        "name",
+        ""
+    ) or ""
+
+    student_profile.candidate_email = candidate_profile.get(
+        "email",
+        ""
+    ) or ""
+
 
     # ------------------------------------------------------
     # 3. SAVE MILESTONE 1 AI ANALYSIS
@@ -665,6 +688,13 @@ def save_analysis_to_database(
             ),
 
             compatibility_score=compatibility_score,
+            retrieval_score=float(
+            job.get("retrieval_score", 0)
+            ),
+
+            retrieval_rank=int(
+            job.get("retrieval_rank", 0)
+             ),
 
             matching_skills=json.dumps(
                 matching_skills,
@@ -1036,7 +1066,104 @@ def resume_upload():
     return render_template(
         "profile.html"
     )
+# ==========================================================
+# M4.3 - REUSABLE ROUTE HELPERS
+# ==========================================================
 
+def get_current_user():
+    """Return the logged-in user or None."""
+    user_id = session.get("user_id")
+
+    if not user_id:
+        return None
+
+    return User.query.get(user_id)
+
+
+def load_json_field(value, default=None):
+    """Safely convert a JSON database field into Python data."""
+    if default is None:
+        default = []
+
+    if not value:
+        return default
+
+    try:
+        return json.loads(value)
+
+    except (json.JSONDecodeError, TypeError):
+        return default
+
+
+def build_candidate_profile(student_profile):
+    """Convert StudentProfile database data into agent-ready format."""
+
+    if not student_profile:
+        return None
+
+    return {
+        "name": student_profile.candidate_name or "",
+        "email": student_profile.candidate_email or "",
+        "education": load_json_field(
+            student_profile.education
+        ),
+        "experience": load_json_field(
+            student_profile.experience
+        ),
+        "skills": load_json_field(
+            student_profile.skills
+        ),
+        "projects": load_json_field(
+            student_profile.projects
+        ),
+        "certifications": load_json_field(
+            student_profile.certifications
+        )
+    }
+
+
+def build_job_data(job):
+    """Convert Job database object into agent-ready dictionary."""
+
+    if not job:
+        return None
+
+    return {
+        "job_id": job.job_id,
+        "job_title": job.title or "",
+        "jobtitle": job.title or "",
+        "company": job.company or "",
+        "category": job.category or "",
+        "description": job.description or "",
+        "jobdescription": job.description or "",
+        "skills": job.skills or "",
+        "experience": job.experience or "",
+        "education": job.education or "",
+        "industry": job.industry or "",
+        "location": job.location or "",
+        "payrate": job.payrate or ""
+    }
+
+# ==========================================================
+# SAFE JSON LOADER
+# ==========================================================
+
+def safe_json_load(value, default=None):
+
+    if default is None:
+        default = {}
+
+    if not value:
+        return default
+
+    if isinstance(value, (dict, list)):
+        return value
+
+    try:
+        return json.loads(value)
+
+    except (json.JSONDecodeError, TypeError, ValueError):
+        return default
 
 # ==========================================================
 # HOME / RESUME PROCESSING
@@ -1187,6 +1314,7 @@ def profile():
 
 
     if job_retrieval_available and job_retrieval_agent is not None:
+        rag_start_time = time.perf_counter()
 
         try:
             retrieved_jobs = job_retrieval_agent.retrieve_jobs(
@@ -1195,6 +1323,16 @@ def profile():
                 top_k_jobs=5
             )
             print(f"M2: Retrieved {len(retrieved_jobs)} jobs.")
+            rag_end_time = time.perf_counter()
+
+            rag_retrieval_time = (
+             rag_end_time - rag_start_time
+            )
+
+            print(
+            f"M4.3 RAG RETRIEVAL TIME: "
+            f"{rag_retrieval_time:.3f} seconds"
+            )
 
         except Exception as e:
             job_retrieval_error = str(e)
@@ -1598,79 +1736,131 @@ def profile():
 
 def dashboard():
 
+    # ------------------------------------------------------
+    # 1. CHECK LOGIN
+    # ------------------------------------------------------
+
     if "user_id" not in session:
-
-        return redirect(
-            url_for("login")
-        )
-
+        return redirect(url_for("login"))
 
     user_id = session["user_id"]
 
+    # ------------------------------------------------------
+    # 2. GET USER
+    # ------------------------------------------------------
 
-    user = User.query.get(
-        user_id
-    )
+    user = User.query.get(user_id)
 
+    if user is None:
+        session.clear()
+        return redirect(url_for("login"))
+
+    # ------------------------------------------------------
+    # 3. GET LATEST USER DATA
+    # ------------------------------------------------------
 
     resume_record = (
         Resume.query
-        .filter_by(
-            user_id=user_id
-        )
-        .order_by(
-            Resume.uploaded_at.desc()
-        )
+        .filter_by(user_id=user_id)
+        .order_by(Resume.uploaded_at.desc())
         .first()
     )
-
 
     student_profile = (
         StudentProfile.query
-        .filter_by(
-            user_id=user_id
-        )
+        .filter_by(user_id=user_id)
         .first()
     )
-
 
     ai_analysis = (
         AIAnalysis.query
-        .filter_by(
-            user_id=user_id
-        )
-        .order_by(
-            AIAnalysis.created_at.desc()
-        )
+        .filter_by(user_id=user_id)
+        .order_by(AIAnalysis.created_at.desc())
         .first()
     )
 
-
     job_matches = (
         JobMatch.query
-        .filter_by(
-            user_id=user_id
-        )
-        .order_by(
-            JobMatch.compatibility_score.desc()
-        )
+        .filter_by(user_id=user_id)
+        .order_by(JobMatch.compatibility_score.desc())
         .all()
     )
 
+    # ------------------------------------------------------
+    # 4. START WITH EMPTY PROFILE
+    # ------------------------------------------------------
 
     profile_data = get_empty_profile()
 
+    # ------------------------------------------------------
+    # 5. LOAD STUDENT PROFILE
+    # ------------------------------------------------------
 
-    if user:
+    if student_profile:
 
-        profile_data["student_profile"]["name"] = user.name
+        candidate_name = (
+            student_profile.candidate_name or ""
+        )
 
-        profile_data["student_profile"]["email"] = user.email
+        candidate_email = (
+            student_profile.candidate_email or ""
+        )
 
-        profile_data["resume"]["llm_extracted_profile"]["name"] = user.name
+        profile_data["student_profile"]["name"] = (
+            candidate_name
+        )
 
-        profile_data["resume"]["llm_extracted_profile"]["email"] = user.email
+        profile_data["student_profile"]["email"] = (
+            candidate_email
+        )
 
+        profile_data["resume"]["llm_extracted_profile"]["name"] = (
+            candidate_name
+        )
+
+        profile_data["resume"]["llm_extracted_profile"]["email"] = (
+            candidate_email
+        )
+
+        # Use the helper function added earlier
+        education = load_json_field(
+            student_profile.education
+        )
+
+        experience = load_json_field(
+            student_profile.experience
+        )
+
+        skills = load_json_field(
+            student_profile.skills
+        )
+
+        projects = load_json_field(
+            student_profile.projects
+        )
+
+        certifications = load_json_field(
+            student_profile.certifications
+        )
+
+        profile_data["student_profile"]["education"] = education
+        profile_data["student_profile"]["experience"] = experience
+        profile_data["student_profile"]["skills"] = skills
+        profile_data["student_profile"]["projects"] = projects
+        profile_data["student_profile"]["certifications"] = certifications
+
+        # Keep the same information inside resume profile
+        llm_profile = profile_data["resume"]["llm_extracted_profile"]
+
+        llm_profile["education"] = education
+        llm_profile["experience"] = experience
+        llm_profile["skills"] = skills
+        llm_profile["projects"] = projects
+        llm_profile["certifications"] = certifications
+
+    # ------------------------------------------------------
+    # 6. LOAD LATEST RESUME
+    # ------------------------------------------------------
 
     if resume_record:
 
@@ -1682,267 +1872,199 @@ def dashboard():
             resume_record.resume_text or ""
         )
 
-
-    if student_profile:
-
-        try:
-
-            profile_data["student_profile"]["education"] = (
-                json.loads(
-                    student_profile.education
-                )
-                if student_profile.education
-                else []
-            )
-
-
-            profile_data["student_profile"]["experience"] = (
-                json.loads(
-                    student_profile.experience
-                )
-                if student_profile.experience
-                else []
-            )
-
-
-            profile_data["student_profile"]["skills"] = (
-                json.loads(
-                    student_profile.skills
-                )
-                if student_profile.skills
-                else []
-            )
-
-
-            profile_data["student_profile"]["projects"] = (
-                json.loads(
-                    student_profile.projects
-                )
-                if student_profile.projects
-                else []
-            )
-
-
-            profile_data["student_profile"]["certifications"] = (
-                json.loads(
-                    student_profile.certifications
-                )
-                if student_profile.certifications
-                else []
-            )
-
-
-            profile_data["resume"]["llm_extracted_profile"]["skills"] = (
-                json.loads(
-                    student_profile.skills
-                )
-                if student_profile.skills
-                else []
-            )
-
-
-            profile_data["resume"]["llm_extracted_profile"]["education"] = (
-                json.loads(
-                    student_profile.education
-                )
-                if student_profile.education
-                else []
-            )
-
-
-            profile_data["resume"]["llm_extracted_profile"]["experience"] = (
-                json.loads(
-                    student_profile.experience
-                )
-                if student_profile.experience
-                else []
-            )
-
-
-            profile_data["resume"]["llm_extracted_profile"]["projects"] = (
-                json.loads(
-                    student_profile.projects
-                )
-                if student_profile.projects
-                else []
-            )
-
-
-            profile_data["resume"]["llm_extracted_profile"]["certifications"] = (
-                json.loads(
-                    student_profile.certifications
-                )
-                if student_profile.certifications
-                else []
-            )
-
-
-        except Exception as e:
-
-            print(
-                f"DATABASE PROFILE READ ERROR: {e}"
-            )
-
+    # ------------------------------------------------------
+    # 7. LOAD AI ANALYSIS
+    # ------------------------------------------------------
 
     if ai_analysis:
 
-        try:
+        profile_data["resume_analysis"] = load_json_field(
+            ai_analysis.resume_analysis
+        )
 
-            profile_data["resume_analysis"] = (
-                json.loads(
-                    ai_analysis.resume_analysis
-                )
-                if ai_analysis.resume_analysis
-                else {}
+        career_data = load_json_field(
+            ai_analysis.career_recommendations
+        )
+
+        if isinstance(career_data, dict):
+
+            profile_data["career_analysis"] = (
+                career_data
             )
 
+        else:
 
-            career_data = (
-                json.loads(
-                    ai_analysis.career_recommendations
-                )
-                if ai_analysis.career_recommendations
-                else {}
+            profile_data["career_analysis"] = {
+                "recommended_roles": career_data
+            }
+
+        profile_data["skill_gap_analysis"] = (
+            load_json_field(
+                ai_analysis.skill_gap
             )
+        )
 
-
-            if isinstance(
-                career_data,
-                dict
-            ):
-
-                profile_data["career_analysis"] = career_data
-
-            else:
-
-                profile_data["career_analysis"] = {
-
-                    "recommended_roles": career_data
-
-                }
-
-
-            profile_data["skill_gap_analysis"] = (
-                json.loads(
-                    ai_analysis.skill_gap
-                )
-                if ai_analysis.skill_gap
-                else {}
+        profile_data["interview_analysis"] = (
+            load_json_field(
+                ai_analysis.interview_preparation
             )
-
-
-            profile_data["interview_analysis"] = (
-                json.loads(
-                    ai_analysis.interview_preparation
-                )
-                if ai_analysis.interview_preparation
-                else {}
-            )
-
-
-        except Exception as e:
-
-            print(
-                f"DATABASE AI ANALYSIS READ ERROR: {e}"
-            )
-
+        )
 
     # ======================================================
-    # BUILD MATCHED JOB LIST
+    # 8. OPTIMIZED JOB LOOKUP
+    # ======================================================
+    #
+    # OLD:
+    #
+    # for match in job_matches:
+    #     Job.query.filter_by(...)
+    #
+    # This creates one database query for every match.
+    #
+    # NEW:
+    # Get all required jobs in ONE database query.
     # ======================================================
 
     matched_jobs = []
 
+    if job_matches:
 
-    for match in job_matches:
+        job_ids = [
+            str(match.job_id)
+            for match in job_matches
+        ]
 
-        job = Job.query.filter_by(
-            job_id=match.job_id
-        ).first()
+        jobs = (
+            Job.query
+            .filter(
+                Job.job_id.in_(job_ids)
+            )
+            .all()
+        )
 
+        # Create lookup dictionary
+        jobs_by_id = {
+            str(job.job_id): job
+            for job in jobs
+        }
 
-        if job is None:
+        # --------------------------------------------------
+        # BUILD MATCHED JOBS
+        # --------------------------------------------------
 
-            continue
+        for match in job_matches:
 
-
-        try:
-
-            matching_skills = (
-                json.loads(
-                    match.matching_skills
-                )
-                if match.matching_skills
-                else []
+            job = jobs_by_id.get(
+                str(match.job_id)
             )
 
-        except Exception:
+            if job is None:
+                continue
 
-            matching_skills = []
-
-
-        try:
-
-            missing_skills = (
-                json.loads(
-                    match.missing_skills
-                )
-                if match.missing_skills
-                else []
+            matching_skills = load_json_field(
+                match.matching_skills
             )
 
-        except Exception:
+            missing_skills = load_json_field(
+                match.missing_skills
+            )
 
-            missing_skills = []
+            try:
 
+                compatibility_score = round(
+                    float(
+                        match.compatibility_score or 0
+                    ),
+                    2
+                )
 
-        matched_jobs.append({
+            except (TypeError, ValueError):
 
-            "jobid": job.job_id,
+                compatibility_score = 0
 
-            "job_title": job.title or "Job Opportunity",
+            matched_jobs.append({
 
-            "title": job.title or "Job Opportunity",
+                "jobid": job.job_id,
 
-            "company": job.company or "Company",
-
-            "category": job.category or "",
-
-            "description": job.description or "",
-
-            "skills": job.skills or "",
-
-            "experience": job.experience or "",
-
-            "education": job.education or "",
-
-            "industry": job.industry or "",
-
-            "location": job.location or "",
-
-            "payrate": job.payrate or "",
-
-
-            # ==================================================
-            # JOB MATCHING PERCENTAGE
-            # ==================================================
-
-            "compatibility_score": round(
-                float(
-                    match.compatibility_score or 0
+                "job_title": (
+                    job.title or
+                    "Job Opportunity"
                 ),
-                2
-            ),
 
+                "title": (
+                    job.title or
+                    "Job Opportunity"
+                ),
 
-            "matching_skills": matching_skills,
+                "company": (
+                    job.company or
+                    "Company"
+                ),
 
-            "missing_skills": missing_skills,
+                "category": (
+                    job.category or ""
+                ),
 
-            "reasoning": match.reasoning or ""
+                "description": (
+                    job.description or ""
+                ),
 
-        })
+                "skills": (
+                    job.skills or ""
+                ),
 
+                "experience": (
+                    job.experience or ""
+                ),
+
+                "education": (
+                    job.education or ""
+                ),
+
+                "industry": (
+                    job.industry or ""
+                ),
+
+                "location": (
+                    job.location or ""
+                ),
+
+                "payrate": (
+                    job.payrate or ""
+                ),
+
+                "compatibility_score": (
+                    compatibility_score
+                ),
+                "retrieval_score": (
+                match.retrieval_score
+                if hasattr(match, "retrieval_score")
+                else 0
+                ),
+
+                "retrieval_rank": (
+                match.retrieval_rank
+                if hasattr(match, "retrieval_rank")
+                else 0
+                ),
+
+                "matching_skills": (
+                    matching_skills
+                ),
+
+                "missing_skills": (
+                    missing_skills
+                ),
+
+                "reasoning": (
+                    match.reasoning or ""
+                )
+
+            })
+
+    # ------------------------------------------------------
+    # 9. STORE JOB RESULTS
+    # ------------------------------------------------------
 
     profile_data["job_retrieval_analysis"] = {
 
@@ -1954,13 +2076,15 @@ def dashboard():
 
     }
 
-
     profile_data["job_matching_analysis"] = {
 
         "matched_jobs": matched_jobs
 
     }
 
+    # ------------------------------------------------------
+    # 10. DISPLAY DASHBOARD
+    # ------------------------------------------------------
 
     return render_template(
 
@@ -1970,7 +2094,6 @@ def dashboard():
 
     )
 
-
 # ==========================================================
 # PROFILE PAGE
 # ==========================================================
@@ -1979,7 +2102,6 @@ def dashboard():
     "/profile",
     methods=["GET", "POST"]
 )
-
 def profile_page():
 
     # ------------------------------------------------------
@@ -1987,41 +2109,29 @@ def profile_page():
     # ------------------------------------------------------
 
     if "user_id" not in session:
-
-        return redirect(
-            url_for("login")
-        )
-
+        return redirect(url_for("login"))
 
     user_id = session["user_id"]
-
 
     # ------------------------------------------------------
     # GET USER
     # ------------------------------------------------------
 
-    user = User.query.get(
-        user_id
-    )
-
+    user = User.query.get(user_id)
 
     if user is None:
-
         session.clear()
-
-        return redirect(
-            url_for("login")
-        )
-
+        return redirect(url_for("login"))
 
     # ------------------------------------------------------
     # GET OR CREATE STUDENT PROFILE
     # ------------------------------------------------------
 
-    student_profile = StudentProfile.query.filter_by(
-        user_id=user_id
-    ).first()
-
+    student_profile = (
+        StudentProfile.query
+        .filter_by(user_id=user_id)
+        .first()
+    )
 
     if student_profile is None:
 
@@ -2034,12 +2144,23 @@ def profile_page():
             certifications=json.dumps([])
         )
 
-        db.session.add(
-            student_profile
-        )
+        try:
 
-        db.session.commit()
+            db.session.add(student_profile)
+            db.session.commit()
 
+        except Exception as e:
+
+            db.session.rollback()
+
+            print(
+                f"PROFILE CREATION ERROR: {e}"
+            )
+
+            return (
+                "Unable to create student profile.",
+                500
+            )
 
     # ======================================================
     # SAVE PROFILE
@@ -2052,141 +2173,173 @@ def profile_page():
             ""
         ).strip()
 
-
         experience = request.form.get(
             "experience",
             ""
         ).strip()
-
 
         skills = request.form.get(
             "skills",
             ""
         ).strip()
 
-
         projects = request.form.get(
             "projects",
             ""
         ).strip()
-
 
         certifications = request.form.get(
             "certifications",
             ""
         ).strip()
 
+        # --------------------------------------------------
+        # CONVERT FORM DATA INTO LISTS
+        # --------------------------------------------------
+
+        education_list = (
+            [education]
+            if education
+            else []
+        )
+
+        experience_list = (
+            [experience]
+            if experience
+            else []
+        )
+
+        skills_list = [
+            skill.strip()
+            for skill in skills.split(",")
+            if skill.strip()
+        ]
+
+        projects_list = (
+            [projects]
+            if projects
+            else []
+        )
+
+        certifications_list = [
+            certification.strip()
+            for certification in certifications.split(",")
+            if certification.strip()
+        ]
 
         # --------------------------------------------------
-        # Store each field as a simple list
+        # SAVE PROFILE DATA
         # --------------------------------------------------
 
         student_profile.education = json.dumps(
-            [education] if education else [],
+            education_list,
             ensure_ascii=False
         )
-
 
         student_profile.experience = json.dumps(
-            [experience] if experience else [],
+            experience_list,
             ensure_ascii=False
         )
-
 
         student_profile.skills = json.dumps(
-            [
-                skill.strip()
-                for skill in skills.split(",")
-                if skill.strip()
-            ],
+            skills_list,
             ensure_ascii=False
         )
-
 
         student_profile.projects = json.dumps(
-            [projects] if projects else [],
+            projects_list,
             ensure_ascii=False
         )
-
 
         student_profile.certifications = json.dumps(
-            [
-                certification.strip()
-                for certification in certifications.split(",")
-                if certification.strip()
-            ],
+            certifications_list,
             ensure_ascii=False
         )
 
+        # --------------------------------------------------
+        # COMMIT CHANGES
+        # --------------------------------------------------
 
-        db.session.commit()
+        try:
 
+            db.session.commit()
+
+            print(
+                f"PROFILE UPDATED: user_id={user_id}"
+            )
+
+        except Exception as e:
+
+            db.session.rollback()
+
+            print(
+                f"PROFILE UPDATE ERROR: {e}"
+            )
+
+            return (
+                "Unable to save profile changes.",
+                500
+            )
+
+        # --------------------------------------------------
+        # POST → REDIRECT → GET
+        # --------------------------------------------------
 
         return redirect(
             url_for("profile_page")
         )
 
-
     # ======================================================
-    # PREPARE DATA FOR DISPLAY
+    # LOAD JSON FIELD
     # ======================================================
 
     def load_json_list(value):
 
         if not value:
-
             return []
-
 
         try:
 
             data = json.loads(value)
 
-
             if isinstance(data, list):
-
                 return data
-
 
             return [data]
 
-
-        except Exception:
+        except (json.JSONDecodeError, TypeError):
 
             return []
 
+    # ======================================================
+    # PREPARE PROFILE DATA
+    # ======================================================
 
     education = load_json_list(
         student_profile.education
     )
 
-
     experience = load_json_list(
         student_profile.experience
     )
-
 
     skills = load_json_list(
         student_profile.skills
     )
 
-
     projects = load_json_list(
         student_profile.projects
     )
-
 
     certifications = load_json_list(
         student_profile.certifications
     )
 
-
-    # ------------------------------------------------------
-    # SEND DATA TO PROFILE PAGE
-    # ------------------------------------------------------
+    # ======================================================
+    # DISPLAY PROFILE PAGE
+    # ======================================================
 
     return render_template(
-
         "profile_page.html",
 
         user=user,
@@ -2202,9 +2355,7 @@ def profile_page():
         projects=projects,
 
         certifications=certifications
-
     )
-
 
 # ==========================================================
 # RESUME PAGE
@@ -2213,29 +2364,29 @@ def profile_page():
 @app.route("/resume")
 def resume_page():
 
+    # ------------------------------------------------------
+    # CHECK LOGIN
+    # ------------------------------------------------------
+
     if "user_id" not in session:
-
-        return redirect(
-            url_for("login")
-        )
-
+        return redirect(url_for("login"))
 
     user_id = session["user_id"]
 
+    # ------------------------------------------------------
+    # GET USER
+    # ------------------------------------------------------
 
     user = User.query.get(user_id)
 
-
     if user is None:
-
         session.clear()
+        return redirect(url_for("login"))
 
-        return redirect(
-            url_for("login")
-        )
+    # ------------------------------------------------------
+    # GET LATEST RESUME
+    # ------------------------------------------------------
 
-
-    # Get the user's latest resume
     resume = (
         Resume.query
         .filter_by(user_id=user_id)
@@ -2243,8 +2394,10 @@ def resume_page():
         .first()
     )
 
+    # ------------------------------------------------------
+    # GET LATEST AI ANALYSIS
+    # ------------------------------------------------------
 
-    # Get the user's latest AI analysis
     analysis = (
         AIAnalysis.query
         .filter_by(user_id=user_id)
@@ -2252,23 +2405,25 @@ def resume_page():
         .first()
     )
 
+    # ------------------------------------------------------
+    # DEFAULT RESUME ANALYSIS
+    # ------------------------------------------------------
 
-    # Default values
     resume_analysis = {}
-
 
     if analysis and analysis.resume_analysis:
 
-        try:
+        resume_analysis = safe_json_load(
+            analysis.resume_analysis,
+            {}
+        )
 
-            resume_analysis = json.loads(
-                analysis.resume_analysis
-            )
-
-        except Exception:
-
+        if not isinstance(resume_analysis, dict):
             resume_analysis = {}
 
+    # ------------------------------------------------------
+    # DISPLAY RESUME PAGE
+    # ------------------------------------------------------
 
     return render_template(
         "resume_page.html",
@@ -2286,10 +2441,18 @@ def resume_page():
 @app.route("/career")
 def career_page():
 
+    # ------------------------------------------------------
+    # CHECK LOGIN
+    # ------------------------------------------------------
+
     if "user_id" not in session:
         return redirect(url_for("login"))
 
     user_id = session["user_id"]
+
+    # ------------------------------------------------------
+    # GET USER
+    # ------------------------------------------------------
 
     user = User.query.get(user_id)
 
@@ -2297,7 +2460,10 @@ def career_page():
         session.clear()
         return redirect(url_for("login"))
 
-    # Get latest career analysis from database
+    # ------------------------------------------------------
+    # GET LATEST CAREER ANALYSIS
+    # ------------------------------------------------------
+
     analysis = (
         AIAnalysis.query
         .filter_by(user_id=user_id)
@@ -2305,82 +2471,81 @@ def career_page():
         .first()
     )
 
+    # ------------------------------------------------------
+    # DEFAULT CAREER DATA
+    # ------------------------------------------------------
+
     career_analysis = {
         "recommended_roles": [],
         "career_paths": [],
         "recommendations": []
     }
 
+    # ------------------------------------------------------
+    # LOAD CAREER ANALYSIS
+    # ------------------------------------------------------
+
     if analysis and analysis.career_recommendations:
 
-        try:
+        data = safe_json_load(
+            analysis.career_recommendations,
+            {}
+        )
 
-            data = json.loads(
-                analysis.career_recommendations
-            )
+        if isinstance(data, dict):
+            career_analysis.update(data)
 
-            if isinstance(data, dict):
+    # ------------------------------------------------------
+    # NORMALIZE RECOMMENDED ROLES
+    # ------------------------------------------------------
 
-                career_analysis.update(data)
+    roles = career_analysis.get(
+        "recommended_roles",
+        []
+    )
 
-                # Fix recommended roles if they are stored
-                # as dictionary strings
-                roles = career_analysis.get(
-                    "recommended_roles",
-                    []
+    normalized_roles = []
+
+    if isinstance(roles, list):
+
+        for role in roles:
+
+            # Already a dictionary
+            if isinstance(role, dict):
+
+                normalized_roles.append(role)
+                continue
+
+            # Dictionary stored as a JSON/Python string
+            if isinstance(role, str):
+
+                parsed_role = safe_json_load(
+                    role,
+                    None
                 )
 
-                fixed_roles = []
+                if isinstance(parsed_role, dict):
 
-                if isinstance(roles, list):
+                    normalized_roles.append(
+                        parsed_role
+                    )
 
-                    for role in roles:
+    career_analysis["recommended_roles"] = normalized_roles
 
-                        if isinstance(role, dict):
-
-                            fixed_roles.append(role)
-
-                        elif isinstance(role, str):
-
-                            try:
-                                # First try JSON
-                                fixed_role = json.loads(role)
-
-                                if isinstance(fixed_role, dict):
-                                    fixed_roles.append(fixed_role)
-
-                            except Exception:
-
-                                try:
-                                    # Handle Python dictionary format
-                                    fixed_role = ast.literal_eval(role)
-
-                                    if isinstance(fixed_role, dict):
-                                        fixed_roles.append(fixed_role)
-
-                                except Exception:
-                                    pass
-
-                career_analysis["recommended_roles"] = fixed_roles
-
-        except Exception as e:
-
-            print("Career analysis error:", e)
+    # ------------------------------------------------------
+    # RENDER CAREER PAGE
+    # ------------------------------------------------------
 
     return render_template(
         "career_page.html",
         user=user,
         career_analysis=career_analysis
     )
-
 # ==========================================================
 # OPPORTUNITIES PAGE
 # ==========================================================
 
-@app.route(
-    "/opportunities"
-)
-
+@app.route("/opportunities")
 def opportunities_page():
 
     # ------------------------------------------------------
@@ -2388,153 +2553,438 @@ def opportunities_page():
     # ------------------------------------------------------
 
     if "user_id" not in session:
-
         return redirect(
             url_for("login")
         )
 
-
     user_id = session["user_id"]
 
+    user = User.query.get(user_id)
+
+    if user is None:
+        session.clear()
+        return redirect(
+            url_for("login")
+        )
 
     # ------------------------------------------------------
-    # GET USER JOB MATCHES
+    # GET STUDENT PROFILE
     # ------------------------------------------------------
 
-    job_matches = (
-        JobMatch.query
-        .filter_by(
-            user_id=user_id
+    student_profile = StudentProfile.query.filter_by(
+        user_id=user_id
+    ).first()
+
+    if student_profile is None:
+        return render_template(
+            "opportunities_page.html",
+            opportunities=[],
+            matched_jobs=[],
+            number_of_jobs=0
         )
-        .order_by(
-            JobMatch.compatibility_score.desc()
-        )
-        .all()
+
+    # ------------------------------------------------------
+    # HELPER TO LOAD JSON FIELDS
+    # ------------------------------------------------------
+
+    def load_profile_field(value):
+
+        if not value:
+            return []
+
+        if isinstance(value, (list, tuple, set)):
+            return list(value)
+
+        try:
+            parsed = json.loads(value)
+
+            if isinstance(parsed, list):
+                return parsed
+
+            if isinstance(parsed, dict):
+                return [parsed]
+
+            return [parsed]
+
+        except Exception:
+
+            return [str(value)]
+
+    # ------------------------------------------------------
+    # BUILD CANDIDATE PROFILE
+    # ------------------------------------------------------
+
+    candidate_profile = {
+
+        "name":
+            student_profile.candidate_name or "",
+
+        "email":
+            student_profile.candidate_email or "",
+
+        "education":
+            load_profile_field(
+                student_profile.education
+            ),
+
+        "experience":
+            load_profile_field(
+                student_profile.experience
+            ),
+
+        "skills":
+            load_profile_field(
+                student_profile.skills
+            ),
+
+        "projects":
+            load_profile_field(
+                student_profile.projects
+            ),
+
+        "certifications":
+            load_profile_field(
+                student_profile.certifications
+            )
+    }
+
+    print(
+        "M2: Building job matches for user",
+        user_id
     )
 
+    # ======================================================
+    # MILESTONE 2 - FAISS JOB RETRIEVAL
+    # ======================================================
+
+    retrieved_jobs = []
+
+    retrieval_error = ""
+
+    if (
+        job_retrieval_available
+        and
+        job_retrieval_agent is not None
+    ):
+
+        try:
+
+            retrieved_jobs = (
+                job_retrieval_agent.retrieve_jobs(
+                    candidate_profile,
+                    top_k_chunks=15,
+                    top_k_jobs=5
+                )
+            )
+
+            print(
+                f"M2: Retrieved "
+                f"{len(retrieved_jobs)} jobs using FAISS."
+            )
+
+        except Exception as e:
+
+            retrieval_error = str(e)
+
+            print(
+                f"M2 RETRIEVAL ERROR: {e}"
+            )
+
+    # ======================================================
+    # FALLBACK
+    # ======================================================
+
+    if not retrieved_jobs:
+
+        try:
+
+            retrieved_jobs = (
+                fallback_retrieve_jobs(
+                    candidate_profile,
+                    top_k_jobs=5
+                )
+            )
+
+            print(
+                f"M2 FALLBACK: Retrieved "
+                f"{len(retrieved_jobs)} jobs."
+            )
+
+        except Exception as e:
+
+            print(
+                f"M2 FALLBACK ERROR: {e}"
+            )
+
+            retrieved_jobs = []
+
+    # ======================================================
+    # CLEAR OLD MATCHES
+    #
+    # This prevents duplicate JobMatch records every time
+    # the Opportunities page is opened.
+    # ======================================================
+
+    try:
+
+        JobMatch.query.filter_by(
+            user_id=user_id
+        ).delete(
+            synchronize_session=False
+        )
+
+        db.session.commit()
+
+    except Exception as e:
+
+        db.session.rollback()
+
+        print(
+            f"M2 JOBMATCH CLEANUP ERROR: {e}"
+        )
+
+    # ======================================================
+    # CALCULATE JOB MATCHING
+    # ======================================================
 
     opportunities = []
 
-
-    # ------------------------------------------------------
-    # GET ACTUAL JOB DETAILS
-    # ------------------------------------------------------
-
-    for match in job_matches:
-
-        job = Job.query.filter_by(
-            job_id=match.job_id
-        ).first()
-
-
-        if job is None:
-
-            continue
-
-
-        # --------------------------------------------------
-        # MATCHING SKILLS
-        # --------------------------------------------------
+    for retrieved_job in retrieved_jobs:
 
         try:
+
+            job_id = str(
+                retrieved_job.get(
+                    "jobid",
+                    ""
+                )
+            )
+
+            if not job_id:
+                continue
+
+            # ------------------------------------------------
+            # Find the corresponding Job database record
+            # ------------------------------------------------
+
+            job = Job.query.filter_by(
+                job_id=job_id
+            ).first()
+
+            if job is None:
+
+                print(
+                    f"M2: Job {job_id} "
+                    f"not found in database."
+                )
+
+                continue
+
+            # ------------------------------------------------
+            # Calculate compatibility
+            # ------------------------------------------------
+
+            match_result = (
+                job_matching_agent
+                .calculate_compatibility_score(
+                    candidate_profile,
+                    retrieved_job
+                )
+            )
+
+            compatibility_score = float(
+                match_result.get(
+                    "compatibility_score",
+                    0
+                )
+            )
 
             matching_skills = (
-                json.loads(
-                    match.matching_skills
+                match_result.get(
+                    "matching_skills",
+                    []
                 )
-                if match.matching_skills
-                else []
             )
-
-        except Exception:
-
-            matching_skills = []
-
-
-        # --------------------------------------------------
-        # MISSING SKILLS
-        # --------------------------------------------------
-
-        try:
 
             missing_skills = (
-                json.loads(
-                    match.missing_skills
+                match_result.get(
+                    "missing_skills",
+                    []
                 )
-                if match.missing_skills
-                else []
             )
 
-        except Exception:
+            # ------------------------------------------------
+            # Build reasoning
+            # ------------------------------------------------
 
-            missing_skills = []
+            skill_score = match_result.get(
+                "skill_score",
+                0
+            )
 
+            education_score = match_result.get(
+                "education_score",
+                0
+            )
 
-        # --------------------------------------------------
-        # COMPATIBILITY / JOB MATCHING PERCENTAGE
-        # --------------------------------------------------
+            experience_score = match_result.get(
+                "experience_score",
+                0
+            )
 
-        compatibility_score = round(
-            float(
-                match.compatibility_score or 0
-            ),
-            2
+            reasoning = (
+                f"Compatibility is based on "
+                f"skills ({skill_score}%), "
+                f"education ({education_score}%), "
+                f"and experience ({experience_score}%). "
+                f"Matching skills: "
+                f"{', '.join(matching_skills) if matching_skills else 'None'}. "
+                f"Missing skills: "
+                f"{', '.join(missing_skills) if missing_skills else 'None'}."
+            )
+
+            # ==================================================
+            # SAVE JOB MATCH
+            # ==================================================
+
+            job_match = JobMatch(
+
+                user_id=user_id,
+
+                job_id=job_id,
+
+                compatibility_score=
+                    compatibility_score,
+
+                matching_skills=
+                    json.dumps(
+                        matching_skills
+                    ),
+
+                missing_skills=
+                    json.dumps(
+                        missing_skills
+                    ),
+
+                reasoning=reasoning
+            )
+
+            db.session.add(
+                job_match
+            )
+
+            # ==================================================
+            # PREPARE OPPORTUNITY FOR UI
+            # ==================================================
+
+            opportunities.append({
+
+                "jobid":
+                    job.job_id,
+
+                "title":
+                    job.title or "Job Opportunity",
+
+                "company":
+                    job.company or "Company",
+
+                "category":
+                    job.category or "",
+
+                "description":
+                    job.description or "",
+
+                "skills":
+                    job.skills or "",
+
+                "experience":
+                    job.experience or "",
+
+                "education":
+                    job.education or "",
+
+                "industry":
+                    job.industry or "",
+
+                "location":
+                    job.location or "",
+
+                "payrate":
+                    job.payrate or "",
+
+                "compatibility_score":
+                    compatibility_score,
+
+                "matching_skills":
+                    matching_skills,
+
+                "missing_skills":
+                    missing_skills,
+
+                "reasoning":
+                    reasoning,
+
+                "skill_gap_url":
+                    url_for(
+                        "analyze_skill_gap",
+                        job_id=job.job_id
+                    )
+            })
+
+            print(
+                f"M2 MATCH: "
+                f"{job.title} -> "
+                f"{compatibility_score}%"
+            )
+
+        except Exception as e:
+
+            print(
+                f"M2 MATCHING ERROR "
+                f"for job "
+                f"{retrieved_job.get('jobid')}: "
+                f"{e}"
+            )
+
+    # ======================================================
+    # SAVE ALL MATCHES
+    # ======================================================
+
+    try:
+
+        db.session.commit()
+
+        print(
+            f"M2: Saved "
+            f"{len(opportunities)} JobMatch records."
         )
 
+    except Exception as e:
 
-        # --------------------------------------------------
-        # ADD JOB
-        # --------------------------------------------------
+        db.session.rollback()
 
-        opportunities.append({
+        print(
+            f"M2 DATABASE ERROR: {e}"
+        )
 
-            "jobid": job.job_id,
+        opportunities = []
 
-            "title": job.title or "Job Opportunity",
+    # ======================================================
+    # SORT BY COMPATIBILITY
+    # ======================================================
 
-            "company": job.company or "Company",
+    opportunities.sort(
+        key=lambda item:
+            item.get(
+                "compatibility_score",
+                0
+            ),
+        reverse=True
+    )
 
-            "category": job.category or "",
-
-            "description": job.description or "",
-
-            "skills": job.skills or "",
-
-            "experience": job.experience or "",
-
-            "education": job.education or "",
-
-            "industry": job.industry or "",
-
-            "location": job.location or "",
-
-            "payrate": job.payrate or "",
-
-
-            # ==================================================
-            # COMPATIBILITY PERCENTAGE
-            # ==================================================
-
-            "compatibility_score": compatibility_score,
-
-
-            "matching_skills": matching_skills,
-
-            "missing_skills": missing_skills,
-
-            "reasoning": match.reasoning or "",
-
-            "skill_gap_url": url_for(
-                "analyze_skill_gap",
-                job_id=job.job_id
-            )
-
-        })
-
-
-    # ------------------------------------------------------
+    # ======================================================
     # DISPLAY OPPORTUNITIES
-    # ------------------------------------------------------
+    # ======================================================
 
     return render_template(
 
@@ -2547,9 +2997,7 @@ def opportunities_page():
         number_of_jobs=len(
             opportunities
         )
-
     )
-
 
 # ==========================================================
 # MILESTONE 3.1 - SELECTED JOB SKILL GAP ANALYSIS
@@ -2587,8 +3035,8 @@ def analyze_skill_gap(job_id):
             return value
 
     candidate_profile = {
-        "name": user.name or "",
-        "email": user.email or "",
+        "name": student_profile.candidate_name or "",
+        "email": student_profile.candidate_email or "",
         "education": load_json_field(student_profile.education),
         "experience": load_json_field(student_profile.experience),
         "skills": load_json_field(student_profile.skills),
@@ -2646,6 +3094,30 @@ def analyze_skill_gap(job_id):
         return f"Error saving M3.1 skill gap analysis: {str(e)}", 500
 
     return redirect(url_for("skill_gap_page", job_id=job.job_id))
+
+# ==========================================================
+# GENERATED DOCUMENT DOWNLOAD
+# ==========================================================
+
+@app.route("/download-document/<path:filename>")
+def download_document(filename):
+    if "user_id" not in session:
+        return redirect(url_for("login"))
+
+    safe_filename = os.path.basename(filename)
+
+    file_path = os.path.join(
+        GENERATED_DOCUMENTS_DIR,
+        safe_filename
+    )
+
+    if not os.path.isfile(file_path):
+        return "Document not found", 404
+
+    return send_file(
+        file_path,
+        as_attachment=True
+    )
 
 
 # ==========================================================
@@ -2708,8 +3180,8 @@ def customize_application(job_id):
             return value
 
     candidate_profile = {
-        "name": user.name or "",
-        "email": user.email or "",
+        "name": student_profile.candidate_name or "",
+        "email": student_profile.candidate_email or "",
         "education": load_json_field(
             student_profile.education
         ),
@@ -2841,6 +3313,52 @@ def customize_application(job_id):
         )
 
     # ------------------------------------------------------
+    # GENERATE M3.2 DOCUMENTS
+    # ------------------------------------------------------
+
+    try:
+
+        resume_docx_path = document_generator.generate_resume_docx(
+            candidate_profile,
+            selected_job,
+            result
+        )
+
+        resume_pdf_path = document_generator.generate_resume_pdf(
+            candidate_profile,
+            selected_job,
+            result
+        )
+
+        cover_letter_docx_path = document_generator.generate_cover_letter_docx(
+            candidate_profile,
+            selected_job,
+            result
+        )
+
+        cover_letter_pdf_path = document_generator.generate_cover_letter_pdf(
+            candidate_profile,
+            selected_job,
+            result
+        )
+
+        print(
+            f"M3.2: Documents generated successfully "
+            f"for job {job.job_id}."
+        )
+
+    except Exception as e:
+
+        print(
+            f"M3.2 DOCUMENT GENERATION ERROR: {e}"
+        )
+
+        resume_docx_path = None
+        resume_pdf_path = None
+        cover_letter_docx_path = None
+        cover_letter_pdf_path = None
+
+    # ------------------------------------------------------
     # DISPLAY M3.2 RESULT
     # ------------------------------------------------------
 
@@ -2848,10 +3366,29 @@ def customize_application(job_id):
         "resume_customization_page.html",
         user=user,
         result=result,
-        selected_job=selected_job
+        selected_job=selected_job,
+        candidate_profile=candidate_profile,
+        resume_docx_path=(
+            os.path.basename(resume_docx_path)
+            if resume_docx_path
+            else None
+        ),
+        resume_pdf_path=(
+            os.path.basename(resume_pdf_path)
+            if resume_pdf_path
+            else None
+        ),
+        cover_letter_docx_path=(
+            os.path.basename(cover_letter_docx_path)
+            if cover_letter_docx_path
+            else None
+        ),
+        cover_letter_pdf_path=(
+            os.path.basename(cover_letter_pdf_path)
+            if cover_letter_pdf_path
+            else None
+        )
     )
-
-
 
 # ==========================================================
 # MILESTONE 3.3 - INTERVIEW PREPARATION
@@ -2913,8 +3450,8 @@ def prepare_interview(job_id):
             return value
 
     candidate_profile = {
-        "name": user.name or "",
-        "email": user.email or "",
+        "name": student_profile.candidate_name or "",
+        "email": student_profile.candidate_email or "",
         "education": load_json_field(
             student_profile.education
         ),
@@ -3298,49 +3835,169 @@ def interview_page():
 
     )
 # ==========================================================
+# CAREER COACH — NEW CHAT
+# ==========================================================
+
+@app.route(
+    "/career-coach/new-chat",
+    methods=["POST"]
+)
+def new_career_chat():
+
+    if "user_id" not in session:
+        return {
+            "success": False,
+            "error": "Please login first."
+        }, 401
+
+    user_id = session["user_id"]
+
+    conversation = CareerConversation(
+        user_id=user_id,
+        title="New Chat"
+    )
+
+    db.session.add(conversation)
+    db.session.commit()
+
+    return {
+        "success": True,
+        "conversation_id": conversation.id,
+        "title": conversation.title
+    }
+# ==========================================================
+# CAREER COACH — CHAT HISTORY
+# ==========================================================
+
+@app.route("/career-coach/history", methods=["GET"])
+def career_coach_history():
+
+    if "user_id" not in session:
+        return {
+            "success": False,
+            "error": "Please login first."
+        }, 401
+
+    user_id = session["user_id"]
+
+    conversations = (
+        CareerConversation.query
+        .filter_by(user_id=user_id)
+        .order_by(
+            CareerConversation.updated_at.desc()
+        )
+        .all()
+    )
+
+    history = []
+
+    for conversation in conversations:
+
+        history.append({
+            "id": conversation.id,
+            "title": conversation.title,
+            "created_at": conversation.created_at.isoformat()
+            if conversation.created_at else None,
+            "updated_at": conversation.updated_at.isoformat()
+            if conversation.updated_at else None
+        })
+
+    return {
+        "success": True,
+        "conversations": history
+    }
+# ==========================================================
+# CAREER COACH — LOAD CHAT
+# ==========================================================
+
+@app.route("/career-coach/chat/<int:conversation_id>", methods=["GET"])
+def load_career_chat(conversation_id):
+
+    if "user_id" not in session:
+        return {
+            "success": False,
+            "error": "Please login first."
+        }, 401
+
+    user_id = session["user_id"]
+
+    conversation = (
+        CareerConversation.query
+        .filter_by(
+            id=conversation_id,
+            user_id=user_id
+        )
+        .first()
+    )
+
+    if not conversation:
+        return {
+            "success": False,
+            "error": "Conversation not found."
+        }, 404
+
+    messages = (
+        CareerConversationMessage.query
+        .filter_by(
+            user_id=user_id,
+            conversation_id=conversation_id
+        )
+        .order_by(
+            CareerConversationMessage.created_at.asc()
+        )
+        .all()
+    )
+
+    chat_messages = []
+
+    for record in messages:
+
+        chat_messages.append({
+            "role": record.role,
+            "message": record.message
+        })
+
+    return {
+        "success": True,
+        "conversation": {
+            "id": conversation.id,
+            "title": conversation.title
+        },
+        "messages": chat_messages
+    }
+# ==========================================================
 # AI CAREER COACH PAGE
 # ==========================================================
 
 @app.route("/career-coach")
 def career_coach_page():
 
+    # ------------------------------------------------------
+    # CHECK LOGIN
+    # ------------------------------------------------------
+
     if "user_id" not in session:
-        return redirect(
-            url_for("login")
-        )
+        return redirect(url_for("login"))
 
     user_id = session["user_id"]
 
-    user = User.query.get(
-        user_id
-    )
+    # ------------------------------------------------------
+    # GET USER
+    # ------------------------------------------------------
+
+    user = User.query.get(user_id)
 
     if user is None:
         session.clear()
-        return redirect(
-            url_for("login")
-        )
+        return redirect(url_for("login"))
 
     # ------------------------------------------------------
     # GET STUDENT PROFILE
     # ------------------------------------------------------
 
-    student_profile = StudentProfile.query.filter_by(
-        user_id=user_id
-    ).first()
-
-    # ------------------------------------------------------
-    # GET LATEST AI ANALYSIS
-    # ------------------------------------------------------
-
-    analysis = (
-        AIAnalysis.query
-        .filter_by(
-            user_id=user_id
-        )
-        .order_by(
-            AIAnalysis.created_at.desc()
-        )
+    student_profile = (
+        StudentProfile.query
+        .filter_by(user_id=user_id)
         .first()
     )
 
@@ -3365,59 +4022,147 @@ def career_coach_page():
     }
 
     # ------------------------------------------------------
+    # GET LATEST AI ANALYSIS
+    # ------------------------------------------------------
+
+    analysis = (
+        AIAnalysis.query
+        .filter_by(user_id=user_id)
+        .order_by(
+            AIAnalysis.created_at.desc()
+        )
+        .first()
+    )
+
+    # ------------------------------------------------------
     # LOAD CAREER ANALYSIS
     # ------------------------------------------------------
 
-    if analysis and analysis.career_recommendations:
+    if analysis:
 
-        try:
+        career_data = safe_json_load(
+            analysis.career_recommendations,
+            {}
+        )
 
-            data = json.loads(
-                analysis.career_recommendations
-            )
+        if isinstance(career_data, dict):
 
-            if isinstance(data, dict):
-
-                career_analysis.update(
-                    data
-                )
-
-        except Exception as e:
-
-            print(
-                f"CAREER COACH CAREER DATA ERROR: {e}"
+            career_analysis.update(
+                career_data
             )
 
     # ------------------------------------------------------
-    # LOAD SKILL GAP ANALYSIS
+    # NORMALIZE RECOMMENDED ROLES
     # ------------------------------------------------------
 
-    if analysis and analysis.skill_gap:
+    roles = career_analysis.get(
+        "recommended_roles",
+        []
+    )
 
-        try:
+    normalized_roles = []
 
-            data = json.loads(
-                analysis.skill_gap
-            )
+    if isinstance(roles, list):
 
-            if isinstance(data, dict):
+        for role in roles:
 
-                skill_gap.update(
-                    data
+            if isinstance(role, dict):
+
+                normalized_roles.append(role)
+
+            elif isinstance(role, str):
+
+                parsed_role = safe_json_load(
+                    role,
+                    None
                 )
 
-        except Exception as e:
+                if isinstance(
+                    parsed_role,
+                    dict
+                ):
 
-            print(
-                f"CAREER COACH SKILL DATA ERROR: {e}"
-            )
+                    normalized_roles.append(
+                        parsed_role
+                    )
+
+                else:
+
+                    try:
+
+                        parsed_role = ast.literal_eval(
+                            role
+                        )
+
+                        if isinstance(
+                            parsed_role,
+                            dict
+                        ):
+
+                            normalized_roles.append(
+                                parsed_role
+                            )
+
+                    except (
+                        ValueError,
+                        SyntaxError
+                    ):
+
+                        pass
+
+    career_analysis[
+        "recommended_roles"
+    ] = normalized_roles
+
+    # ------------------------------------------------------
+    # LOAD SKILL GAP
+    # ------------------------------------------------------
+
+    if analysis:
+
+        skill_gap_data = safe_json_load(
+            analysis.skill_gap,
+            {}
+        )
+
+        if isinstance(
+            skill_gap_data,
+            dict
+        ):
+
+            skill_gap.update(
+                skill_gap_data
+        
+         )
+             # ------------------------------------------------------
+    # LOAD CAREER COACH CONVERSATION HISTORY
+    # ------------------------------------------------------
+
+    conversation_records = (
+        CareerConversationMessage.query
+        .filter_by(
+            user_id=user_id
+        )
+        .order_by(
+            CareerConversationMessage.created_at.asc()
+        )
+        .all()
+    )
+
+    conversation_history = []
+
+    for record in conversation_records:
+
+        conversation_history.append({
+            "role": record.role,
+            "message": record.message
+        })
 
     # ------------------------------------------------------
     # DISPLAY CAREER COACH
     # ------------------------------------------------------
 
     return render_template(
-
         "career_coach_page.html",
 
         user=user,
@@ -3426,8 +4171,9 @@ def career_coach_page():
 
         career_analysis=career_analysis,
 
-        skill_gap=skill_gap
-
+        skill_gap=skill_gap,
+            
+        conversation_history=conversation_history
     )
 
 # ==========================================================
@@ -3468,6 +4214,7 @@ def settings_page():
     methods=["POST"]
 )
 def career_coach_chat():
+    request_start_time = time.perf_counter()
 
     # ------------------------------------------------------
     # 1. CHECK LOGIN
@@ -3567,9 +4314,9 @@ def career_coach_chat():
 
     profile_information = {
 
-        "name": user.name or "",
+        "name": student_profile.candidate_name or "",
 
-        "email": user.email or "",
+        "email": student_profile.candidate_email or "",
 
         "education": [],
 
@@ -3941,7 +4688,7 @@ def career_coach_chat():
 
     retrieved_jobs = []
 
-
+    rag_start_time = time.perf_counter()
     if job_retrieval_available and job_retrieval_agent:
 
         try:
@@ -3999,16 +4746,49 @@ def career_coach_chat():
             retrieved_jobs = []
 
 
-    # ------------------------------------------------------
+       # ------------------------------------------------------
     # 13. LOAD CONVERSATION HISTORY
-    #
-    # Last 10 messages are supplied to the AI assistant.
     # ------------------------------------------------------
+
+    conversation_id = data.get("conversation_id")
+
+    # Create a new conversation if one was not provided
+    if not conversation_id:
+
+        conversation = CareerConversation(
+            user_id=user_id,
+            title="New Chat"
+        )
+
+        db.session.add(conversation)
+        db.session.commit()
+
+        conversation_id = conversation.id
+
+    else:
+
+        conversation = (
+            CareerConversation.query
+            .filter_by(
+                id=conversation_id,
+                user_id=user_id
+            )
+            .first()
+        )
+
+        if not conversation:
+
+            return {
+                "success": False,
+                "error": "Conversation not found."
+            }, 404
+
 
     conversation_records = (
         CareerConversationMessage.query
         .filter_by(
-            user_id=user_id
+            user_id=user_id,
+            conversation_id=conversation_id
         )
         .order_by(
             CareerConversationMessage.created_at.desc()
@@ -4033,11 +4813,14 @@ def career_coach_chat():
             "message": record.message
 
         })
+    
 
 
-    # ------------------------------------------------------
+        # ------------------------------------------------------
     # 14. RUN M3.4 CAREER ASSISTANT
     # ------------------------------------------------------
+
+    llm_start_time = time.perf_counter()
 
     try:
 
@@ -4065,7 +4848,6 @@ def career_coach_chat():
             )
         )
 
-
     except Exception as e:
 
         print(
@@ -4083,6 +4865,20 @@ def career_coach_chat():
 
         }, 500
 
+    finally:
+
+        llm_end_time = time.perf_counter()
+
+        llm_time = (
+            llm_end_time
+            - llm_start_time
+        )
+
+        print(
+            f"M4.3 LLM PROCESSING TIME: "
+            f"{llm_time:.3f} seconds"
+        )
+
 
     # ------------------------------------------------------
     # 15. SAFETY CHECK FOR AI RESPONSE
@@ -4095,7 +4891,7 @@ def career_coach_chat():
         )
 
 
-    # ------------------------------------------------------
+        # ------------------------------------------------------
     # 16. SAVE USER MESSAGE
     # ------------------------------------------------------
 
@@ -4106,6 +4902,8 @@ def career_coach_chat():
 
                 user_id=user_id,
 
+                conversation_id=conversation_id,
+
                 role="user",
 
                 message=message
@@ -4113,13 +4911,20 @@ def career_coach_chat():
             )
         )
 
-
         db.session.add(
             user_message_record
         )
+        # Set conversation title from the user's first message
+             
+        if conversation.title == "New Chat":
+            clean_title = message.strip()
+
+            if len(clean_title) > 45:
+                clean_title = clean_title[:45].rstrip() + "..."
+
+        conversation.title = clean_title
 
         db.session.commit()
-
 
     except Exception as e:
 
@@ -4141,6 +4946,8 @@ def career_coach_chat():
 
                 user_id=user_id,
 
+                conversation_id=conversation_id,
+
                 role="assistant",
 
                 message=str(answer)
@@ -4148,13 +4955,11 @@ def career_coach_chat():
             )
         )
 
-
         db.session.add(
             assistant_message_record
         )
 
         db.session.commit()
-
 
     except Exception as e:
 
@@ -4169,16 +4974,27 @@ def career_coach_chat():
     # 18. RETURN RESPONSE TO WEBSITE
     # ------------------------------------------------------
 
+    total_time = (
+        time.perf_counter()
+        - request_start_time
+    )
+
     print(
         "M3.4 CAREER COACH: Response generated successfully."
     )
 
+    print(
+        f"M4.3 TOTAL RESPONSE TIME: "
+        f"{total_time:.3f} seconds"
+    )
 
     return {
 
         "success": True,
 
-        "answer": str(answer)
+        "answer": str(answer),
+
+        "conversation_id": conversation_id
 
     }
 # ==========================================================
@@ -4252,9 +5068,9 @@ def mock_interview(job_id):
 
     candidate_profile = {
 
-        "name": user.name or "",
+        "name": student_profile.candidate_name or "",
 
-        "email": user.email or "",
+        "email": student_profile.candidate_email or "",
 
         "education": load_json_field(
             student_profile.education
@@ -4471,9 +5287,9 @@ def mock_interview_answer(job_id):
 
     candidate_profile = {
 
-        "name": user.name or "",
+        "name": student_profile.candidate_name or "",
 
-        "email": user.email or "",
+        "email": student_profile.candidate_email or "",
 
         "education": load_json_field(
             student_profile.education
@@ -4915,9 +5731,9 @@ def finish_mock_interview(job_id):
 
     candidate_profile = {
 
-        "name": user.name or "",
+        "name": student_profile.candidate_name or "",
 
-        "email": user.email or "",
+        "email": student_profile.candidate_email or "",
 
         "education": load_json_field(
             student_profile.education
@@ -5063,6 +5879,368 @@ def finish_mock_interview(job_id):
             "mock_interview",
             job_id=job.job_id
         )
+    )
+
+# ==========================================================
+# MILESTONE 4.1 - APPLICATION TRACKING
+# ==========================================================
+@app.route("/applications")
+def applications_page():
+
+    if "user_id" not in session:
+        return redirect(url_for("login"))
+
+    user_id = session["user_id"]
+
+    applications = (
+        Application.query
+        .filter_by(user_id=user_id)
+        .order_by(Application.created_at.desc())
+        .all()
+    )
+
+    total_applications = len(applications)
+
+    active_statuses = [
+        "Saved",
+        "Planning to apply",
+        "Applied",
+        "Application under review",
+        "Shortlisted",
+        "Interview scheduled",
+        "Interview completed"
+    ]
+
+    active_applications = sum(
+        1 for application in applications
+        if application.status in active_statuses
+    )
+
+    interviews = sum(
+        1 for application in applications
+        if application.interview_date is not None
+    )
+
+    offers = sum(
+        1 for application in applications
+        if application.status == "Offer received"
+    )
+
+    rejected = sum(
+        1 for application in applications
+        if application.status == "Rejected"
+    )
+
+    # ==========================================================
+    # M4.1 - DEADLINE & REMINDER MANAGEMENT
+    # ==========================================================
+
+    today = datetime.now()
+
+    # ----------------------------------------------------------
+    # Upcoming application deadlines
+    # ----------------------------------------------------------
+
+    upcoming_deadlines = [
+        application
+        for application in applications
+        if (
+            application.deadline
+            and application.deadline >= today
+            and application.status not in [
+                "Rejected",
+                "Withdrawn",
+                "Offer received"
+            ]
+        )
+    ]
+
+    # ----------------------------------------------------------
+    # Upcoming scheduled interviews
+    # ----------------------------------------------------------
+
+    upcoming_interviews = [
+        application
+        for application in applications
+        if (
+            application.interview_date
+            and application.interview_date >= today
+            and application.interview_status
+            and application.interview_status.lower() == "scheduled"
+        )
+    ]
+
+    # ----------------------------------------------------------
+    # Pending applications
+    # ----------------------------------------------------------
+
+    pending_applications = [
+        application
+        for application in applications
+        if application.status in [
+            "Applied",
+            "Application under review",
+            "Shortlisted"
+        ]
+    ]
+
+    # ----------------------------------------------------------
+    # Follow-up applications
+    # ----------------------------------------------------------
+
+    follow_up_applications = [
+        application
+        for application in applications
+        if (
+            application.follow_up_date
+            and application.follow_up_date >= today
+            and application.status not in [
+                "Rejected",
+                "Withdrawn",
+                "Offer received"
+            ]
+        )
+    ]
+
+    # ----------------------------------------------------------
+    # Sort reminders by date
+    # ----------------------------------------------------------
+
+    upcoming_deadlines.sort(
+        key=lambda application: application.deadline
+    )
+
+    upcoming_interviews.sort(
+        key=lambda application: application.interview_date
+    )
+
+    follow_up_applications.sort(
+        key=lambda application: application.follow_up_date
+    )
+
+    # ==========================================================
+    # DISPLAY APPLICATION TRACKING DASHBOARD
+    # ==========================================================
+
+    return render_template(
+        "applications_page.html",
+
+        applications=applications,
+
+        total_applications=total_applications,
+
+        active_applications=active_applications,
+
+        interviews=interviews,
+
+        offers=offers,
+
+        rejected=rejected,
+
+        upcoming_deadlines=upcoming_deadlines,
+
+        upcoming_interviews=upcoming_interviews,
+
+        pending_applications=pending_applications,
+
+        follow_up_applications=follow_up_applications
+    )
+# ==========================================================
+# MILESTONE 4.1 - ADD APPLICATION
+# ==========================================================
+
+@app.route("/applications/add", methods=["GET", "POST"])
+def add_application():
+
+    if "user_id" not in session:
+        return redirect(url_for("login"))
+
+    if request.method == "POST":
+
+        user_id = session["user_id"]
+        application_date = request.form.get("application_date")
+        deadline = request.form.get("deadline")
+        follow_up_date = request.form.get("follow_up_date")     
+        interview_date = request.form.get("interview_date")
+
+        application = Application(
+            user_id=user_id,
+            job_id=request.form.get("job_id") or "manual",
+            company=request.form.get("company"),
+            job_title=request.form.get("job_title"),
+            job_description=request.form.get(
+                "job_description"
+            ),
+            application_date=(
+                datetime.strptime(
+                    application_date,
+                    "%Y-%m-%d"
+                )
+                if application_date
+                else None
+            ),
+            deadline=(
+                datetime.strptime(
+                    deadline,
+                    "%Y-%m-%d"
+                )
+                if deadline
+                else None
+            ),
+            follow_up_date=(
+            datetime.strptime(
+            follow_up_date,
+            "%Y-%m-%d"
+                )
+            if follow_up_date
+            else None
+            ),
+            status=request.form.get(
+                "status",
+                "Saved"
+            ),
+            interview_date=(
+                datetime.strptime(
+                    interview_date,
+                    "%Y-%m-%d"
+                )
+                if interview_date
+                else None
+            ),
+            interview_status=request.form.get(
+                "interview_status"
+            ),
+            notes=request.form.get("notes")
+        )
+
+        db.session.add(application)
+        db.session.commit()
+
+        return redirect(
+            url_for("applications_page")
+        )
+
+    return render_template(
+        "add_application.html"
+    )
+    # ==========================================================
+# MILESTONE 4.1 - EDIT APPLICATION
+# ==========================================================
+
+@app.route("/applications/edit/<int:application_id>", methods=["GET", "POST"])
+def edit_application(application_id):
+
+    if "user_id" not in session:
+        return redirect(url_for("login"))
+
+    user_id = session["user_id"]
+
+    application = (
+        Application.query
+        .filter_by(
+            id=application_id,
+            user_id=user_id
+        )
+        .first()
+    )
+
+    if application is None:
+        return "Application not found", 404
+
+    if request.method == "POST":
+
+        application.company = request.form.get("company")
+        application.job_title = request.form.get("job_title")
+        application.job_description = request.form.get(
+            "job_description"
+        )
+
+        application_date = request.form.get(
+            "application_date"
+        )
+
+        deadline = request.form.get(
+            "deadline"
+        )
+        follow_up_date = request.form.get(
+            "follow_up_date"
+        )
+
+        interview_date = request.form.get(
+            "interview_date"
+        )
+
+        application.application_date = (
+            datetime.strptime(
+                application_date,
+                "%Y-%m-%d"
+            )
+            if application_date
+            else None
+        )
+
+        application.deadline = (
+            datetime.strptime(
+                deadline,
+                "%Y-%m-%d"
+            )
+            if deadline
+            else None
+        )
+        application.follow_up_date = (
+    datetime.strptime(
+        follow_up_date,
+        "%Y-%m-%d"
+    )
+    if follow_up_date
+    else None
+)
+
+        application.status = request.form.get(
+            "status",
+            "Saved"
+        )
+
+        application.interview_date = (
+            datetime.strptime(
+                interview_date,
+                "%Y-%m-%d"
+            )
+            if interview_date
+            else None
+        )
+
+        application.interview_status = request.form.get(
+            "interview_status"
+        )
+
+        application.notes = request.form.get(
+            "notes"
+        )
+
+        try:
+            db.session.commit()
+
+            return redirect(
+                url_for("applications_page")
+            )
+
+        except Exception as e:
+
+            db.session.rollback()
+
+            print(
+                f"APPLICATION UPDATE ERROR: {e}"
+            )
+
+            return (
+                f"Error updating application: {str(e)}",
+                500
+            )
+
+    return render_template(
+        "edit_application.html",
+        application=application
     )
 @app.route("/logout")
 def logout():

@@ -74,13 +74,9 @@ Rules:
 
 10. Return JSON only.
 """
-
-        response = self.client.models.generate_content(
-            model="gemini-3.1-flash-lite",
-            contents=prompt,
-            config={
-                "response_mime_type": "application/json"
-            }
+        response = self.client.generate(
+            prompt,
+            response_mime_type="application/json"
         )
 
         return json.loads(response.text)

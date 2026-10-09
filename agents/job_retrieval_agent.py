@@ -44,14 +44,20 @@ class JobRetrievalAgent:
         )
 
         # ---------------------------------------------
-        # Gemini client
+        # Gemini Service / Client
         # ---------------------------------------------
 
         if client:
 
+            # Normal CareerAI path:
+            # GeminiService is passed from app.py
             self.client = client
 
         else:
+
+            # Standalone fallback.
+            # This keeps the agent usable even if it is
+            # created without GeminiService.
 
             api_key = os.getenv(
                 "GEMINI_API_KEY"
@@ -87,6 +93,14 @@ class JobRetrievalAgent:
         # Load chunk metadata
         # ---------------------------------------------
 
+        if not os.path.exists(
+            self.chunks_file
+        ):
+
+            raise FileNotFoundError(
+                f"Job chunks file not found: {self.chunks_file}"
+            )
+
         self.chunks_df = pd.read_csv(
             self.chunks_file
         )
@@ -95,10 +109,31 @@ class JobRetrievalAgent:
         # Load complete job records
         # ---------------------------------------------
 
+        if not os.path.exists(
+            self.jobs_file
+        ):
+
+            raise FileNotFoundError(
+                f"Job postings file not found: {self.jobs_file}"
+            )
+
         self.jobs_df = pd.read_csv(
             self.jobs_file
         )
 
+        print(
+            "M2: Job Retrieval Agent initialized successfully."
+        )
+
+        print(
+            f"M2: FAISS index contains "
+            f"{self.index.ntotal} vectors."
+        )
+
+        print(
+            f"M2: Loaded "
+            f"{len(self.jobs_df)} job records."
+        )
 
     # =================================================
     # Create search query from candidate profile
@@ -180,7 +215,6 @@ class JobRetrievalAgent:
             query_parts
         )
 
-
     # =================================================
     # Generate query embedding
     # =================================================
@@ -190,37 +224,95 @@ class JobRetrievalAgent:
         query
     ):
 
-        response = self.client.models.embed_content(
+        if not query or not query.strip():
 
-            model="gemini-embedding-001",
-
-            contents=query,
-
-            config=types.EmbedContentConfig(
-
-                task_type="RETRIEVAL_QUERY",
-
-                output_dimensionality=768
+            raise ValueError(
+                "Embedding query cannot be empty."
             )
+
+        print(
+            "M2: Creating query embedding..."
         )
+
+        # ---------------------------------------------
+        # Normal CareerAI path
+        # ---------------------------------------------
+        # GeminiService provides the centralized
+        # embedding method.
+
+        if hasattr(
+            self.client,
+            "embed"
+        ):
+
+            response = self.client.embed(
+                query
+            )
+
+        # ---------------------------------------------
+        # Standalone fallback path
+        # ---------------------------------------------
+        # Used only when a direct Google Gemini client
+        # was supplied instead of GeminiService.
+
+        else:
+
+            response = self.client.models.embed_content(
+
+                model="gemini-embedding-001",
+
+                contents=query,
+
+                config=types.EmbedContentConfig(
+
+                    task_type="RETRIEVAL_QUERY",
+
+                    output_dimensionality=768
+                )
+            )
+
+        # ---------------------------------------------
+        # Convert Gemini embedding to NumPy vector
+        # ---------------------------------------------
 
         vector = np.array(
             response.embeddings[0].values,
             dtype="float32"
         )
 
-        # Normalize for cosine similarity
+        # ---------------------------------------------
+        # Verify embedding dimension
+        # ---------------------------------------------
+
+        if vector.shape[0] != 768:
+
+            raise ValueError(
+                "Embedding dimension mismatch. "
+                f"Expected 768, got {vector.shape[0]}."
+            )
+
+        # ---------------------------------------------
+        # Reshape for FAISS
+        # ---------------------------------------------
+
         vector = vector.reshape(
             1,
             -1
         )
 
+        # ---------------------------------------------
+        # Normalize for cosine similarity
+        # ---------------------------------------------
+
         faiss.normalize_L2(
             vector
         )
 
-        return vector
+        print(
+            "M2: Query embedding created successfully."
+        )
 
+        return vector
 
     # =================================================
     # Retrieve relevant jobs
@@ -243,8 +335,16 @@ class JobRetrievalAgent:
 
         if not query:
 
+            print(
+                "M2: Candidate profile contains "
+                "no information for job retrieval."
+            )
+
             return []
 
+        print(
+            "M2: Searching jobs using candidate profile..."
+        )
 
         # ---------------------------------------------
         # Create embedding
@@ -253,7 +353,6 @@ class JobRetrievalAgent:
         query_vector = self.create_embedding(
             query
         )
-
 
         # ---------------------------------------------
         # Search FAISS
@@ -264,13 +363,11 @@ class JobRetrievalAgent:
             top_k_chunks
         )
 
-
         # ---------------------------------------------
         # Collect jobs
         # ---------------------------------------------
 
         job_scores = {}
-
 
         for score, index_position in zip(
             scores[0],
@@ -281,7 +378,6 @@ class JobRetrievalAgent:
 
                 continue
 
-
             chunk = self.chunks_df.iloc[
                 index_position
             ]
@@ -289,7 +385,6 @@ class JobRetrievalAgent:
             jobid = str(
                 chunk["jobid"]
             )
-
 
             # Keep highest score for each job
 
@@ -302,17 +397,33 @@ class JobRetrievalAgent:
                     score
                 )
 
-
         # ---------------------------------------------
-        # Sort jobs by retrieval score
+        # M4.3 — FILTER AND SORT RETRIEVED JOBS
         # ---------------------------------------------
 
-        ranked_jobs = sorted(
-            job_scores.items(),
-            key=lambda x: x[1],
-            reverse=True
+        MIN_RETRIEVAL_SCORE = 0.20
+
+        filtered_job_scores = {
+             jobid: score
+            for jobid, score in job_scores.items()
+             if score >= MIN_RETRIEVAL_SCORE
+        }
+
+        print(
+        f"M4.3 RAG: {len(job_scores)} jobs before "
+        f"similarity filtering." 
         )
 
+        print(
+        f"M4.3 RAG: {len(filtered_job_scores)} jobs after "
+        f"similarity filtering."
+        )
+
+        ranked_jobs = sorted(
+        filtered_job_scores.items(),
+        key=lambda x: x[1],
+        reverse=True
+    )
 
         # ---------------------------------------------
         # Get complete job information
@@ -320,8 +431,10 @@ class JobRetrievalAgent:
 
         results = []
 
-
-        for jobid, score in ranked_jobs:
+        for rank, (jobid, score) in enumerate(
+                        ranked_jobs,
+                        start=1
+                            ):
 
             matching_rows = self.jobs_df[
                 self.jobs_df["jobid"].astype(str)
@@ -333,7 +446,6 @@ class JobRetrievalAgent:
                 continue
 
             job = matching_rows.iloc[0]
-
 
             results.append({
 
@@ -378,13 +490,70 @@ class JobRetrievalAgent:
                 "retrieval_score": round(
                     score,
                     4
-                )
-            })
+                ),
+                "retrieval_rank": rank
 
+
+            })
 
             if len(results) >= top_k_jobs:
 
                 break
 
+               # ---------------------------------------------
+        # Retrieval summary
+        # ---------------------------------------------
+
+        print(
+            f"M2: Retrieved {len(results)} relevant jobs."
+        )
+
+        # ---------------------------------------------
+        # M4.3 RETRIEVAL QUALITY SUMMARY
+        # ---------------------------------------------
+
+        if results:
+
+            retrieval_scores = [
+                job["retrieval_score"]
+                for job in results
+            ]
+
+            print(
+                f"M4.3 RAG TOP SCORE: "
+                f"{max(retrieval_scores):.4f}"
+            )
+
+            print(
+                f"M4.3 RAG LOWEST SCORE: "
+                f"{min(retrieval_scores):.4f}"
+            )
+
+            print(
+                f"M4.3 RAG AVERAGE SCORE: "
+                f"{sum(retrieval_scores) / len(retrieval_scores):.4f}"
+            )
+
+            print(
+                "M4.3 RAG RETRIEVED JOBS:"
+            )
+
+            for rank, job in enumerate(
+                results,
+                start=1
+            ):
+
+                print(
+                    f"  {rank}. "
+                    f"{job['job_title']} | "
+                    f"{job['company']} | "
+                    f"score={job['retrieval_score']:.4f}"
+                )
+
+        else:
+
+            print(
+                "M4.3 RAG: No jobs retrieved."
+            )
 
         return results

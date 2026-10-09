@@ -1,0 +1,486 @@
+{% extends "base.html" %}
+
+{% block title %}CareerAI | Add Application{% endblock %}
+
+{% block page_heading %}
+Add Application
+{% endblock %}
+
+{% block content %}
+
+<style>
+    /* =========================================
+       APPLICATION FORM PAGE
+    ========================================= */
+
+    .application-form-container {
+        width: 100%;
+        max-width: 1100px;
+        margin: 30px auto 60px;
+    }
+
+    .application-form-header {
+        margin-bottom: 25px;
+    }
+
+    .application-form-header h2 {
+        margin: 0 0 8px;
+        color: #302b43;
+        font-size: 28px;
+        font-weight: 700;
+    }
+
+    .application-form-header p {
+        margin: 0;
+        color: #8b849b;
+        font-size: 15px;
+    }
+
+    /* Main card */
+
+    .application-form-card {
+        background: #ffffff;
+        border: 1px solid #eeeaf4;
+        border-radius: 20px;
+        padding: 32px;
+        box-shadow: 0 10px 30px rgba(63, 43, 107, 0.08);
+    }
+
+    .application-section-title {
+        margin: 0 0 22px;
+        color: #302b43;
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    /* Form grid */
+
+    .application-form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 22px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .form-group.full-width {
+        grid-column: 1 / -1;
+    }
+
+    .form-group label {
+        color: #302b43;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+        box-sizing: border-box;
+        border: 1px solid #ddd7ea;
+        border-radius: 10px;
+        background: #ffffff;
+        color: #302b43;
+        font-family: inherit;
+        font-size: 14px;
+        padding: 12px 14px;
+        outline: none;
+        transition: 0.2s ease;
+    }
+
+    .form-group input,
+    .form-group select {
+        height: 46px;
+    }
+
+    .form-group textarea {
+        min-height: 130px;
+        resize: vertical;
+        line-height: 1.5;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+        border-color: #7652b5;
+        box-shadow: 0 0 0 3px rgba(118, 82, 181, 0.12);
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+        color: #aaa3b5;
+    }
+
+    /* Small helper text */
+
+    .field-help {
+        margin: 0;
+        color: #9a93a8;
+        font-size: 12px;
+    }
+
+    /* Buttons */
+
+    .application-form-actions {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-top: 30px;
+        padding-top: 25px;
+        border-top: 1px solid #eeeaf4;
+    }
+
+    .save-application-button {
+        flex: 1;
+        min-height: 50px;
+        border: none;
+        border-radius: 11px;
+        background: linear-gradient(135deg, #7652b5, #5d3fa4);
+        color: #ffffff;
+        font-size: 15px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: 0.2s ease;
+    }
+
+    .save-application-button:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 8px 20px rgba(93, 63, 164, 0.25);
+    }
+
+    .cancel-application-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 50px;
+        padding: 0 25px;
+        border: 1px solid #ddd7ea;
+        border-radius: 11px;
+        background: #ffffff;
+        color: #5d536d;
+        font-size: 14px;
+        font-weight: 600;
+        text-decoration: none;
+        box-sizing: border-box;
+    }
+
+    .cancel-application-button:hover {
+        background: #f8f6fc;
+    }
+
+    /* Responsive */
+
+    @media (max-width: 800px) {
+
+        .application-form-container {
+            margin: 20px auto 40px;
+        }
+
+        .application-form-card {
+            padding: 22px;
+        }
+
+        .application-form-grid {
+            grid-template-columns: 1fr;
+            gap: 18px;
+        }
+
+        .form-group.full-width {
+            grid-column: auto;
+        }
+
+        .application-form-actions {
+            flex-direction: column;
+        }
+
+        .save-application-button,
+        .cancel-application-button {
+            width: 100%;
+        }
+    }
+</style>
+
+
+<div class="application-form-container">
+
+    <!-- Page Header -->
+
+    <div class="application-form-header">
+
+        <h2>Add Internship / Job Application</h2>
+
+        <p>
+            Save and track an internship or job application in your CareerAI companion.
+        </p>
+
+    </div>
+
+
+    <!-- Form Card -->
+
+    <div class="application-form-card">
+
+        <h3 class="application-section-title">
+            Application Details
+        </h3>
+
+
+        <form method="POST">
+
+
+            <div class="application-form-grid">
+
+
+                <!-- Company -->
+
+                <div class="form-group">
+
+                    <label for="company">
+                        Company Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="company"
+                        name="company"
+                        placeholder="e.g. Infosys"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Job Title -->
+
+                <div class="form-group">
+
+                    <label for="job_title">
+                        Job / Internship Title
+                    </label>
+
+                    <input
+                        type="text"
+                        id="job_title"
+                        name="job_title"
+                        placeholder="e.g. Python Developer Intern"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Job Description -->
+
+                <div class="form-group full-width">
+
+                    <label for="job_description">
+                        Job Description
+                    </label>
+
+                    <textarea
+                        id="job_description"
+                        name="job_description"
+                        placeholder="Enter the job responsibilities, requirements, skills, or other important details..."
+                        rows="5"
+                    ></textarea>
+
+                </div>
+
+
+                <!-- Application Date -->
+
+                <div class="form-group">
+
+                   <label for="application_date">Application Date</label>
+                   <input
+                     type="date"
+                     id="application_date"
+                      name="application_date"
+                        >
+ 
+                   <label for="deadline">Application Deadline</label>
+                   <input
+                       type="date"
+                       id="deadline"
+                       name="deadline"
+                        >
+
+                    <label for="follow_up_date">Follow-up Date</label>
+                    <input
+                       type="date"
+                       id="follow_up_date"
+                        name="follow_up_date"
+                        >
+
+
+                <!-- Application Status -->
+
+                <div class="form-group">
+
+                    <label for="status">
+                        Application Status
+                    </label>
+
+                    <select
+                        id="status"
+                        name="status"
+                    >
+
+                        <option value="Saved">
+                            Saved
+                        </option>
+
+                        <option value="Planning to apply">
+                            Planning to apply
+                        </option>
+
+                        <option value="Applied">
+                            Applied
+                        </option>
+
+                        <option value="Application under review">
+                            Application under review
+                        </option>
+
+                        <option value="Shortlisted">
+                            Shortlisted
+                        </option>
+
+                        <option value="Interview scheduled">
+                            Interview scheduled
+                        </option>
+
+                        <option value="Interview completed">
+                            Interview completed
+                        </option>
+
+                        <option value="Offer received">
+                            Offer received
+                        </option>
+
+                        <option value="Rejected">
+                            Rejected
+                        </option>
+
+                    </select>
+
+                    <p class="field-help">
+                        Select the current stage of your application.
+                    </p>
+
+                </div>
+
+
+                <!-- Interview Date -->
+
+                <div class="form-group">
+
+                    <label for="interview_date">
+                        Interview Date
+                    </label>
+
+                    <input
+                        type="date"
+                        id="interview_date"
+                        name="interview_date"
+                    >
+
+                </div>
+
+
+                <!-- Interview Status -->
+
+                <div class="form-group">
+
+                    <label for="interview_status">
+                        Interview Status
+                    </label>
+
+                    <select
+                        id="interview_status"
+                        name="interview_status"
+                    >
+
+                        <option value="Not scheduled">
+                            Not scheduled
+                        </option>
+
+                        <option value="Scheduled">
+                            Scheduled
+                        </option>
+
+                        <option value="Completed">
+                            Completed
+                        </option>
+
+                        <option value="Rescheduled">
+                            Rescheduled
+                        </option>
+
+                        <option value="Cancelled">
+                            Cancelled
+                        </option>
+
+                    </select>
+
+                    <p class="field-help">
+                        Select the current interview stage.
+                    </p>
+
+                </div>
+
+
+                <!-- Notes -->
+
+                <div class="form-group full-width">
+
+                    <label for="notes">
+                        Notes
+                    </label>
+
+                    <textarea
+                        id="notes"
+                        name="notes"
+                        placeholder="Add notes, follow-up information, recruiter details, preparation points, etc."
+                        rows="5"
+                    ></textarea>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- Actions -->
+
+            <div class="application-form-actions">
+
+                <button
+                    type="submit"
+                    class="save-application-button"
+                >
+                    Save Application
+                </button>
+
+                <a
+                    href="{{ url_for('applications_page') }}"
+                    class="cancel-application-button"
+                >
+                    Cancel
+                </a>
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

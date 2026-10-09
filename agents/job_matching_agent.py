@@ -16,7 +16,9 @@ class JobMatchingAgent:
             return set()
 
         if isinstance(skills, list):
-            text = " ".join(str(x) for x in skills)
+            text = " ".join(
+                str(x) for x in skills
+            )
         else:
             text = str(skills)
 
@@ -81,7 +83,9 @@ class JobMatchingAgent:
 
             if skill == "c++":
 
-                pattern = r"(?<![a-z0-9])c\+\+(?![a-z0-9])"
+                pattern = (
+                    r"(?<![a-z0-9])c\+\+(?![a-z0-9])"
+                )
 
                 if re.search(pattern, text):
                     found.add("c++")
@@ -92,7 +96,9 @@ class JobMatchingAgent:
 
             elif skill == "c":
 
-                pattern = r"(?<![a-z0-9])c(?![a-z0-9])"
+                pattern = (
+                    r"(?<![a-z0-9])c(?![a-z0-9])"
+                )
 
                 if re.search(pattern, text):
                     found.add("c")
@@ -112,11 +118,11 @@ class JobMatchingAgent:
                 if re.search(pattern, text):
                     found.add(skill)
 
-        # Treat scikit-learn and scikit learn as the same skill
+        # Treat scikit-learn and scikit learn as same skill
         if "scikit-learn" in found:
             found.add("scikit learn")
 
-        # Treat node js and node.js as the same skill
+        # Treat node js and node.js as same skill
         if "node js" in found:
             found.add("node.js")
 
@@ -172,11 +178,14 @@ class JobMatchingAgent:
             return 0
 
         try:
+
             return max(
                 float(x)
                 for x in matches
             )
+
         except Exception:
+
             return 0
 
     # =========================================================
@@ -200,6 +209,7 @@ class JobMatchingAgent:
         # If no recognizable technical skills
         # are found in the job text, do not penalize.
         if not required:
+
             return 100, [], []
 
         matching = candidate.intersection(
@@ -233,9 +243,11 @@ class JobMatchingAgent:
         # If job does not specify education,
         # consider education satisfied.
         if not job_education:
+
             return 100
 
         if not candidate_education:
+
             return 0
 
         candidate = str(
@@ -281,6 +293,7 @@ class JobMatchingAgent:
         # Job education does not contain
         # a recognizable requirement.
         if not required_matches:
+
             return 100
 
         # Candidate and job have common
@@ -288,6 +301,7 @@ class JobMatchingAgent:
         if candidate_matches.intersection(
             required_matches
         ):
+
             return 100
 
         # Some education information exists,
@@ -314,14 +328,17 @@ class JobMatchingAgent:
 
         # No experience requirement
         if required_years == 0:
+
             return 100
 
         # Candidate satisfies requirement
         if candidate_years >= required_years:
+
             return 100
 
         # Fresher against experienced role
         if candidate_years == 0:
+
             return 50
 
         # Partial experience match
@@ -378,26 +395,7 @@ class JobMatchingAgent:
         )
 
         # -----------------------------------------------------
-        # IMPORTANT:
-        #
-        # The dataset's "skills" column contains broad
-        # categories such as:
-        #
-        # IT Software - Application Programming
-        #
-        # Therefore we build a complete job text using:
-        #
-        # job title
-        # skills
-        # category
-        # job description
-        # education
-        # experience
-        # industry
-        #
-        # This allows technical skills such as Java,
-        # Python, SQL, React, AWS, etc. to be detected
-        # from the actual job posting.
+        # Build complete job text
         # -----------------------------------------------------
 
         job_text = self.build_job_text(
@@ -697,6 +695,19 @@ class JobMatchingAgent:
                 "compatibility_score":
                     score,
 
+                # M4.3 — RAG retrieval information
+                "retrieval_score":
+                    job.get(
+                        "retrieval_score",
+                        0
+                    ),
+
+                "retrieval_rank":
+                    job.get(
+                        "retrieval_rank",
+                        0
+                    ),
+
                 "matching_skills":
                     matching_skills,
 
@@ -722,13 +733,21 @@ class JobMatchingAgent:
                     reasoning
             })
 
-        # =====================================================
-        # RANK JOBS BY COMPATIBILITY
-        # =====================================================
+        # -----------------------------------------------------
+        # M4.3 — SORT BY COMPATIBILITY SCORE
+        #
+        # The RAG retrieval score determines which jobs
+        # are retrieved from the available job collection.
+        #
+        # The compatibility score determines the final
+        # ordering shown to the user.
+        # -----------------------------------------------------
 
         results.sort(
-            key=lambda x:
-                x["compatibility_score"],
+            key=lambda job: job.get(
+                "compatibility_score",
+                0
+            ),
             reverse=True
         )
 

@@ -21,21 +21,12 @@ class ResumeAgent:
         prompt = f"""
 You are the Resume Agent in an AI Career Companion system.
 
-Analyze the student's resume carefully.
+Analyze the student's resume and return ONLY valid JSON.
 
-Your tasks are:
+Extract information only from the resume. Do not invent or assume
+information.
 
-1. Extract the candidate's information.
-2. Evaluate the overall resume quality.
-3. Identify resume strengths.
-4. Identify resume weaknesses.
-5. Suggest improvements.
-6. Recommend suitable career roles.
-7. Identify useful skills the candidate should improve.
-
-Return ONLY valid JSON.
-
-Use exactly this structure:
+Return exactly this structure:
 
 {{
     "candidate_profile": {{
@@ -50,7 +41,6 @@ Use exactly this structure:
         "achievements": [],
         "languages": []
     }},
-
     "resume_analysis": {{
         "resume_score": 0,
         "strengths": [],
@@ -62,73 +52,26 @@ Use exactly this structure:
 }}
 
 Rules:
+- resume_score must be a number from 0 to 100.
+- Use only information present in the resume.
+- Use empty strings/lists when information is unavailable.
+- Keep skills, projects, certifications and achievements as individual items.
+- Education should include degree, institution, year and CGPA/percentage when available.
+- Experience should include company, role and description when available.
+- Recommended roles must match the candidate's actual skills, education and projects.
+- Skill gaps should contain useful skills that would strengthen the candidate for those roles.
+- Do not claim the candidate is definitely eligible for any job or internship.
+- Evaluate clarity, education, technical skills, projects, experience,
+  certifications, achievements and completeness.
+- Return JSON only.
 
-1. Give resume_score as a number between 0 and 100.
-
-2. Do not invent information about the candidate.
-
-3. Use ONLY information available in the resume.
-
-4. If information is not available, use an empty
-   string or empty list.
-
-5. Keep skills as individual items.
-
-6. Keep projects as individual items.
-
-7. Keep certifications as individual items.
-
-8. Education should contain degree, institution,
-   year and CGPA/percentage when available.
-
-9. Experience should contain company, role and
-   description when available.
-
-10. Achievements should contain actual achievements
-    mentioned in the resume.
-
-11. Languages should contain languages explicitly
-    mentioned in the resume.
-
-12. Evaluate the resume based on factors such as:
-    - clarity
-    - education
-    - technical skills
-    - projects
-    - experience
-    - certifications
-    - achievements
-    - overall completeness
-
-13. Do not give a high score simply because the
-    candidate has many skills.
-
-14. If experience is missing, mention it as a
-    possible improvement when appropriate.
-
-15. Recommended roles must be based on the
-    candidate's actual skills, education and projects.
-
-16. Skill gaps should contain useful skills that
-    would help the candidate become stronger for
-    the recommended roles.
-
-17. Do not claim that the candidate is definitely
-    eligible for a real internship or job.
-
-18. Return JSON only.
-
-Resume:
-
+ume:
 {resume_text}
 """
 
-        response = self.client.models.generate_content(
-            model="gemini-3.1-flash-lite",
-            contents=prompt,
-            config={
-                "response_mime_type": "application/json"
-            }
+        response = self.client.generate(
+        prompt,
+        response_mime_type="application/json"
         )
 
         return json.loads(response.text)

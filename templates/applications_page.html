@@ -1,0 +1,627 @@
+
+{% extends "base.html" %}
+
+{% block title %}CareerAI | Application Tracker{% endblock %}
+
+{% block page_heading %}
+Application Tracker
+{% endblock %}
+
+{% block content %}
+
+<div class="application-container">
+
+    <!-- =====================================================
+         PAGE HEADER
+    ====================================================== -->
+
+    <div class="application-header">
+
+        <div class="application-header-text">
+
+            <span class="application-eyebrow">
+                CAREER MANAGEMENT
+            </span>
+
+            <h2>My Applications</h2>
+
+            <p>
+                Track your internships and job applications,
+                monitor progress, and stay prepared for interviews.
+            </p>
+
+        </div>
+
+        <a href="{{ url_for('add_application') }}"
+           class="primary-button application-add-button">
+            + Add Application
+        </a>
+
+    </div>
+    <!-- =====================================================
+     M4.1 - DEADLINE & REMINDER MANAGEMENT
+====================================================== -->
+
+<div class="application-reminders">
+
+    <div class="reminder-section-header">
+        <span class="application-eyebrow">
+            REMINDERS & FOLLOW-UPS
+        </span>
+
+        <h3>Stay on Top of Your Applications</h3>
+
+        <p>
+            Keep track of upcoming deadlines, interviews,
+            pending applications, and follow-up actions.
+        </p>
+    </div>
+
+
+    <!-- Upcoming Application Deadlines -->
+
+    <div class="reminder-card">
+
+        <h4>📅 Upcoming Deadlines</h4>
+
+        {% if upcoming_deadlines %}
+
+            <div class="reminder-list">
+
+                {% for application in upcoming_deadlines %}
+
+                    <div class="reminder-item">
+
+                        <div>
+                            <strong>
+                                {{ application.company }}
+                            </strong>
+
+                            <span>
+                                {{ application.job_title }}
+                            </span>
+                        </div>
+
+                        <div class="reminder-date">
+                            {{ application.deadline.strftime('%d %b %Y') }}
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <p class="no-reminders">
+                No upcoming application deadlines.
+            </p>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- Scheduled Interviews -->
+
+    <div class="reminder-card">
+
+        <h4>🎤 Scheduled Interviews</h4>
+
+        {% if upcoming_interviews %}
+
+            <div class="reminder-list">
+
+                {% for application in upcoming_interviews %}
+
+                    <div class="reminder-item">
+
+                        <div>
+                            <strong>
+                                {{ application.company }}
+                            </strong>
+
+                            <span>
+                                {{ application.job_title }}
+                            </span>
+                        </div>
+
+                        <div class="reminder-date">
+                            {{ application.interview_date.strftime('%d %b %Y') }}
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <p class="no-reminders">
+                No upcoming interviews.
+            </p>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- Pending Applications -->
+
+    <div class="reminder-card">
+
+        <h4>⏳ Pending Applications</h4>
+
+        {% if pending_applications %}
+
+            <div class="reminder-list">
+
+                {% for application in pending_applications %}
+
+                    <div class="reminder-item">
+
+                        <div>
+                            <strong>
+                                {{ application.company }}
+                            </strong>
+
+                            <span>
+                                {{ application.job_title }}
+                            </span>
+                        </div>
+
+                        <div class="reminder-status">
+                            {{ application.status }}
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <p class="no-reminders">
+                No pending applications.
+            </p>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- Follow-up Applications -->
+
+    <div class="reminder-card">
+
+        <h4>🔔 Follow-up Actions</h4>
+
+        {% if follow_up_applications %}
+
+            <div class="reminder-list">
+
+                {% for application in follow_up_applications %}
+
+                    <div class="reminder-item">
+
+                        <div>
+                            <strong>
+                                {{ application.company }}
+                            </strong>
+
+                            <span>
+                                {{ application.job_title }}
+                            </span>
+                        </div>
+
+                        <div class="reminder-status">
+                            Follow-up required
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <p class="no-reminders">
+                No follow-up actions at the moment.
+            </p>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+
+    <!-- =====================================================
+         APPLICATION SUMMARY
+    ====================================================== -->
+
+    <div class="application-stats">
+
+        <div class="stat-card">
+            <span class="stat-label">Total Applications</span>
+            <strong>{{ total_applications }}</strong>
+            <small>All applications</small>
+        </div>
+
+        <div class="stat-card">
+            <span class="stat-label">Active Applications</span>
+            <strong>{{ active_applications }}</strong>
+            <small>Currently in progress</small>
+        </div>
+
+        <div class="stat-card">
+            <span class="stat-label">Interviews</span>
+            <strong>{{ interviews }}</strong>
+            <small>Interview stage</small>
+        </div>
+
+        <div class="stat-card">
+            <span class="stat-label">Offers</span>
+            <strong>{{ offers }}</strong>
+            <small>Offers received</small>
+        </div>
+
+        <div class="stat-card">
+            <span class="stat-label">Rejected</span>
+            <strong>{{ rejected }}</strong>
+            <small>Applications closed</small>
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         APPLICATION HISTORY
+    ====================================================== -->
+
+    <div class="applications-section">
+
+        <div class="section-header">
+
+            <div>
+
+                <span class="application-section-label">
+                    APPLICATION HISTORY
+                </span>
+
+                <h2>My Career Applications</h2>
+
+                <p>
+                    Keep track of every opportunity in your career journey.
+                </p>
+
+            </div>
+
+            {% if applications %}
+
+            <span class="application-count">
+                {{ applications|length }}
+                application{% if applications|length != 1 %}s{% endif %}
+            </span>
+
+            {% endif %}
+
+        </div>
+
+
+        {% if applications %}
+
+            <div class="application-list">
+
+            {% for application in applications %}
+
+                <!-- =================================================
+                     SINGLE APPLICATION HISTORY CARD
+                ================================================== -->
+
+                <div class="application-history-card">
+
+                    <!-- TOP SECTION -->
+
+                    <div class="application-card-top">
+
+                        <!-- COMPANY + JOB TITLE -->
+
+                        <div class="application-company-section">
+
+                            <div class="application-company-icon">
+                                💼
+                            </div>
+
+                            <div class="application-title-content">
+
+                                <span class="application-record-label">
+                                    APPLICATION
+                                </span>
+
+                                <h3>
+                                    {{ application.job_title }}
+                                </h3>
+
+                                <p class="application-company-name">
+                                    {{ application.company }}
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- STATUS -->
+
+                        <div class="application-status-container">
+
+                            <span class="application-status-label">
+                                CURRENT STATUS
+                            </span>
+
+                            <span class="history-status-badge
+                                {% if application.status == 'Applied' %}
+                                    history-status-applied
+                                {% elif application.status == 'Shortlisted' %}
+                                    history-status-shortlisted
+                                {% elif application.status == 'Interview scheduled' %}
+                                    history-status-interview
+                                {% elif application.status == 'Offer received' %}
+                                    history-status-offer
+                                {% elif application.status == 'Rejected' %}
+                                    history-status-rejected
+                                {% elif application.status == 'Saved' %}
+                                    history-status-saved
+                                {% else %}
+                                    history-status-default
+                                {% endif %}
+                            ">
+                                {{ application.status }}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- DIVIDER -->
+
+                    <div class="application-card-divider"></div>
+
+
+                    <!-- =================================================
+                         APPLICATION INFORMATION
+                    ================================================== -->
+
+                    <div class="application-information">
+
+                        {% if application.application_date %}
+
+                        <div class="application-info-item">
+
+                            <div class="application-info-icon">
+                                📅
+                            </div>
+
+                            <div class="application-info-content">
+
+                                <span>Applied On</span>
+
+                                <strong>
+                                    {{ application.application_date.strftime('%d %b %Y') }}
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                        {% endif %}
+
+
+                        {% if application.deadline %}
+
+                        <div class="application-info-item">
+
+                            <div class="application-info-icon deadline-icon">
+                                ⏳
+                            </div>
+
+                            <div class="application-info-content">
+
+                                <span>Application Deadline</span>
+
+                                <strong>
+                                    {{ application.deadline.strftime('%d %b %Y') }}
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                        {% endif %}
+
+
+                        {% if application.interview_date %}
+
+                        <div class="application-info-item">
+
+                            <div class="application-info-icon interview-icon">
+                                🎯
+                            </div>
+
+                            <div class="application-info-content">
+
+                                <span>Interview Date</span>
+
+                                <strong>
+                                    {{ application.interview_date.strftime('%d %b %Y') }}
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- =================================================
+                         JOB DESCRIPTION
+                    ================================================== -->
+
+                    {% if application.job_description %}
+
+                    <div class="application-description-box">
+
+                        <div class="description-heading">
+                            📋
+                            <strong>Job Description</strong>
+                        </div>
+
+                        <p>
+                            {{ application.job_description }}
+                        </p>
+
+                    </div>
+
+                    {% endif %}
+
+
+                    <!-- =================================================
+                         INTERVIEW REMINDER
+                    ================================================== -->
+
+                    {% if application.interview_date %}
+
+                    <div class="application-interview-box">
+
+                        <div class="interview-box-icon">
+                            🎤
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Interview scheduled
+                            </strong>
+
+                            <p>
+                                Prepare using the CareerAI Interview Preparation tools.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    {% endif %}
+
+
+                    <!-- =================================================
+                         NOTES
+                    ================================================== -->
+
+                    {% if application.notes %}
+
+                    <div class="application-notes-box">
+
+                        <div class="notes-heading">
+                            📝 Notes
+                        </div>
+
+                        <p>
+                            {{ application.notes }}
+                        </p>
+
+                    </div>
+
+                    {% endif %}
+
+
+                    <!-- =================================================
+                         CARD FOOTER
+                    ================================================== -->
+
+                    <div class="application-card-footer">
+
+                        <div class="application-record-info">
+
+                            {% if application.created_at %}
+
+                            <span>
+                                Added to CareerAI
+                                {{ application.created_at.strftime('%d %b %Y') }}
+                            </span>
+
+                            {% else %}
+
+                            <span>
+                                Application record
+                            </span>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <a href="{{ url_for(
+                            'edit_application',
+                            application_id=application.id
+                        ) }}"
+                           class="edit-application-btn">
+                            ✏️ Edit Application
+                        </a>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+            </div>
+
+
+        {% else %}
+
+            <!-- =================================================
+                 EMPTY STATE
+            ================================================== -->
+
+            <div class="application-empty-state">
+
+                <div class="empty-state-icon">
+                    📋
+                </div>
+
+                <span class="empty-state-label">
+                    APPLICATION TRACKER
+                </span>
+
+                <h3>
+                    No applications yet
+                </h3>
+
+                <p>
+                    Start building your career application history by
+                    adding an internship or job opportunity.
+                </p>
+
+                <a href="{{ url_for('add_application') }}"
+                   class="primary-button">
+                    + Add Your First Application
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}

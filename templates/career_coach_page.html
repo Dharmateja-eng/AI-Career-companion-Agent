@@ -4,173 +4,239 @@
 
 <div class="coach-page">
 
-    <!-- ==================================================
-         HEADER
-    =================================================== -->
+    <div class="career-coach-layout">
 
-    <div class="coach-header">
+        <aside class="chat-sidebar">
 
-        <div>
-            <h1>AI Career Coach</h1>
+            <div class="sidebar-header">
 
-            <p>
-                Ask questions and get personalized career guidance
-                based on your profile.
-            </p>
-        </div>
+                <div class="sidebar-brand-icon">
+                    🤖
+                </div>
 
-        <div class="coach-status">
-            <span class="status-dot"></span>
-            AI Coach Online
-        </div>
-
-    </div>
-
-
-    <!-- ==================================================
-         COACH CARD
-    =================================================== -->
-
-    <div class="coach-container">
-
-        <!-- Welcome -->
-
-        <div class="coach-welcome">
-
-            <div class="coach-icon">
-                🤖
-            </div>
-
-            <div>
-
-                <h2>
-                    Hi {{ session.get("user_name", "there") }}!
-                </h2>
-
-                <p>
-                    I'm your AI Career Coach. Ask me anything
-                    about your career, skills, internships,
-                    resume or interview preparation.
-                </p>
+                <div>
+                    <h2>Career Coach</h2>
+                    <span>AI Career Assistant</span>
+                </div>
 
             </div>
-
-        </div>
-
-
-        <!-- ==================================================
-             SUGGESTED QUESTIONS
-        =================================================== -->
-
-        <div class="suggested-questions">
-
-            <button onclick="askSuggestion(
-                'What skills should I learn next for my career?'
-            )">
-                What skills should I learn next?
-            </button>
-
-            <button onclick="askSuggestion(
-                'Am I ready for an internship?'
-            )">
-                Am I ready for an internship?
-            </button>
-
-            <button onclick="askSuggestion(
-                'How can I improve my resume?'
-            )">
-                How can I improve my resume?
-            </button>
-
-            <button onclick="askSuggestion(
-                'Which career roles are suitable for me?'
-            )">
-                Which roles suit me?
-            </button>
-
-        </div>
-
-
-        <!-- ==================================================
-             CHAT AREA
-        =================================================== -->
-
-        <div
-            id="chatMessages"
-            class="chat-messages"
-        >
-
-            <!-- Messages will appear here -->
-
-        </div>
-
-
-        <!-- ==================================================
-             TYPING INDICATOR
-        =================================================== -->
-
-        <div
-            id="typingIndicator"
-            class="typing-indicator"
-            style="display:none;"
-        >
-
-            <span></span>
-            <span></span>
-            <span></span>
-
-            <label>
-                AI Career Coach is thinking...
-            </label>
-
-        </div>
-
-
-        <!-- ==================================================
-             INPUT AREA
-        =================================================== -->
-
-        <div class="coach-input-area">
-
-            <textarea
-                id="messageInput"
-                placeholder="Ask your career question..."
-                rows="1"
-                onkeydown="handleKeyDown(event)"
-            ></textarea>
 
             <button
-                id="sendButton"
-                onclick="sendMessage()"
+                class="new-chat-btn"
+                onclick="createNewChat()"
+                type="button"
             >
-                Send
+
+                <span class="new-chat-icon">＋</span>
+
+                <span>
+                    New Chat
+                </span>
+
             </button>
 
-        </div>
+            <div class="history-title">
 
-        <div class="coach-note">
-            AI Career Coach uses your profile to provide
-            personalized guidance.
-        </div>
+                <span>Chat History</span>
+
+            </div>
+
+            <div
+                id="chatHistoryList"
+                class="chat-history-list"
+            >
+
+                <div class="history-loading">
+                    Loading chats...
+                </div>
+
+            </div>
+
+            <div class="sidebar-footer">
+
+                <span class="sidebar-online-dot"></span>
+
+                AI Coach Online
+
+            </div>
+
+        </aside>
+
+
+        <main class="career-chat-main">
+
+            <div class="coach-header">
+
+                <div>
+
+                    <h1>
+                        AI Career Coach
+                    </h1>
+
+                    <p>
+                        Ask questions and get personalized career
+                        guidance based on your profile.
+                    </p>
+
+                </div>
+
+                <div class="coach-status">
+
+                    <span class="status-dot"></span>
+
+                    AI Coach Online
+
+                </div>
+
+            </div>
+
+
+            <div class="coach-container">
+
+
+                <div class="coach-welcome">
+
+                    <div class="coach-icon">
+                        🤖
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Hi {{ session.get("user_name", "there") }}!
+                        </h2>
+
+                        <p>
+                            I'm your AI Career Coach. Ask me anything
+                            about your career, skills, internships,
+                            resume or interview preparation.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="suggested-questions">
+
+                    <button
+                        type="button"
+                        onclick="askSuggestion(
+                            'What skills should I learn next for my career?'
+                        )"
+                    >
+                        What skills should I learn next?
+                    </button>
+
+
+                    <button
+                        type="button"
+                        onclick="askSuggestion(
+                            'Am I ready for an internship?'
+                        )"
+                    >
+                        Am I ready for an internship?
+                    </button>
+
+
+                    <button
+                        type="button"
+                        onclick="askSuggestion(
+                            'How can I improve my resume?'
+                        )"
+                    >
+                        How can I improve my resume?
+                    </button>
+
+
+                    <button
+                        type="button"
+                        onclick="askSuggestion(
+                            'Which career roles are suitable for me?'
+                        )"
+                    >
+                        Which roles suit me?
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="chatMessages"
+                    class="chat-messages"
+                >
+
+                </div>
+
+
+                <div
+                    id="typingIndicator"
+                    class="typing-indicator"
+                    style="display:none;"
+                >
+
+                    <span></span>
+                    <span></span>
+                    <span></span>
+
+                    <label>
+                        AI Career Coach is thinking...
+                    </label>
+
+                </div>
+
+
+                <div class="coach-input-area">
+
+                    <textarea
+                        id="messageInput"
+                        placeholder="Ask your career question..."
+                        rows="1"
+                        onkeydown="handleKeyDown(event)"
+                    ></textarea>
+
+
+                    <button
+                        id="sendButton"
+                        onclick="sendMessage()"
+                        type="button"
+                    >
+                        Send
+                    </button>
+
+                </div>
+
+
+                <div class="coach-note">
+
+                    AI Career Coach uses your profile to provide
+                    personalized guidance.
+
+                </div>
+
+            </div>
+
+        </main>
 
     </div>
 
 </div>
 
 
-<!-- ======================================================
-     JAVASCRIPT
-======================================================= -->
-
 <script>
+
+let currentConversationId = null;
+
 
 function addMessage(message, sender) {
 
     const chatMessages =
         document.getElementById("chatMessages");
 
+
     const messageDiv =
         document.createElement("div");
+
 
     messageDiv.className =
         "chat-message " + sender;
@@ -179,14 +245,73 @@ function addMessage(message, sender) {
     const bubble =
         document.createElement("div");
 
+
     bubble.className =
         "message-bubble";
 
 
-    // Convert line breaks into HTML
+    let formattedMessage =
+        String(message || "");
+
+
+    formattedMessage =
+        formattedMessage
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+
+
+    formattedMessage =
+        formattedMessage.replace(
+            /^### (.*)$/gm,
+            "<h4>$1</h4>"
+        );
+
+
+    formattedMessage =
+        formattedMessage.replace(
+            /^## (.*)$/gm,
+            "<h3>$1</h3>"
+        );
+
+
+    formattedMessage =
+        formattedMessage.replace(
+            /^# (.*)$/gm,
+            "<h2>$1</h2>"
+        );
+
+
+    formattedMessage =
+        formattedMessage.replace(
+            /\*\*(.*?)\*\*/g,
+            "<strong>$1</strong>"
+        );
+
+
+    formattedMessage =
+        formattedMessage.replace(
+            /(?<!\*)\*([^*]+)\*(?!\*)/g,
+            "<em>$1</em>"
+        );
+
+
+    formattedMessage =
+        formattedMessage.replace(
+            /^[•\-] (.*)$/gm,
+            "• $1"
+        );
+
+
+    formattedMessage =
+        formattedMessage.replace(
+            /\n/g,
+            "<br>"
+        );
+
+
     bubble.innerHTML =
-        message
-        .replace(/\n/g, "<br>");
+        formattedMessage;
 
 
     messageDiv.appendChild(
@@ -199,22 +324,597 @@ function addMessage(message, sender) {
     );
 
 
-    // Scroll to bottom
-
     chatMessages.scrollTop =
         chatMessages.scrollHeight;
+
 }
 
+
+/* ======================================================
+   LOAD CHAT HISTORY
+====================================================== */
+
+async function loadChatHistory() {
+
+    const historyList =
+        document.getElementById(
+            "chatHistoryList"
+        );
+
+
+    historyList.innerHTML =
+        '<div class="history-loading">Loading chats...</div>';
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/career-coach/history",
+                {
+                    method: "GET"
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            !response.ok ||
+            !data.success
+        ) {
+
+            historyList.innerHTML =
+                '<div class="history-empty">Unable to load chats.</div>';
+
+            return;
+
+        }
+
+
+        historyList.innerHTML = "";
+
+
+        const conversations =
+            data.conversations || [];
+
+
+        if (
+            conversations.length === 0
+        ) {
+
+            historyList.innerHTML =
+                `
+                <div class="history-empty">
+
+                    <div class="empty-history-icon">
+                        💬
+                    </div>
+
+                    <span>
+                        No previous chats yet.
+                    </span>
+
+                    <small>
+                        Start a new conversation.
+                    </small>
+
+                </div>
+                `;
+
+            return;
+
+        }
+
+
+        /*
+         * IMPORTANT:
+         *
+         * If the backend title is still "New Chat",
+         * get the conversation messages and use the
+         * FIRST USER MESSAGE as the sidebar title.
+         */
+
+        const conversationItems =
+            await Promise.all(
+
+                conversations.map(
+                    async function(conversation) {
+
+                        let title =
+                            conversation.title ||
+                            "New Chat";
+
+
+                        if (
+                            title
+                                .trim()
+                                .toLowerCase() ===
+                            "new chat"
+                        ) {
+
+                            try {
+
+                                const chatResponse =
+                                    await fetch(
+                                        "/career-coach/chat/" +
+                                        conversation.id,
+                                        {
+                                            method: "GET"
+                                        }
+                                    );
+
+
+                                if (
+                                    chatResponse.ok
+                                ) {
+
+                                    const chatData =
+                                        await chatResponse.json();
+
+
+                                    const messages =
+                                        chatData.messages ||
+                                        [];
+
+
+                                    const firstUserMessage =
+                                        messages.find(
+                                            function(record) {
+
+                                                return (
+                                                    record.role ===
+                                                        "user" &&
+
+                                                    record.message &&
+
+                                                    record.message.trim()
+                                                );
+
+                                            }
+                                        );
+
+
+                                    if (
+                                        firstUserMessage
+                                    ) {
+
+                                        title =
+                                            firstUserMessage
+                                                .message
+                                                .trim();
+
+
+                                        /*
+                                         * Keep long questions
+                                         * short in the sidebar.
+                                         */
+
+                                        if (
+                                            title.length > 45
+                                        ) {
+
+                                            title =
+                                                title
+                                                    .substring(
+                                                        0,
+                                                        45
+                                                    )
+                                                    .trim() +
+                                                "...";
+
+                                        }
+
+                                    }
+
+                                }
+
+                            }
+
+                            catch (titleError) {
+
+                                console.warn(
+                                    "Unable to get first message for conversation:",
+                                    conversation.id,
+                                    titleError
+                                );
+
+                            }
+
+                        }
+
+
+                        return {
+
+                            conversation:
+                                conversation,
+
+                            title:
+                                title
+
+                        };
+
+                    }
+                )
+
+            );
+
+
+        conversationItems.forEach(
+            function(chatItem) {
+
+                const conversation =
+                    chatItem.conversation;
+
+
+                const item =
+                    document.createElement("div");
+
+
+                item.className =
+                    "history-item";
+
+
+                item.dataset.id =
+                    conversation.id;
+
+
+                item.innerHTML =
+                    `
+                    <span class="history-chat-icon">
+                        💬
+                    </span>
+
+                    <span class="history-chat-title">
+                        ${escapeHtml(chatItem.title)}
+                    </span>
+                    `;
+
+
+                item.onclick =
+                    function() {
+
+                        loadConversation(
+                            conversation.id
+                        );
+
+                    };
+
+
+                historyList.appendChild(
+                    item
+                );
+
+            }
+        );
+
+
+        highlightCurrentConversation();
+
+    }
+
+
+    catch (error) {
+
+        console.error(
+            "History loading error:",
+            error
+        );
+
+
+        historyList.innerHTML =
+            `
+            <div class="history-empty">
+                Unable to load chats.
+            </div>
+            `;
+
+    }
+
+}
+
+
+/* ======================================================
+   ESCAPE HTML
+====================================================== */
+
+function escapeHtml(value) {
+
+    const div =
+        document.createElement("div");
+
+
+    div.textContent =
+        value;
+
+
+    return div.innerHTML;
+
+}
+
+
+/* ======================================================
+   LOAD SELECTED CONVERSATION
+====================================================== */
+
+async function loadConversation(
+    conversationId
+) {
+
+    if (!conversationId) {
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/career-coach/chat/" +
+                conversationId,
+                {
+                    method: "GET"
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            !response.ok ||
+            !data.success
+        ) {
+
+            alert(
+                data.error ||
+                "Unable to load conversation."
+            );
+
+            return;
+
+        }
+
+
+        currentConversationId =
+            conversationId;
+
+
+        const chatMessages =
+            document.getElementById(
+                "chatMessages"
+            );
+
+
+        chatMessages.innerHTML = "";
+
+
+        const messages =
+            data.messages || [];
+
+
+        messages.forEach(
+            function(record) {
+
+                if (
+                    record.role === "user"
+                ) {
+
+                    addMessage(
+                        record.message,
+                        "user-message"
+                    );
+
+                }
+
+                else if (
+                    record.role === "assistant"
+                ) {
+
+                    addMessage(
+                        record.message,
+                        "ai-message"
+                    );
+
+                }
+
+            }
+        );
+
+
+        highlightCurrentConversation();
+
+
+        document
+            .getElementById(
+                "messageInput"
+            )
+            .focus();
+
+    }
+
+
+    catch (error) {
+
+        console.error(
+            "Conversation loading error:",
+            error
+        );
+
+
+        alert(
+            "Unable to load this conversation."
+        );
+
+    }
+
+}
+
+
+/* ======================================================
+   HIGHLIGHT CURRENT CONVERSATION
+====================================================== */
+
+function highlightCurrentConversation() {
+
+    document
+        .querySelectorAll(
+            ".history-item"
+        )
+        .forEach(
+            function(item) {
+
+                item.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+    if (!currentConversationId) {
+        return;
+    }
+
+
+    const selectedItem =
+        document.querySelector(
+            '.history-item[data-id="' +
+            currentConversationId +
+            '"]'
+        );
+
+
+    if (selectedItem) {
+
+        selectedItem.classList.add(
+            "active"
+        );
+
+    }
+
+}
+
+
+/* ======================================================
+   CREATE NEW CHAT
+====================================================== */
+
+async function createNewChat() {
+
+    try {
+
+        const response =
+            await fetch(
+                "/career-coach/new-chat",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    }
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            !response.ok ||
+            !data.success
+        ) {
+
+            alert(
+                data.error ||
+                "Unable to create new chat."
+            );
+
+            return;
+
+        }
+
+
+        currentConversationId =
+            data.conversation_id;
+
+
+        document
+            .getElementById(
+                "chatMessages"
+            )
+            .innerHTML = "";
+
+
+        document
+            .getElementById(
+                "messageInput"
+            )
+            .value = "";
+
+
+        await loadChatHistory();
+
+
+        highlightCurrentConversation();
+
+
+        document
+            .getElementById(
+                "messageInput"
+            )
+            .focus();
+
+    }
+
+
+    catch (error) {
+
+        console.error(
+            "New chat error:",
+            error
+        );
+
+
+        alert(
+            "Unable to create a new chat."
+        );
+
+    }
+
+}
+
+
+/* ======================================================
+   ASK SUGGESTION
+====================================================== */
 
 function askSuggestion(question) {
 
-    document.getElementById(
-        "messageInput"
-    ).value = question;
+    const input =
+        document.getElementById(
+            "messageInput"
+        );
+
+
+    input.value =
+        question;
+
 
     sendMessage();
+
 }
 
+
+/* ======================================================
+   SEND MESSAGE
+====================================================== */
 
 async function sendMessage() {
 
@@ -223,10 +923,12 @@ async function sendMessage() {
             "messageInput"
         );
 
+
     const sendButton =
         document.getElementById(
             "sendButton"
         );
+
 
     const typingIndicator =
         document.getElementById(
@@ -243,28 +945,22 @@ async function sendMessage() {
     }
 
 
-    // Show user's message
-
     addMessage(
         message,
         "user-message"
     );
 
 
-    // Clear input
-
     input.value = "";
 
 
-    // Disable button
+    sendButton.disabled =
+        true;
 
-    sendButton.disabled = true;
 
     sendButton.innerText =
         "Thinking...";
 
-
-    // Show typing indicator
 
     typingIndicator.style.display =
         "flex";
@@ -284,8 +980,15 @@ async function sendMessage() {
                     },
 
                     body: JSON.stringify({
-                        message: message
+
+                        message:
+                            message,
+
+                        conversation_id:
+                            currentConversationId
+
                     })
+
                 }
             );
 
@@ -294,14 +997,43 @@ async function sendMessage() {
             await response.json();
 
 
-        if (data.success) {
+        if (
+            response.ok &&
+            data.success
+        ) {
+
+
+            if (
+                data.conversation_id
+            ) {
+
+                currentConversationId =
+                    data.conversation_id;
+
+            }
+
 
             addMessage(
                 data.answer,
                 "ai-message"
             );
 
-        } else {
+
+            /*
+             * Reload history after every successful
+             * message so the first typed message appears
+             * immediately as the sidebar title.
+             */
+
+            await loadChatHistory();
+
+
+            highlightCurrentConversation();
+
+        }
+
+
+        else {
 
             addMessage(
                 data.error ||
@@ -313,9 +1045,14 @@ async function sendMessage() {
 
     }
 
+
     catch (error) {
 
-        console.error(error);
+        console.error(
+            "Chat error:",
+            error
+        );
+
 
         addMessage(
             "Unable to connect to the AI Career Coach. Please try again.",
@@ -324,16 +1061,20 @@ async function sendMessage() {
 
     }
 
+
     finally {
 
         typingIndicator.style.display =
             "none";
 
+
         sendButton.disabled =
             false;
 
+
         sendButton.innerText =
             "Send";
+
 
         input.focus();
 
@@ -342,14 +1083,14 @@ async function sendMessage() {
 }
 
 
+/* ======================================================
+   KEYBOARD HANDLING
+====================================================== */
+
 function handleKeyDown(event) {
 
-    // Enter → send
-    // Shift + Enter → new line
-
     if (
-        event.key === "Enter"
-        &&
+        event.key === "Enter" &&
         !event.shiftKey
     ) {
 
@@ -361,21 +1102,225 @@ function handleKeyDown(event) {
 
 }
 
+
+/* ======================================================
+   PAGE LOAD
+====================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async function() {
+
+        await loadChatHistory();
+
+
+        document
+            .getElementById(
+                "messageInput"
+            )
+            .focus();
+
+    }
+);
+
 </script>
 
-
-<!-- ======================================================
-     PAGE CSS
-======================================================= -->
 
 <style>
 
 .coach-page {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
     padding: 10px 0 40px;
 }
 
+.career-coach-layout {
+    display: flex;
+    gap: 20px;
+    min-height: 650px;
+}
+
+.chat-sidebar {
+    width: 270px;
+    flex-shrink: 0;
+    background: #ffffff;
+    border: 1px solid #e8e8ee;
+    border-radius: 20px;
+    padding: 18px;
+    box-shadow:
+        0 8px 30px rgba(0,0,0,0.04);
+    display: flex;
+    flex-direction: column;
+    min-height: 650px;
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 3px 4px 18px;
+}
+
+.sidebar-brand-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ece9ff;
+    font-size: 21px;
+}
+
+.sidebar-header h2 {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.sidebar-header span {
+    display: block;
+    margin-top: 3px;
+    font-size: 11px;
+    color: #999;
+}
+
+.new-chat-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 14px;
+    border: none;
+    border-radius: 12px;
+    background: #6d5dfc;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: left;
+    transition: 0.2s;
+}
+
+.new-chat-btn:hover {
+    background: #5b4be8;
+    transform: translateY(-1px);
+}
+
+.new-chat-icon {
+    font-size: 20px;
+    line-height: 1;
+}
+
+.history-title {
+    margin-top: 25px;
+    margin-bottom: 9px;
+    padding: 0 5px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+}
+
+.chat-history-list {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-height: 0;
+}
+
+.chat-history-list::-webkit-scrollbar {
+    width: 5px;
+}
+
+.chat-history-list::-webkit-scrollbar-thumb {
+    background: #ddd;
+    border-radius: 10px;
+}
+
+.history-item {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 11px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 13px;
+    color: #444;
+    transition: 0.2s;
+}
+
+.history-item:hover {
+    background: #f3f1ff;
+}
+
+.history-item.active {
+    background: #ece9ff;
+    color: #5b4be8;
+    font-weight: 600;
+}
+
+.history-chat-icon {
+    flex-shrink: 0;
+    font-size: 13px;
+    opacity: 0.65;
+}
+
+.history-chat-title {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.history-loading,
+.history-empty {
+    padding: 14px 6px;
+    color: #999;
+    font-size: 13px;
+}
+
+.history-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+}
+
+.empty-history-icon {
+    font-size: 20px;
+    margin-bottom: 3px;
+}
+
+.history-empty small {
+    color: #bbb;
+    font-size: 11px;
+}
+
+.sidebar-footer {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 14px 5px 3px;
+    margin-top: 15px;
+    border-top: 1px solid #eee;
+    font-size: 11px;
+    color: #999;
+}
+
+.sidebar-online-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #22c55e;
+}
+
+.career-chat-main {
+    flex: 1;
+    min-width: 0;
+}
 
 .coach-header {
     display: flex;
@@ -384,18 +1329,15 @@ function handleKeyDown(event) {
     margin-bottom: 25px;
 }
 
-
 .coach-header h1 {
     margin: 0;
     font-size: 30px;
 }
 
-
 .coach-header p {
     margin-top: 8px;
     color: #777;
 }
-
 
 .coach-status {
     display: flex;
@@ -409,7 +1351,6 @@ function handleKeyDown(event) {
     font-weight: 600;
 }
 
-
 .status-dot {
     width: 9px;
     height: 9px;
@@ -417,15 +1358,14 @@ function handleKeyDown(event) {
     background: #22c55e;
 }
 
-
 .coach-container {
     background: white;
     border-radius: 20px;
     border: 1px solid #e8e8ee;
     overflow: hidden;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.05);
+    box-shadow:
+        0 8px 30px rgba(0,0,0,0.05);
 }
-
 
 .coach-welcome {
     display: flex;
@@ -435,7 +1375,6 @@ function handleKeyDown(event) {
     background: #f8f7ff;
     border-bottom: 1px solid #eceaf5;
 }
-
 
 .coach-icon {
     width: 55px;
@@ -448,17 +1387,14 @@ function handleKeyDown(event) {
     background: #ece9ff;
 }
 
-
 .coach-welcome h2 {
     margin: 0 0 5px;
 }
-
 
 .coach-welcome p {
     margin: 0;
     color: #666;
 }
-
 
 .suggested-questions {
     display: flex;
@@ -468,7 +1404,6 @@ function handleKeyDown(event) {
     border-bottom: 1px solid #eee;
 }
 
-
 .suggested-questions button {
     border: 1px solid #ddd8f5;
     background: #faf9ff;
@@ -476,13 +1411,14 @@ function handleKeyDown(event) {
     padding: 9px 14px;
     cursor: pointer;
     font-size: 13px;
+    color: #444;
+    transition: 0.2s;
 }
-
 
 .suggested-questions button:hover {
     background: #efecff;
+    border-color: #cfc8ff;
 }
-
 
 .chat-messages {
     height: 430px;
@@ -494,21 +1430,26 @@ function handleKeyDown(event) {
     background: #fcfcfe;
 }
 
+.chat-messages::-webkit-scrollbar {
+    width: 6px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+    background: #ddd;
+    border-radius: 10px;
+}
 
 .chat-message {
     display: flex;
 }
 
-
 .user-message {
     justify-content: flex-end;
 }
 
-
 .ai-message {
     justify-content: flex-start;
 }
-
 
 .message-bubble {
     max-width: 75%;
@@ -516,8 +1457,27 @@ function handleKeyDown(event) {
     border-radius: 16px;
     line-height: 1.55;
     font-size: 14px;
+    word-wrap: break-word;
 }
 
+.message-bubble h2,
+.message-bubble h3,
+.message-bubble h4 {
+    margin-top: 8px;
+    margin-bottom: 7px;
+}
+
+.message-bubble h2 {
+    font-size: 18px;
+}
+
+.message-bubble h3 {
+    font-size: 16px;
+}
+
+.message-bubble h4 {
+    font-size: 15px;
+}
 
 .user-message .message-bubble {
     background: #6d5dfc;
@@ -525,14 +1485,12 @@ function handleKeyDown(event) {
     border-bottom-right-radius: 4px;
 }
 
-
 .ai-message .message-bubble {
     background: white;
     border: 1px solid #e5e5eb;
     color: #333;
     border-bottom-left-radius: 4px;
 }
-
 
 .typing-indicator {
     align-items: center;
@@ -542,7 +1500,6 @@ function handleKeyDown(event) {
     font-size: 13px;
 }
 
-
 .typing-indicator span {
     width: 6px;
     height: 6px;
@@ -551,16 +1508,13 @@ function handleKeyDown(event) {
     animation: typing 1s infinite;
 }
 
-
 .typing-indicator span:nth-child(2) {
     animation-delay: 0.2s;
 }
 
-
 .typing-indicator span:nth-child(3) {
     animation-delay: 0.4s;
 }
-
 
 @keyframes typing {
 
@@ -574,14 +1528,12 @@ function handleKeyDown(event) {
 
 }
 
-
 .coach-input-area {
     display: flex;
     gap: 12px;
     padding: 18px 25px;
     border-top: 1px solid #eee;
 }
-
 
 .coach-input-area textarea {
     flex: 1;
@@ -591,13 +1543,14 @@ function handleKeyDown(event) {
     padding: 13px 15px;
     font-family: inherit;
     outline: none;
+    min-height: 45px;
 }
-
 
 .coach-input-area textarea:focus {
     border-color: #6d5dfc;
+    box-shadow:
+        0 0 0 3px rgba(109,93,252,0.08);
 }
-
 
 .coach-input-area button {
     align-self: stretch;
@@ -608,14 +1561,17 @@ function handleKeyDown(event) {
     color: white;
     font-weight: 600;
     cursor: pointer;
+    transition: 0.2s;
 }
 
+.coach-input-area button:hover {
+    background: #5b4be8;
+}
 
 .coach-input-area button:disabled {
     opacity: 0.6;
     cursor: not-allowed;
 }
-
 
 .coach-note {
     text-align: center;
@@ -624,6 +1580,22 @@ function handleKeyDown(event) {
     padding: 0 25px 18px;
 }
 
+@media (max-width: 950px) {
+
+    .career-coach-layout {
+        flex-direction: column;
+    }
+
+    .chat-sidebar {
+        width: auto;
+        min-height: auto;
+    }
+
+    .chat-history-list {
+        max-height: 220px;
+    }
+
+}
 
 @media (max-width: 700px) {
 
@@ -633,12 +1605,29 @@ function handleKeyDown(event) {
         gap: 15px;
     }
 
+    .coach-status {
+        align-self: flex-start;
+    }
+
     .message-bubble {
         max-width: 90%;
     }
 
     .suggested-questions {
         flex-direction: column;
+    }
+
+    .suggested-questions button {
+        width: 100%;
+        text-align: left;
+    }
+
+    .coach-input-area {
+        padding: 15px;
+    }
+
+    .coach-input-area button {
+        padding: 0 18px;
     }
 
 }

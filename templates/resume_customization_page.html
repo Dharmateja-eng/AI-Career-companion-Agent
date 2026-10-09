@@ -538,8 +538,1090 @@ CareerAI | Resume Customization
         {% endif %}
 
     </div>
+     <!-- ==========================================================
+     FULL RESUME PREVIEW
+     ========================================================== -->
+
+<section class="full-resume-preview">
+
+    <div class="preview-header">
+        <div>
+            <h2>📄 Customized Resume Preview</h2>
+            <p>
+                A live preview of the resume generated for
+                <strong>{{ selected_job.job_title }}</strong>
+                at
+                <strong>{{ selected_job.company }}</strong>.
+            </p>
+        </div>
+
+        <span class="preview-badge">
+            Job Customized
+        </span>
+    </div>
 
 
+    <!-- RESUME PAPER -->
+
+    <div class="resume-paper">
+
+        <!-- HEADER -->
+
+        <div class="resume-header">
+
+            <h1>
+                {{ candidate_profile.name }}
+            </h1>
+
+            <div class="resume-contact">
+
+                {% if candidate_profile.email %}
+                <span>
+                    ✉ {{ candidate_profile.email }}
+                </span>
+                {% endif %}
+
+                {% if selected_job.location %}
+                <span>
+                    📍 {{ selected_job.location }}
+                </span>
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        <!-- PROFESSIONAL SUMMARY -->
+
+        {% if result.tailored_resume_summary %}
+
+        <div class="resume-section">
+
+            <h3>PROFESSIONAL SUMMARY</h3>
+
+            <p class="summary-text">
+                {{ result.tailored_resume_summary }}
+            </p>
+
+        </div>
+
+        {% endif %}
+
+
+        <!-- TECHNICAL SKILLS -->
+
+        {% if candidate_profile.skills %}
+
+        <div class="resume-section">
+
+            <h3>TECHNICAL SKILLS</h3>
+
+            <div class="skill-list">
+
+                {% for skill in candidate_profile.skills %}
+
+                    {% if skill is mapping %}
+
+                        {% if skill.name %}
+                            <span class="skill-tag">
+                                {{ skill.name }}
+                            </span>
+                        {% elif skill.skill %}
+                            <span class="skill-tag">
+                                {{ skill.skill }}
+                            </span>
+                        {% else %}
+                            <span class="skill-tag">
+                                {{ skill }}
+                            </span>
+                        {% endif %}
+
+                    {% else %}
+
+                        <span class="skill-tag">
+                            {{ skill }}
+                        </span>
+
+                    {% endif %}
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+        {% endif %}
+
+
+        <!-- EDUCATION -->
+
+        {% if candidate_profile.education %}
+
+        <div class="resume-section">
+
+            <h3>EDUCATION</h3>
+
+            {% for education in candidate_profile.education %}
+
+            <div class="resume-item">
+
+                {% if education is mapping %}
+
+                    <h4>
+                        {{ education.degree
+                        or education.course
+                        or education.qualification
+                        or "Education" }}
+                    </h4>
+
+                    <p>
+                        {{ education.institution
+                        or education.college
+                        or education.university
+                        or "" }}
+                    </p>
+
+                    {% if education.year %}
+                    <span class="resume-date">
+                        {{ education.year }}
+                    </span>
+                    {% endif %}
+
+                    {% if education.cgpa %}
+                    <p>
+                        CGPA: {{ education.cgpa }}
+                    </p>
+                    {% endif %}
+
+                {% else %}
+
+                    <p>{{ education }}</p>
+
+                {% endif %}
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% endif %}
+
+
+        <!-- PROJECTS -->
+
+        {% if candidate_profile.projects %}
+
+        <div class="resume-section">
+
+            <h3>PROJECTS</h3>
+
+            {% for project in candidate_profile.projects %}
+
+            <div class="resume-item">
+
+                {% if project is mapping %}
+
+                    <h4>
+                        {{ project.title
+                        or project.name
+                        or "Project" }}
+                    </h4>
+
+                    {% if project.description %}
+                    <p>
+                        {{ project.description }}
+                    </p>
+                    {% endif %}
+
+                    {% if project.technologies %}
+                    <p>
+                        <strong>Technologies:</strong>
+                        {{ project.technologies }}
+                    </p>
+                    {% endif %}
+
+                {% else %}
+
+                    <p>{{ project }}</p>
+
+                {% endif %}
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% endif %}
+
+
+        <!-- EXPERIENCE -->
+
+        {% if candidate_profile.experience %}
+
+        <div class="resume-section">
+
+            <h3>EXPERIENCE / INTERNSHIPS</h3>
+
+            {% for experience in candidate_profile.experience %}
+
+            <div class="resume-item">
+
+                {% if experience is mapping %}
+
+                    <h4>
+                        {{ experience.role
+                        or experience.position
+                        or experience.title
+                        or "Experience" }}
+                    </h4>
+
+                    {% if experience.company %}
+                    <p>
+                        <strong>{{ experience.company }}</strong>
+                    </p>
+                    {% endif %}
+
+                    {% if experience.description %}
+                    <p>
+                        {{ experience.description }}
+                    </p>
+                    {% endif %}
+
+                {% else %}
+
+                    <p>{{ experience }}</p>
+
+                {% endif %}
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% endif %}
+
+
+        <!-- CERTIFICATIONS -->
+
+        {% if candidate_profile.certifications %}
+
+        <div class="resume-section">
+
+            <h3>CERTIFICATIONS</h3>
+
+            <ul class="resume-list">
+
+                {% for certification in candidate_profile.certifications %}
+
+                    {% if certification is mapping %}
+
+                        <li>
+                            {{ certification.name
+                            or certification.title
+                            or certification.certificate
+                            or certification }}
+                        </li>
+
+                    {% else %}
+
+                        <li>{{ certification }}</li>
+
+                    {% endif %}
+
+                {% endfor %}
+
+            </ul>
+
+        </div>
+
+        {% endif %}
+
+
+        <!-- JOB-RELEVANT KEYWORDS -->
+
+        {% if result.recommended_keywords %}
+
+        <div class="resume-section">
+
+            <h3>JOB-RELEVANT KEYWORDS</h3>
+
+            <div class="skill-list">
+
+                {% for keyword in result.recommended_keywords %}
+
+                <span class="keyword-tag">
+                    {{ keyword }}
+                </span>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+        {% endif %}
+
+
+        <!-- IMPROVED BULLET POINTS -->
+
+        {% if result.improved_bullet_points %}
+
+        <div class="resume-section">
+
+            <h3>TAILORED ACHIEVEMENT / EXPERIENCE POINTS</h3>
+
+            <ul class="resume-list">
+
+                {% for bullet in result.improved_bullet_points %}
+
+                <li>
+                    {{ bullet }}
+                </li>
+
+                {% endfor %}
+
+            </ul>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+
+<!-- ==========================================================
+     FULL COVER LETTER PREVIEW
+     ========================================================== -->
+
+<section class="full-cover-letter-preview">
+
+    <div class="preview-header">
+
+        <div>
+
+            <h2>✉️ Customized Cover Letter Preview</h2>
+
+            <p>
+                Tailored for
+                <strong>{{ selected_job.job_title }}</strong>
+                at
+                <strong>{{ selected_job.company }}</strong>.
+            </p>
+
+        </div>
+
+        <span class="preview-badge">
+            Job Customized
+        </span>
+
+    </div>
+
+
+    <div class="cover-letter-paper">
+
+        <div class="cover-letter-top">
+
+            <h1>
+                {{ candidate_profile.name }}
+            </h1>
+
+            {% if candidate_profile.email %}
+
+            <p>
+                {{ candidate_profile.email }}
+            </p>
+
+            {% endif %}
+
+        </div>
+
+
+        <div class="cover-letter-body">
+
+            {% if result.cover_letter %}
+
+                {% for paragraph in result.cover_letter.split('\n') %}
+
+                    {% if paragraph.strip() %}
+
+                    <p>
+                        {{ paragraph }}
+                    </p>
+
+                    {% endif %}
+
+                {% endfor %}
+
+            {% else %}
+
+                <p>
+                    Cover letter could not be generated.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<style>
+
+/* ==========================================================
+   FULL RESUME + COVER LETTER PREVIEW
+   ========================================================== */
+
+.full-resume-preview,
+.full-cover-letter-preview {
+
+    margin-top: 35px;
+    margin-bottom: 35px;
+    padding: 28px;
+
+    background: #ffffff;
+
+    border-radius: 18px;
+
+    border: 1px solid #e5e7eb;
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.06);
+
+}
+
+
+.preview-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-start;
+
+    gap: 20px;
+
+    margin-bottom: 25px;
+
+}
+
+
+.preview-header h2 {
+
+    margin: 0 0 8px;
+
+    font-size: 24px;
+
+    color: #25215c;
+
+}
+
+
+.preview-header p {
+
+    margin: 0;
+
+    color: #6b7280;
+
+    font-size: 14px;
+
+}
+
+
+.preview-badge {
+
+    padding: 8px 13px;
+
+    border-radius: 20px;
+
+    background: #ede9fe;
+
+    color: #5b21b6;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+
+}
+
+
+/* ==========================================================
+   RESUME PAPER
+   ========================================================== */
+
+.resume-paper {
+
+    max-width: 900px;
+
+    margin: 0 auto;
+
+    padding: 45px 55px;
+
+    background: #ffffff;
+
+    border: 1px solid #d1d5db;
+
+    box-shadow:
+        0 10px 35px rgba(0, 0, 0, 0.08);
+
+}
+
+
+.resume-header {
+
+    text-align: center;
+
+    padding-bottom: 22px;
+
+    border-bottom: 2px solid #25215c;
+
+}
+
+
+.resume-header h1 {
+
+    margin: 0 0 10px;
+
+    font-size: 32px;
+
+    color: #25215c;
+
+}
+
+
+.resume-contact {
+
+    display: flex;
+
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    gap: 18px;
+
+    color: #4b5563;
+
+    font-size: 13px;
+
+}
+
+
+/* ==========================================================
+   RESUME SECTIONS
+   ========================================================== */
+
+.resume-section {
+
+    margin-top: 25px;
+
+}
+
+
+.resume-section h3 {
+
+    margin: 0 0 12px;
+
+    padding-bottom: 6px;
+
+    border-bottom: 1px solid #d1d5db;
+
+    color: #25215c;
+
+    font-size: 15px;
+
+    letter-spacing: 0.5px;
+
+}
+
+
+.summary-text {
+
+    margin: 0;
+
+    line-height: 1.7;
+
+    color: #374151;
+
+    font-size: 14px;
+
+}
+
+
+.resume-item {
+
+    margin-bottom: 17px;
+
+}
+
+
+.resume-item h4 {
+
+    margin: 0 0 5px;
+
+    color: #111827;
+
+    font-size: 15px;
+
+}
+
+
+.resume-item p {
+
+    margin: 4px 0;
+
+    color: #4b5563;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+
+}
+
+
+.resume-date {
+
+    color: #6b7280;
+
+    font-size: 12px;
+
+}
+
+
+.resume-list {
+
+    margin: 0;
+
+    padding-left: 20px;
+
+}
+
+
+.resume-list li {
+
+    margin-bottom: 8px;
+
+    color: #374151;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+
+}
+
+
+/* ==========================================================
+   SKILLS
+   ========================================================== */
+
+.skill-list {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+}
+
+
+.skill-tag {
+
+    padding: 6px 11px;
+
+    background: #f3f4f6;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 6px;
+
+    color: #374151;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+}
+
+
+.keyword-tag {
+
+    padding: 6px 11px;
+
+    background: #ede9fe;
+
+    border: 1px solid #ddd6fe;
+
+    border-radius: 6px;
+
+    color: #5b21b6;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+}
+
+
+/* ==========================================================
+   COVER LETTER
+   ========================================================== */
+
+.cover-letter-paper {
+
+    max-width: 900px;
+
+    margin: 0 auto;
+
+    padding: 55px;
+
+    background: #ffffff;
+
+    border: 1px solid #d1d5db;
+
+    box-shadow:
+        0 10px 35px rgba(0, 0, 0, 0.08);
+
+}
+
+
+.cover-letter-top {
+
+    padding-bottom: 22px;
+
+    border-bottom: 1px solid #d1d5db;
+
+}
+
+
+.cover-letter-top h1 {
+
+    margin: 0 0 6px;
+
+    color: #25215c;
+
+    font-size: 26px;
+
+}
+
+
+.cover-letter-top p {
+
+    margin: 0;
+
+    color: #6b7280;
+
+    font-size: 13px;
+
+}
+
+
+.cover-letter-body {
+
+    padding-top: 28px;
+
+}
+
+
+.cover-letter-body p {
+
+    margin: 0 0 20px;
+
+    color: #374151;
+
+    font-size: 15px;
+
+    line-height: 1.8;
+
+}
+
+
+/* ==========================================================
+   RESPONSIVE
+   ========================================================== */
+
+@media (max-width: 800px) {
+
+    .full-resume-preview,
+    .full-cover-letter-preview {
+
+        padding: 18px;
+
+    }
+
+    .resume-paper,
+    .cover-letter-paper {
+
+        padding: 28px 22px;
+
+    }
+
+    .preview-header {
+
+        flex-direction: column;
+
+    }
+
+    .resume-header h1 {
+
+        font-size: 26px;
+
+    }
+
+}
+
+</style>
+    <!-- ==========================================================
+     GENERATED DOCUMENTS
+     ========================================================== -->
+
+<section class="document-generation-section">
+
+    <div class="section-header">
+        <h2>📄 Your Customized Documents</h2>
+        <p>
+            Your resume and cover letter have been customized
+            for <strong>{{ selected_job.job_title }}</strong>
+            at <strong>{{ selected_job.company }}</strong>.
+        </p>
+    </div>
+
+    <div class="document-cards">
+
+        <!-- RESUME -->
+        <div class="document-card">
+
+            <div class="document-icon">
+                📄
+            </div>
+
+            <div class="document-content">
+
+                <h3>Customized Resume</h3>
+
+                <p>
+                    Your resume has been tailored using your
+                    profile and the selected job requirements.
+                </p>
+
+                <div class="document-buttons">
+
+                    {% if resume_pdf_path %}
+                    <a
+                        href="{{ url_for(
+                            'download_document',
+                            filename=resume_pdf_path
+                        ) }}"
+                        class="document-btn primary"
+                        target="_blank"
+                    >
+                        👁️ Preview / Download PDF
+                    </a>
+                    {% endif %}
+
+                    {% if resume_docx_path %}
+                    <a
+                        href="{{ url_for(
+                            'download_document',
+                            filename=resume_docx_path
+                        ) }}"
+                        class="document-btn secondary"
+                    >
+                        📝 Download DOCX
+                    </a>
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- COVER LETTER -->
+        <div class="document-card">
+
+            <div class="document-icon">
+                ✉️
+            </div>
+
+            <div class="document-content">
+
+                <h3>Customized Cover Letter</h3>
+
+                <p>
+                    Your cover letter has been written specifically
+                    for the selected job using your actual profile.
+                </p>
+
+                <div class="document-buttons">
+
+                    {% if cover_letter_pdf_path %}
+                    <a
+                        href="{{ url_for(
+                            'download_document',
+                            filename=cover_letter_pdf_path
+                        ) }}"
+                        class="document-btn primary"
+                        target="_blank"
+                    >
+                        👁️ Preview / Download PDF
+                    </a>
+                    {% endif %}
+
+                    {% if cover_letter_docx_path %}
+                    <a
+                        href="{{ url_for(
+                            'download_document',
+                            filename=cover_letter_docx_path
+                        ) }}"
+                        class="document-btn secondary"
+                    >
+                        📝 Download DOCX
+                    </a>
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<style>
+
+.document-generation-section {
+    margin-top: 35px;
+    margin-bottom: 35px;
+    padding: 28px;
+    border-radius: 18px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+}
+
+.section-header {
+    margin-bottom: 24px;
+}
+
+.section-header h2 {
+    margin-bottom: 8px;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.section-header p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 15px;
+}
+
+.document-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.document-card {
+    display: flex;
+    gap: 18px;
+    padding: 22px;
+    border-radius: 16px;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.document-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.document-icon {
+    width: 52px;
+    height: 52px;
+    min-width: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    background: #ede9fe;
+    font-size: 25px;
+}
+
+.document-content {
+    flex: 1;
+}
+
+.document-content h3 {
+    margin: 0 0 8px;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.document-content p {
+    margin: 0 0 16px;
+    color: #6b7280;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.document-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.document-btn {
+    display: inline-block;
+    padding: 10px 15px;
+    border-radius: 9px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    transition: opacity 0.2s ease;
+}
+
+.document-btn:hover {
+    opacity: 0.85;
+}
+
+.document-btn.primary {
+    background: #6d28d9;
+    color: white;
+}
+
+.document-btn.secondary {
+    background: #ffffff;
+    color: #4b5563;
+    border: 1px solid #d1d5db;
+}
+
+@media (max-width: 800px) {
+
+    .document-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .document-card {
+        flex-direction: column;
+    }
+
+}
+
+</style>
     <!-- ACTIONS -->
     <div style="
         display:flex;
