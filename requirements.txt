@@ -14,3 +14,4 @@ gunicorn
 faiss-cpu==1.15.1
 Flask-Session==0.8.0
 python-docx
+reportlab
