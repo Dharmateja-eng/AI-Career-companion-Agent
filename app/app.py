@@ -1173,43 +1173,37 @@ def safe_json_load(value, default=None):
     methods=["GET", "POST"]
 )
 
+# ==========================================================
+# HOME / RESUME PROCESSING
+# ==========================================================
+
+@app.route("/", methods=["GET", "POST"])
 def profile():
 
-   if request.method == "GET":
-    return render_template("landing.html")
+    # Display the landing page
+    if request.method == "GET":
+        return render_template("landing.html")
 
+    # Require login before processing a resume
     if "user_id" not in session:
+        return redirect(url_for("login"))
 
-        return redirect(
-            url_for("login")
-        )
-
-
-    resume = request.files.get(
-        "resume"
-    )
-
+    # Continue with your existing resume-processing code below
+    resume = request.files.get("resume")
 
     if not resume or resume.filename == "":
-
         return "Please upload a resume PDF."
 
-
-    if not resume.filename.lower().endswith(
-        ".pdf"
-    ):
-
+    if not resume.filename.lower().endswith(".pdf"):
         return "Please upload a PDF resume."
 
-
-    filename = secure_filename(
-        resume.filename
-    )
-
+    filename = secure_filename(resume.filename)
 
     if not filename:
-
         return "Invalid resume filename."
+
+    # Keep the rest of your existing code below this point.
+
 
 
     # ======================================================
