@@ -6235,6 +6235,13 @@ def edit_application(application_id):
 def logout():
     session.clear()
     return redirect(url_for("login"))
+# ==========================================================
+# DATABASE TABLE INITIALIZATION
+# ==========================================================
+
+with app.app_context():
+    db.create_all()
+    print("Database tables initialized successfully.")
 
 
 # ==========================================================
