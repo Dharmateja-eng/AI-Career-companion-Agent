@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareerAI | Your AI Career Companion</title>
+
+    <style>
+        :root {
+            --bg: #080b18;
+            --panel: #11162a;
+            --text: #f5f6ff;
+            --muted: #a5aec7;
+            --purple: #8b5cf6;
+            --cyan: #67e8f9;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(ellipse at 75% 15%, #30205b55, transparent 38%),
+                radial-gradient(ellipse at 15% 65%, #123a5350, transparent 35%),
+                var(--bg);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .navbar {
+            width: min(1160px, 90%);
+            margin: auto;
+            min-height: 86px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            font-size: 21px;
+            font-weight: 750;
+            letter-spacing: -0.5px;
+        }
+
+        .brand-icon {
+            width: 39px;
+            height: 39px;
+            display: grid;
+            place-items: center;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #8b5cf6, #4f46e5);
+            box-shadow: 0 0 24px #8b5cf655;
+            font-size: 22px;
+        }
+
+        .brand span {
+            color: #b7a0ff;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .nav-links a:hover,
+        .text-link:hover {
+            color: white;
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 22px;
+            border-radius: 11px;
+            font-size: 14px;
+            font-weight: 650;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+        }
+
+        .button-primary {
+            color: white;
+            background: linear-gradient(110deg, #8b5cf6, #635bff);
+            box-shadow: 0 8px 28px #7654ee35;
+        }
+
+        .button-primary:hover {
+            box-shadow: 0 10px 35px #7654ee70;
+        }
+
+        .button-outline {
+            border: 1px solid #343b56;
+            background: #ffffff05;
+        }
+
+        .hero {
+            width: min(1160px, 90%);
+            margin: auto;
+            min-height: 590px;
+            display: grid;
+            grid-template-columns: 1.05fr 0.95fr;
+            align-items: center;
+            gap: 45px;
+            padding: 55px 0 75px;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            padding: 7px 13px;
+            border: 1px solid #8b5cf64d;
+            border-radius: 50px;
+            background: #8b5cf614;
+            color: #c8b8ff;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #67e8a5;
+            box-shadow: 0 0 10px #67e8a5;
+        }
+
+        h1 {
+            margin-top: 24px;
+            font-size: clamp(40px, 5.2vw, 65px);
+            line-height: 1.1;
+            letter-spacing: -2.5px;
+            font-weight: 800;
+        }
+
+        .gradient-text {
+            color: #b39aff;
+            background: linear-gradient(100deg, #bba5ff, #67e8f9);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-description {
+            max-width: 520px;
+            margin-top: 23px;
+            color: var(--muted);
+            font-size: 16px;
+            line-height: 1.9;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-top: 30px;
+        }
+
+        .trust-line {
+            margin-top: 24px;
+            color: #8791ad;
+            font-size: 12px;
+        }
+
+        .visual {
+            min-height: 405px;
+            display: grid;
+            place-items: center;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #ffffff12;
+            border-radius: 30px;
+            background:
+                radial-gradient(circle at center, #6843bb2e, transparent 55%),
+                linear-gradient(145deg, #151a32cc, #0b1020e8);
+            box-shadow: 0 30px 100px #00000035;
+        }
+
+        .visual::before,
+        .visual::after {
+            content: "";
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            border: 1px solid #8b5cf62e;
+            border-radius: 50%;
+        }
+
+        .visual::after {
+            width: 350px;
+            height: 350px;
+            border-color: #67e8f91a;
+        }
+
+        .orbit {
+            width: 205px;
+            height: 205px;
+            display: grid;
+            place-items: center;
+            border: 1px solid #9a80ff75;
+            border-radius: 50%;
+            background: radial-gradient(circle, #8b5cf62b, #10162c);
+            box-shadow: 0 0 70px #8b5cf628, inset 0 0 40px #8b5cf61a;
+            position: relative;
+            z-index: 1;
+        }
+
+        .brain {
+            font-size: 76px;
+            filter: drop-shadow(0 0 20px #a78bfa80);
+        }
+
+        .floating-card {
+            position: absolute;
+            z-index: 2;
+            padding: 13px 16px;
+            border: 1px solid #ffffff1a;
+            border-radius: 14px;
+            background: #171d32eF;
+            box-shadow: 0 12px 30px #00000030;
+            font-size: 12px;
+        }
+
+        .floating-card strong {
+            display: block;
+            margin-top: 3px;
+            color: white;
+            font-size: 13px;
+        }
+
+        .card-one {
+            top: 55px;
+            left: 20px;
+        }
+
+        .card-two {
+            right: 18px;
+            top: 125px;
+        }
+
+        .card-three {
+            bottom: 45px;
+            left: 35px;
+        }
+
+        .card-label {
+            color: #aeb8d2;
+        }
+
+        .cyan {
+            color: var(--cyan) !important;
+        }
+
+        .purple {
+            color: #c4b5fd !important;
+        }
+
+        .section {
+            width: min(1160px, 90%);
+            margin: auto;
+            padding: 65px 0;
+        }
+
+        .section-heading {
+            text-align: center;
+            max-width: 650px;
+            margin: 0 auto 38px;
+        }
+
+        .section-heading h2 {
+            font-size: clamp(28px, 4vw, 40px);
+            line-height: 1.2;
+            letter-spacing: -1px;
+        }
+
+        .section-heading p {
+            color: var(--muted);
+            margin-top: 13px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 19px;
+        }
+
+        .feature-card {
+            padding: 26px;
+            min-height: 190px;
+            border: 1px solid #ffffff12;
+            border-radius: 19px;
+            background: linear-gradient(145deg, #151a2c, #0e1221);
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            border-color: #8b5cf65c;
+        }
+
+        .feature-icon {
+            width: 45px;
+            height: 45px;
+            display: grid;
+            place-items: center;
+            border-radius: 13px;
+            background: #8b5cf621;
+            font-size: 22px;
+        }
+
+        .feature-card h3 {
+            margin-top: 17px;
+            font-size: 17px;
+        }
+
+        .feature-card p {
+            margin-top: 8px;
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        .cta {
+            width: min(1160px, 90%);
+            margin: 35px auto 80px;
+            padding: 48px 24px;
+            text-align: center;
+            border: 1px solid #8b5cf633;
+            border-radius: 25px;
+            background:
+                radial-gradient(ellipse at top, #8b5cf629, transparent 65%),
+                #111528;
+        }
+
+        .cta h2 {
+            font-size: clamp(27px, 4vw, 38px);
+        }
+
+        .cta p {
+            margin: 12px auto 24px;
+            color: var(--muted);
+        }
+
+        footer {
+            padding: 25px 5%;
+            border-top: 1px solid #ffffff12;
+            text-align: center;
+            color: #8490aa;
+            font-size: 12px;
+        }
+
+        @media (max-width: 850px) {
+            .hero {
+                grid-template-columns: 1fr;
+                padding-top: 45px;
+            }
+
+            .hero-copy {
+                text-align: center;
+            }
+
+            .hero-description {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-actions {
+                justify-content: center;
+            }
+
+            .features {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .visual {
+                min-height: 370px;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .navbar {
+                min-height: 72px;
+            }
+
+            .nav-links {
+                gap: 12px;
+            }
+
+            .nav-links .nav-about {
+                display: none;
+            }
+
+            .nav-links .button {
+                padding: 9px 12px;
+            }
+
+            .brand {
+                font-size: 17px;
+            }
+
+            .brand-icon {
+                width: 34px;
+                height: 34px;
+            }
+
+            .hero {
+                gap: 35px;
+            }
+
+            h1 {
+                letter-spacing: -1.5px;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .visual {
+                min-height: 330px;
+            }
+
+            .orbit {
+                width: 160px;
+                height: 160px;
+            }
+
+            .brain {
+                font-size: 60px;
+            }
+
+            .card-one {
+                left: 10px;
+                top: 35px;
+            }
+
+            .card-two {
+                right: 8px;
+                top: 115px;
+            }
+
+            .card-three {
+                left: 12px;
+                bottom: 25px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            *, *::before, *::after {
+                transition: none !important;
+            }
+        }
+            
+/* ===== Light theme for the landing page only ===== */
+
+body {
+    --bg: #f7f6fc;
+    --panel: #ffffff;
+    --text: #171936;
+    --muted: #66708f;
+
+    background: linear-gradient(
+        135deg,
+        #ffffff 0%,
+        #f7f6fc 60%,
+        #f0edff 100%
+    );
+    color: var(--text);
+}
+
+/* Navigation */
+.nav-links {
+    color: #66708f;
+}
+
+.nav-links a:hover,
+.text-link:hover {
+    color: #7044db;
+}
+
+/* Secondary button */
+.button-outline {
+    color: #252748;
+    border-color: #ded9ef;
+    background: #ffffff;
+}
+
+/* Small label above the heading */
+.eyebrow {
+    color: #7044db;
+    background: #f0eaff;
+    border-color: #ded0ff;
+}
+
+/* Hero illustration */
+.visual {
+    background:
+        radial-gradient(circle at center, #e5dcff, transparent 60%),
+        linear-gradient(145deg, #ffffff, #f0edff);
+    border-color: #e6e2f7;
+    box-shadow: 0 30px 70px #51418b14;
+}
+
+/* Central circle */
+.orbit {
+    background: radial-gradient(circle, #e5dcff, #ffffff);
+    border-color: #b5a0ff;
+}
+
+/* Floating information cards */
+.floating-card {
+    background: #ffffff;
+    border-color: #e6e2f7;
+    box-shadow: 0 12px 30px #51418b12;
+}
+
+.floating-card strong {
+    color: #252748;
+}
+
+.card-label {
+    color: #66708f;
+}
+
+/* Features cards */
+.feature-card {
+    background: linear-gradient(145deg, #ffffff, #f7f5ff);
+    border-color: #e6e2f7;
+    box-shadow: 0 8px 24px #51418b0a;
+}
+
+.feature-card h3,
+.section-heading h2 {
+    color: #171936;
+}
+
+/* Call-to-action section */
+.cta {
+    background: linear-gradient(135deg, #ffffff, #eee8ff);
+    border-color: #ded0ff;
+    box-shadow: 0 15px 40px #51418b10;
+}
+
+footer {
+    border-top-color: #e6e2f7;
+    color: #66708f;
+}
+
+/* ===== CareerAI: Elegant Purple & Lavender Theme ===== */
+
+/* Soft lavender page background */
+body {
+    background:
+        radial-gradient(
+            ellipse at 12% 15%,
+            rgba(139, 92, 246, 0.10),
+            transparent 35%
+        ),
+        radial-gradient(
+            ellipse at 90% 45%,
+            rgba(167, 139, 250, 0.12),
+            transparent 32%
+        ),
+        linear-gradient(
+            135deg,
+            #ffffff 0%,
+            #faf8ff 50%,
+            #f2edff 100%
+        ) !important;
+    color: #21183d;
+}
+
+/* Clean white navigation bar */
+.navbar {
+    background: rgba(255, 255, 255, 0.88);
+    border-bottom: 1px solid #eee7ff;
+    backdrop-filter: blur(14px);
+}
+
+/* Purple brand icon */
+.brand-icon {
+    background: linear-gradient(135deg, #8b5cf6, #6d4aff);
+    color: #ffffff;
+    box-shadow: 0 5px 15px rgba(124, 77, 255, 0.24);
+}
+
+/* Purple accent on the brand name */
+.brand span {
+    color: #8052e8;
+}
+
+/* Hero heading and supporting text */
+.hero h1,
+.hero-title {
+    color: #21183d;
+}
+
+.hero p,
+.hero-description {
+    color: #6e6685;
+}
+
+/* Gradient headline */
+.gradient-text {
+    background: linear-gradient(
+        90deg,
+        #7947e8,
+        #a05cf5,
+        #5b8df7
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Main purple call-to-action buttons */
+.btn-primary,
+.button-primary,
+.cta-button {
+    background: linear-gradient(135deg, #8b5cf6, #7045e8);
+    color: #ffffff;
+    border: none;
+    box-shadow: 0 8px 22px rgba(124, 77, 255, 0.22);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-primary:hover,
+.button-primary:hover,
+.cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(124, 77, 255, 0.30);
+}
+
+/* Outlined buttons */
+.button-outline,
+.btn-outline {
+    background: rgba(255, 255, 255, 0.9);
+    color: #7145d6;
+    border: 1px solid #d9c9ff;
+}
+
+.button-outline:hover,
+.btn-outline:hover {
+    background: #f4efff;
+}
+
+/* Hero illustration panel */
+.visual {
+    background:
+        radial-gradient(
+            circle at 50% 40%,
+            rgba(167, 139, 250, 0.22),
+            transparent 58%
+        ),
+        linear-gradient(145deg, #ffffff, #f4efff);
+    border: 1px solid #e7dcff;
+    border-radius: 28px;
+    box-shadow: 0 24px 65px rgba(89, 57, 160, 0.12);
+}
+
+/* Floating cards */
+.floating-card {
+    background: rgba(255, 255, 255, 0.96);
+    border: 1px solid #e9e0ff;
+    border-radius: 16px;
+    box-shadow: 0 12px 32px rgba(89, 57, 160, 0.10);
+}
+
+.floating-card strong {
+    color: #342254;
+}
+
+/* Small purple labels */
+.eyebrow {
+    color: #7443d4;
+    background: #f2ebff;
+    border: 1px solid #e1d2ff;
+    border-radius: 999px;
+}
+
+/* Feature cards */
+.feature-card {
+    background: linear-gradient(145deg, #ffffff, #fbf9ff);
+    border: 1px solid #ebe4fa;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(89, 57, 160, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 32px rgba(89, 57, 160, 0.10);
+    border-color: #d8c7ff;
+}
+
+.feature-card h3 {
+    color: #302044;
+}
+
+/* Feature icons */
+.feature-icon {
+    background: #f0e8ff;
+    color: #7947e8;
+    border-radius: 14px;
+}
+
+/* Section headings */
+.section-heading h2 {
+    color: #21183d;
+}
+
+.section-heading p {
+    color: #756b8d;
+}
+
+/* Call-to-action section near the bottom */
+.cta {
+    background: linear-gradient(125deg, #f2eaff, #ffffff 65%, #e9e1ff);
+    border: 1px solid #e0d2ff;
+    border-radius: 24px;
+    box-shadow: 0 15px 40px rgba(89, 57, 160, 0.08);
+}
+
+/* Footer */
+footer {
+    color: #756b8d;
+    border-top: 1px solid #ebe4fa;
+}
+
+/* Keep the design comfortable on smaller screens */
+@media (max-width: 768px) {
+    .visual {
+        border-radius: 22px;
+    }
+
+    .feature-card {
+        border-radius: 16px;
+    }
+}
+
+    </style>
+
+</head>
+
+<body>
+    <header class="navbar">
+        <a class="brand" href="{{ url_for('profile') }}" aria-label="CareerAI home">
+            <div class="brand-icon">✦</div>
+            <div>Career<span>AI</span></div>
+        </a>
+
+        <nav class="nav-links" aria-label="Main navigation">
+            <a class="nav-about" href="#features">Features</a>
+            <a class="text-link" href="{{ url_for('login') }}">Login</a>
+            <a class="button button-primary" href="{{ url_for('signup') }}">Get Started</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-copy">
+                <div class="eyebrow">
+                    <span class="status-dot"></span>
+                    YOUR AI-POWERED CAREER PARTNER
+                </div>
+
+                <h1>
+                    Your future.<br>
+                    Your skills.<br>
+                    <span class="gradient-text">Your next move.</span>
+                </h1>
+
+                <p class="hero-description">
+                    Discover career opportunities that fit you.
+                    Analyze your resume, find relevant internships,
+                    identify skill gaps and prepare for interviews —
+                    all in one intelligent career companion.
+                </p>
+
+                <div class="hero-actions">
+                    <a class="button button-primary" href="{{ url_for('signup') }}">
+                        Start Your Journey&nbsp; →
+                    </a>
+                    <a class="button button-outline" href="{{ url_for('login') }}">
+                        I Have an Account
+                    </a>
+                </div>
+
+                <p class="trust-line">
+                    Built for students · Personalized career guidance · AI-assisted preparation
+                </p>
+            </div>
+
+            <div class="visual" aria-label="AI career companion illustration">
+                <div class="floating-card card-one">
+                    <span class="card-label">Resume insights</span>
+                    <strong class="purple">Skills discovered ✦</strong>
+                </div>
+
+                <div class="floating-card card-two">
+                    <span class="card-label">Career match</span>
+                    <strong class="cyan">Opportunities found</strong>
+                </div>
+
+                <div class="floating-card card-three">
+                    <span class="card-label">Your next step</span>
+                    <strong>Build your skills ↗</strong>
+                </div>
+
+                <div class="orbit">
+                    <div class="brain">✧</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="features">
+            <div class="section-heading">
+                <h2>Everything you need to move forward</h2>
+                <p>
+                    From your first resume to your next interview,
+                    get practical support throughout your career journey.
+                </p>
+            </div>
+
+            <div class="features">
+                <article class="feature-card">
+                    <div class="feature-icon">📄</div>
+                    <h3>Smart Resume Analysis</h3>
+                    <p>Extract your skills, education and experience to build a clearer picture of your strengths.</p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Career Recommendations</h3>
+                    <p>Explore career roles that align with your profile, interests and existing skills.</p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-icon">🔎</div>
+                    <h3>Internship Discovery</h3>
+                    <p>Find relevant opportunities from the available job knowledge base.</p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-icon">🧩</div>
+                    <h3>Skill Gap Analysis</h3>
+                    <p>Compare your skills with job requirements and identify areas to improve.</p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-icon">💬</div>
+                    <h3>Interview Preparation</h3>
+                    <p>Practice interview questions and get AI-assisted career guidance.</p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-icon">📌</div>
+                    <h3>Application Tracking</h3>
+                    <p>Organize applications, deadlines, interviews and follow-up activities.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="cta">
+            <h2>Make your next career move with confidence.</h2>
+            <p>Start building your personalized career journey today.</p>
+            <a class="button button-primary" href="{{ url_for('signup') }}">
+                Get Started — It's Free to Sign Up
+            </a>
+        </section>
+    </main>
+
+    <footer>
+        AI Career Companion Agent · Intelligent career guidance, built for students.
+    </footer>
+</body>
+</html>

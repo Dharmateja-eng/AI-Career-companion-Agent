@@ -17,3 +17,5 @@ python-docx
 reportlab
 
 Flask-Mail
+
+pandas
