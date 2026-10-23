@@ -1031,7 +1031,7 @@ def login():
                 "AI Career Companion Agent Team"
             )
         )
-        mail.send(msg)
+        mail.connect().send(msg)
 
     except Exception:
         app.logger.exception(
