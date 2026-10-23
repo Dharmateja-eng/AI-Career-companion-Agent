@@ -25,3 +25,14 @@ data/candidate_profile.json
 # Flask instance data
 instance/
 app/instance/
+# Local application data (do not upload user files or sessions)
+careerai_data/
+
+# Local sync backups
+backup_before_sync_*/
+
+# Local application backup files
+app/app.py.backup
+
+# Additional virtual environments
+careerai-venv/

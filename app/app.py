@@ -39,6 +39,7 @@ from agents.m3_interview_agent import M3InterviewAgent
 from agents.m3_career_assistant_agent import M3CareerAssistantAgent
 from agents.m3_mock_interview_agent import M3MockInterviewAgent
 from services.document_generator import DocumentGenerator
+from flask_mail import Mail, Message
 
 
 # ==========================================================
@@ -53,79 +54,81 @@ if not GEMINI_API_KEY:
     raise ValueError("GEMINI_API_KEY is not set in the .env file")
 
 
+
 # ==========================================================
 # FLASK CONFIGURATION
 # ==========================================================
 
 BASE_DIR = os.path.dirname(
-    os.path.dirname(
-        os.path.abspath(__file__)
-    )
+    os.path.dirname(os.path.abspath(__file__))
 )
 
-DATA_DIR = os.path.join(
-    BASE_DIR,
-    "data"
+DATA_DIR = os.path.join(BASE_DIR, "data")
+os.makedirs(DATA_DIR, exist_ok=True)
+
+# Local data directory; can be changed on the hosting server.
+PERSISTENT_DIR = os.getenv(
+    "CAREERAI_DATA_DIR",
+    os.path.join(BASE_DIR, "careerai_data")
 )
+os.makedirs(PERSISTENT_DIR, exist_ok=True)
 
-UPLOAD_DIR = r"C:\CareerAI_Uploads"
+UPLOAD_DIR = os.path.join(PERSISTENT_DIR, "uploads")
+LOCAL_DATA_DIR = PERSISTENT_DIR
 
-# Legacy JSON profile cache. Keep it outside OneDrive as well.
-LOCAL_DATA_DIR = r"C:\CareerAI_Data"
-os.makedirs(LOCAL_DATA_DIR, exist_ok=True)
+os.makedirs(UPLOAD_DIR, exist_ok=True)
+
 PROFILE_FILE = os.path.join(
-    LOCAL_DATA_DIR,
-    "candidate_profile.json"
+    LOCAL_DATA_DIR, "candidate_profile.json"
 )
+
 # ==========================================================
 # DOCUMENT GENERATION
 # ==========================================================
 
 GENERATED_DOCUMENTS_DIR = os.path.join(
-    LOCAL_DATA_DIR,
-    "generated_documents"
+    PERSISTENT_DIR, "generated_documents"
 )
-
-os.makedirs(
-    GENERATED_DOCUMENTS_DIR,
-    exist_ok=True
-)
+os.makedirs(GENERATED_DOCUMENTS_DIR, exist_ok=True)
 
 document_generator = DocumentGenerator(
     GENERATED_DOCUMENTS_DIR
 )
 
 # ==========================================================
-# CREATE REQUIRED DIRECTORIES
-# ==========================================================
-
-os.makedirs(
-    DATA_DIR,
-    exist_ok=True
-)
-
-os.makedirs(
-    UPLOAD_DIR,
-    exist_ok=True
-)
-
-
-# ==========================================================
 # CREATE FLASK APPLICATION
 # ==========================================================
 
-# ==========================================================
-# SERVER-SIDE SESSION CONFIGURATION
-# ==========================================================
 app = Flask(
     __name__,
     template_folder="../templates",
     static_folder="../static"
 )
 
-app.config["SECRET_KEY"] = "careerai-development-secret"
+app.config["SECRET_KEY"] = os.getenv(
+    "SECRET_KEY",
+    "careerai-development-secret"
+)
 
-SESSION_DIR = r"C:\Users\dharm\careerai_session"
+# ==========================================================
+# EMAIL CONFIGURATION
+# ==========================================================
+
+app.config["MAIL_SERVER"] = os.getenv("MAIL_SERVER", "smtp.gmail.com")
+app.config["MAIL_PORT"] = int(os.getenv("MAIL_PORT", "587"))
+app.config["MAIL_USE_TLS"] = os.getenv("MAIL_USE_TLS", "True").lower() == "true"
+app.config["MAIL_USERNAME"] = os.getenv("MAIL_USERNAME")
+app.config["MAIL_PASSWORD"] = os.getenv("MAIL_PASSWORD")
+app.config["MAIL_DEFAULT_SENDER"] = os.getenv("MAIL_DEFAULT_SENDER")
+
+mail = Mail(app)
+
+
+# ==========================================================
+# SERVER-SIDE SESSION CONFIGURATION
+# ==========================================================
+
+SESSION_DIR = os.path.join(PERSISTENT_DIR, "sessions")
 os.makedirs(SESSION_DIR, exist_ok=True)
 
 app.config["SESSION_TYPE"] = "filesystem"
@@ -134,59 +137,35 @@ app.config["SESSION_PERMANENT"] = False
 
 Session(app)
 
-# Keep the frequently-written SQLite database outside OneDrive.
-# This avoids file-lock/synchronization problems during INSERT/COMMIT operations.
-DATABASE_DIR = r"C:\CareerAI_Data"
-os.makedirs(DATABASE_DIR, exist_ok=True)
+# ==========================================================
+# DATABASE CONFIGURATION
+# ==========================================================
 
-DATABASE_PATH = os.path.join(DATABASE_DIR, "careerai.db")
-
-app.config["SQLALCHEMY_DATABASE_URI"] = (
-    "sqlite:///" + DATABASE_PATH.replace("\\", "/")
+DATABASE_PATH = os.path.join(
+    PERSISTENT_DIR, "careerai.db"
 )
+
+database_url = os.getenv("DATABASE_URL")
+
+if database_url:
+    if database_url.startswith("postgres://"):
+        database_url = database_url.replace(
+            "postgres://", "postgresql://", 1
+        )
+    app.config["SQLALCHEMY_DATABASE_URI"] = database_url
+else:
+    app.config["SQLALCHEMY_DATABASE_URI"] = (
+        "sqlite:///" + DATABASE_PATH.replace("\\", "/")
+    )
+
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
-# Give SQLite enough time to handle a short-lived file lock.
-app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
-    "connect_args": {"timeout": 30}
-}
+if app.config["SQLALCHEMY_DATABASE_URI"].startswith("sqlite:"):
+    app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
+        "connect_args": {"timeout": 30}
+    }
 
 db.init_app(app)
-
-
-# ==========================================================
-# CREATE DATABASE TABLES
-# ==========================================================
-
-with app.app_context():
-    db.create_all()
-
-
-# ==========================================================
-# CENTRAL GEMINI AI SERVICE
-# ==========================================================
-
-gemini_service = GeminiService()
-
-# ==========================================================
-# AI AGENTS - MILESTONE 1
-# ==========================================================
-
-resume_agent = ResumeAgent(
-    gemini_service
-)
-
-career_agent = CareerAgent(
-    gemini_service
-)
-
-skill_gap_agent = SkillGapAgent(
-    gemini_service
-)
-
-interview_agent = InterviewAgent(
-    gemini_service
-)
 
 # ==========================================================
 # MILESTONE 2 AGENTS
@@ -194,7 +173,7 @@ interview_agent = InterviewAgent(
 
 job_retrieval_agent = None
 job_retrieval_available = False
-
+gemini_service = GeminiService()
 try:
     from agents.job_retrieval_agent import JobRetrievalAgent
     job_retrieval_agent = JobRetrievalAgent(gemini_service)
@@ -209,6 +188,13 @@ job_matching_agent = JobMatchingAgent()
 # ==========================================================
 # MILESTONE 3.1 AGENT
 # ==========================================================
+
+resume_agent = ResumeAgent(gemini_service)
+career_agent = CareerAgent(gemini_service)
+
+skill_gap_agent = SkillGapAgent(gemini_service)
+interview_agent = InterviewAgent(gemini_service)
+
 
 m3_skill_gap_agent = M3SkillGapAgent(gemini_service)
 m3_resume_cover_letter_agent = M3ResumeCoverLetterAgent(gemini_service)
@@ -993,31 +979,26 @@ def signup():
     methods=["GET", "POST"]
 )
 
+
+
 def login():
 
     if request.method == "GET":
-
-        return render_template(
-            "login.html"
-        )
-
+        return render_template("login.html")
 
     email = request.form.get(
         "email",
         ""
     ).strip().lower()
 
-
     password = request.form.get(
         "password",
         ""
     )
 
-
     user = User.query.filter_by(
         email=email
     ).first()
-
 
     if (
         user is None
@@ -1026,23 +1007,41 @@ def login():
             password
         )
     ):
-
         return render_template(
             "login.html",
             error="Invalid email or password."
         )
 
-
     session["user_id"] = user.id
-
     session["user_email"] = user.email
-
     session["user_name"] = user.name
 
+    # Send login-success email
+    try:
+        msg = Message(
+            subject="Successful Login - AI Career Companion Agent",
+            recipients=[user.email],
+            body=(
+                f"Hello {user.name},\n\n"
+                "You have successfully logged in to "
+                "AI Career Companion Agent.\n\n"
+                "If this wasn't you, please secure your password.\n\n"
+                "Regards,\n"
+                "AI Career Companion Agent Team"
+            )
+        )
+        mail.send(msg)
+
+    except Exception:
+        app.logger.exception(
+            "Login notification email could not be sent."
+        )
 
     return redirect(
         url_for("resume_upload")
     )
+
+
 
 
 # ==========================================================
@@ -1176,12 +1175,8 @@ def safe_json_load(value, default=None):
 
 def profile():
 
-    if request.method == "GET":
-
-        return render_template(
-            "login.html"
-        )
-
+   if request.method == "GET":
+    return render_template("landing.html")
 
     if "user_id" not in session:
 

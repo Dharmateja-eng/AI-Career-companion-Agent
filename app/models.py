@@ -83,6 +83,17 @@ class StudentProfile(db.Model):
     certifications = db.Column(
         db.Text
     )
+    mobile_number = db.Column(db.String(30))
+    college = db.Column(db.String(255))
+    degree_branch = db.Column(db.String(255))
+    graduation_year = db.Column(db.Integer)
+    city = db.Column(db.String(120))
+    profile_completed = db.Column(
+        db.Boolean,
+        nullable=False,
+        default=False,
+        server_default="0"
+    )
 
 
 # =========================================================
